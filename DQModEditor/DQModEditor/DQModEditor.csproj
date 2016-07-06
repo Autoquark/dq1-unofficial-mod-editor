@@ -46,14 +46,60 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Form1.cs">
+    <Compile Include="Gui\EnemiesViewControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Gui\EnemiesViewControl.Designer.cs">
+      <DependentUpon>EnemiesViewControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Gui\EnemyViewControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Gui\EnemyViewControl.Designer.cs">
+      <DependentUpon>EnemyViewControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Gui\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Gui\MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Gui\ModViewControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Gui\ModViewControl.Designer.cs">
+      <DependentUpon>ModViewControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Gui\OpenModControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Gui\OpenModControl.Designer.cs">
+      <DependentUpon>OpenModControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Gui\Utility.cs" />
+    <Compile Include="Model\Enemy.cs" />
+    <Compile Include="Model\ExtendedBindingList.cs" />
+    <Compile Include="Model\Mod.cs" />
+    <Compile Include="Model\ModLoadException.cs" />
+    <Compile Include="Model\SpawnInfo.cs" />
+    <Compile Include="Model\XmlExtensions.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Gui\EnemiesViewControl.resx">
+      <DependentUpon>EnemiesViewControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Gui\EnemyViewControl.resx">
+      <DependentUpon>EnemyViewControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Gui\MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Gui\ModViewControl.resx">
+      <DependentUpon>ModViewControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Gui\OpenModControl.resx">
+      <DependentUpon>OpenModControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
