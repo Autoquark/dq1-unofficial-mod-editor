@@ -46,7 +46,7 @@
             this.enemiesListBox.FormattingEnabled = true;
             this.enemiesListBox.Location = new System.Drawing.Point(16, 24);
             this.enemiesListBox.Name = "enemiesListBox";
-            this.enemiesListBox.Size = new System.Drawing.Size(128, 485);
+            this.enemiesListBox.Size = new System.Drawing.Size(128, 446);
             this.enemiesListBox.TabIndex = 2;
             // 
             // EnemiesViewControl
@@ -56,7 +56,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.enemiesListBox);
             this.Name = "EnemiesViewControl";
-            this.Size = new System.Drawing.Size(768, 526);
+            this.Size = new System.Drawing.Size(768, 494);
             this.ResumeLayout(false);
             this.PerformLayout();
 

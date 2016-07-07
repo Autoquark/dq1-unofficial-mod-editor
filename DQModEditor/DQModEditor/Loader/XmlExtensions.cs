@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace DQModEditor.Model
+namespace DQModEditor.Loader
 {
     /// <summary>
     /// Static class providing extension methods to simplify parsing XML during mod loading.

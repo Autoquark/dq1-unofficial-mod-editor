@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using DQModEditor.Model;
 using System.IO;
+using DQModEditor.Loader;
 
 namespace DQModEditor.Gui
 {
@@ -17,7 +18,7 @@ namespace DQModEditor.Gui
     /// </summary>
     public partial class OpenModControl : UserControl
     {
-        internal event Action<Mod> ModLoaded;
+        internal event Action<Mod, string> ModLoaded;
 
         internal OpenModControl()
         {
@@ -33,8 +34,10 @@ namespace DQModEditor.Gui
             dialog.SelectedPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
                 "LevelUpLabs", "DefendersQuest", "mods");
             if (dialog.ShowDialog() != DialogResult.OK) return;
-            Mod mod = Mod.LoadDirectory(dialog.SelectedPath);
-            ModLoaded?.Invoke(mod);
+
+            ModDirectoryParser parser = new ModDirectoryParser(dialog.SelectedPath);
+            Mod mod = parser.Load();
+            ModLoaded?.Invoke(mod, dialog.SelectedPath);
         }
     }
 }

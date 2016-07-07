@@ -76,13 +76,22 @@
     <Compile Include="Gui\OpenModControl.Designer.cs">
       <DependentUpon>OpenModControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Gui\StatSetViewControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Gui\StatSetViewControl.Designer.cs">
+      <DependentUpon>StatSetViewControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Gui\Utility.cs" />
+    <Compile Include="Loader\DirectoryParserBase.cs" />
+    <Compile Include="Loader\EnemyDirectoryParser.cs" />
     <Compile Include="Model\Enemy.cs" />
     <Compile Include="Model\ExtendedBindingList.cs" />
     <Compile Include="Model\Mod.cs" />
+    <Compile Include="Loader\ModDirectoryParser.cs" />
     <Compile Include="Model\ModLoadException.cs" />
     <Compile Include="Model\SpawnInfo.cs" />
-    <Compile Include="Model\XmlExtensions.cs" />
+    <Compile Include="Loader\XmlExtensions.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Gui\EnemiesViewControl.resx">
@@ -99,6 +108,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Gui\OpenModControl.resx">
       <DependentUpon>OpenModControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Gui\StatSetViewControl.resx">
+      <DependentUpon>StatSetViewControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

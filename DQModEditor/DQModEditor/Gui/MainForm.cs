@@ -26,11 +26,11 @@ namespace DQModEditor.Gui
             openModControl.ModLoaded += OpenModControl_ModLoaded;
         }
 
-        private void OpenModControl_ModLoaded(Mod mod)
+        private void OpenModControl_ModLoaded(Mod mod, string path)
         {
             openModControl.Visible = false;
             modViewControl?.Dispose();
-            modViewControl = new ModViewControl(mod);
+            modViewControl = new ModViewControl(mod, path);
             Controls.Add(modViewControl);
         }
 

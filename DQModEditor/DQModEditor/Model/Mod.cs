@@ -7,6 +7,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
+using System.Xml.Linq;
 
 namespace DQModEditor.Model
 {
@@ -16,20 +18,9 @@ namespace DQModEditor.Model
     public class Mod
     {
         /// <summary>
-        /// Parses the given mod directory into a Mod object.
+        /// Creates an empty Mod.
         /// </summary>
-        /// <param name="path"></param>
-        /// <returns></returns>
-        public static Mod LoadDirectory(string path)
-        {
-            if (!Directory.Exists(path)) throw new ModLoadException("The given path does not exist or is not a directory");
-
-            Mod mod = new Mod();
-            foreach(Enemy e in Enemy.LoadEnemies(path)) mod.Enemies.Add(e);
-            return mod;
-        }
-
-        private Mod()
+        public Mod()
         {
             ExtendedBindingList<Enemy> enemies = new ExtendedBindingList<Enemy>();
             Enemies = enemies;
@@ -51,7 +42,7 @@ namespace DQModEditor.Model
         public BindingList<Enemy> Enemies { get; }
         private Dictionary<string, Enemy> _enemiesByInternalName = new Dictionary<string, Enemy>();
 
-        public Enemy GetEnemyById(string id)
+        public Enemy GetEnemyByIdOrNull(string id)
         {
             Enemy e;
             _enemiesByInternalName.TryGetValue(id, out e);

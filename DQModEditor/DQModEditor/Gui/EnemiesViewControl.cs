@@ -27,6 +27,7 @@ namespace DQModEditor.Gui
 
         private void EnemiesListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (enemyViewControl != null && enemiesListBox.SelectedItem == enemyViewControl.DisplayedEnemy) return;
             enemyViewControl?.Dispose();
             enemyViewControl = new EnemyViewControl((Enemy)enemiesListBox.SelectedItem);
             Controls.Add(enemyViewControl);
