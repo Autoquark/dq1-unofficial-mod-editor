@@ -46,70 +46,61 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Gui\EnemiesViewControl.cs">
+    <Compile Include="EnemiesViewControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Gui\EnemiesViewControl.Designer.cs">
+    <Compile Include="EnemiesViewControl.Designer.cs">
       <DependentUpon>EnemiesViewControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Gui\EnemyViewControl.cs">
+    <Compile Include="EnemyViewControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Gui\EnemyViewControl.Designer.cs">
+    <Compile Include="EnemyViewControl.Designer.cs">
       <DependentUpon>EnemyViewControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Gui\MainForm.cs">
+    <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Gui\MainForm.Designer.cs">
+    <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Gui\ModViewControl.cs">
+    <Compile Include="ModViewControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Gui\ModViewControl.Designer.cs">
+    <Compile Include="ModViewControl.Designer.cs">
       <DependentUpon>ModViewControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Gui\OpenModControl.cs">
+    <Compile Include="OpenModControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Gui\OpenModControl.Designer.cs">
+    <Compile Include="OpenModControl.Designer.cs">
       <DependentUpon>OpenModControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Gui\StatSetViewControl.cs">
+    <Compile Include="StatSetViewControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Gui\StatSetViewControl.Designer.cs">
+    <Compile Include="StatSetViewControl.Designer.cs">
       <DependentUpon>StatSetViewControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Gui\Utility.cs" />
-    <Compile Include="Loader\DirectoryParserBase.cs" />
-    <Compile Include="Loader\EnemyDirectoryParser.cs" />
-    <Compile Include="Model\Enemy.cs" />
-    <Compile Include="Model\ExtendedBindingList.cs" />
-    <Compile Include="Model\Mod.cs" />
-    <Compile Include="Loader\ModDirectoryParser.cs" />
-    <Compile Include="Model\ModLoadException.cs" />
-    <Compile Include="Model\SpawnInfo.cs" />
-    <Compile Include="Loader\XmlExtensions.cs" />
+    <Compile Include="Utility.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Gui\EnemiesViewControl.resx">
+    <EmbeddedResource Include="EnemiesViewControl.resx">
       <DependentUpon>EnemiesViewControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Gui\EnemyViewControl.resx">
+    <EmbeddedResource Include="EnemyViewControl.resx">
       <DependentUpon>EnemyViewControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Gui\MainForm.resx">
+    <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Gui\ModViewControl.resx">
+    <EmbeddedResource Include="ModViewControl.resx">
       <DependentUpon>ModViewControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Gui\OpenModControl.resx">
+    <EmbeddedResource Include="OpenModControl.resx">
       <DependentUpon>OpenModControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Gui\StatSetViewControl.resx">
+    <EmbeddedResource Include="StatSetViewControl.resx">
       <DependentUpon>StatSetViewControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -133,6 +124,16 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DataModel\DataModel.csproj">
+      <Project>{f13cecdc-51b8-41c9-b8dc-fde7ca1ca3b4}</Project>
+      <Name>DataModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Loader\Loader.csproj">
+      <Project>{e701a723-c0a0-404e-940c-042ecd641fae}</Project>
+      <Name>Loader</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

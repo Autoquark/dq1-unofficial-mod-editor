@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace DQModEditor.Gui
+namespace DQModEditor.Model
 {
     /// <summary>
     /// Static class providing utility methods relating to WinForms.
