@@ -33,6 +33,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.statsGroupBox = new System.Windows.Forms.GroupBox();
+            this.label10 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
@@ -46,8 +47,6 @@
             this.flavorDescriptionTextBox = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
             this.flavorNameTextBox = new System.Windows.Forms.TextBox();
-            this.label10 = new System.Windows.Forms.Label();
-            this.displayName2 = new System.Windows.Forms.TextBox();
             this.statsGroupBox.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -104,6 +103,15 @@
             this.statsGroupBox.TabIndex = 7;
             this.statsGroupBox.TabStop = false;
             this.statsGroupBox.Text = "Stats";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(8, 192);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(47, 13);
+            this.label10.TabIndex = 25;
+            this.label10.Text = "Strength";
             // 
             // label9
             // 
@@ -228,28 +236,10 @@
             this.flavorNameTextBox.TabIndex = 3;
             this.flavorNameTextBox.Text = "(display name)";
             // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(8, 192);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(47, 13);
-            this.label10.TabIndex = 25;
-            this.label10.Text = "Strength";
-            // 
-            // displayName2
-            // 
-            this.displayName2.Location = new System.Drawing.Point(248, 120);
-            this.displayName2.Name = "displayName2";
-            this.displayName2.Size = new System.Drawing.Size(208, 20);
-            this.displayName2.TabIndex = 9;
-            this.displayName2.Text = "(display name)";
-            // 
             // EnemyViewControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.displayName2);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.statsGroupBox);
             this.Name = "EnemyViewControl";
@@ -259,7 +249,6 @@
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -283,6 +272,5 @@
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.TextBox internalNameTextBox;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.TextBox displayName2;
     }
 }

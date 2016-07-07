@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace DQModEditor.Model
+namespace DQModEditor.Loader
 {
     /// <summary>
     /// Exception thrown when a problem occurs while loading a mod folder.
