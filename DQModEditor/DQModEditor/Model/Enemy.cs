@@ -140,6 +140,7 @@ namespace DQModEditor.Model
                 set
                 {
                     if (_Hp == value) return;
+                    Console.WriteLine("Hp changed to " + value);
                     _Hp = value;
                     NotifyPropertyChanged();
                 }

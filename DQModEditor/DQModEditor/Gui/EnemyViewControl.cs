@@ -26,6 +26,7 @@ namespace DQModEditor.Gui
             string textPropertyName = nameof(displayNameTextBox.Text);
             internalNameTextBox.DataBindings.Add(textPropertyName, enemy, nameof(enemy.InternalName));
             displayNameTextBox.DataBindings.Add(textPropertyName, enemy, nameof(enemy.DisplayName));
+            displayName2.DataBindings.Add(textPropertyName, enemy, nameof(enemy.DisplayName));
             flavorNameTextBox.DataBindings.Add(textPropertyName, enemy, nameof(enemy.FlavorName));
             flavorDescriptionTextBox.DataBindings.Add(textPropertyName, enemy, nameof(enemy.FlavorDescription));
             // Stats

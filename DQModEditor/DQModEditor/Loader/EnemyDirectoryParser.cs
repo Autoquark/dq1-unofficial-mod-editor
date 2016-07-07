@@ -60,11 +60,11 @@ namespace DQModEditor.Loader
         private Enemy CreateEnemyFromXml(XElement enemyXml)
         {
             // Name & Description
-            Enemy enemy = new Enemy(enemyXml.AttributeValue("name"));
-            enemy.DisplayName = enemyXml.AttributeValue("nick");
-            XElement flavorElement = enemyXml.Descendants("flavor").Single();
-            enemy.FlavorName = flavorElement.AttributeValue("name");
-            enemy.FlavorDescription = flavorElement.AttributeValue("text");
+            Enemy enemy = new Enemy(enemyXml.AttributeValue(_internalNameAttributeName));
+            enemy.DisplayName = enemyXml.AttributeValue(_displayNameAttributeName);
+            XElement flavorElement = enemyXml.Descendants(_flavorElementName).Single();
+            enemy.FlavorName = flavorElement.AttributeValue(_flavorNameAttributeName);
+            enemy.FlavorDescription = flavorElement.AttributeValue(_flavorDescriptionAttributeName);
 
             // Sound & Graphics
             enemy.DeathSound = enemyXml.Descendants("sounds").SingleOrDefault()?.AttributeValue("death");
@@ -121,22 +121,33 @@ namespace DQModEditor.Loader
         {
             if (enemyRoot.AttributeValue("name") != enemy.InternalName) throw new ModLoadException();
 
+            enemyRoot.SetAttributeValue(_displayNameAttributeName, enemy.DisplayName);
+            XElement flavorElement = enemyRoot.Descendants(_flavorElementName).Single();
+            flavorElement.SetAttributeValue(_flavorNameAttributeName, enemy.FlavorName);
+            flavorElement.SetAttributeValue(_flavorDescriptionAttributeName, enemy.FlavorDescription);
+
             EditXmlFromStatSet(enemy.BaseStats, enemyRoot.Descendants(_statsElementName).Single());
             EditXmlFromStatSet(enemy.LevelUpIncrement, enemyRoot.Descendants(_levelupElementName).Single());
         }
 
         private void EditXmlFromStatSet(StatSet statSet, XElement statSetRoot)
         {
-            statSetRoot.SetAttributeValue(XName.Get(_armorAttributeName), statSet.Armor);
-            statSetRoot.SetAttributeValue(XName.Get(_hpAttributeName), statSet.Hp);
-            statSetRoot.SetAttributeValue(XName.Get(_scrapAttributeName), statSet.Scrap);
-            statSetRoot.SetAttributeValue(XName.Get(_speedAttributeName), statSet.Speed);
-            statSetRoot.SetAttributeValue(XName.Get(_strengthAttributeName), statSet.Strength);
-            statSetRoot.SetAttributeValue(XName.Get(_psiAttributeName), statSet.Psi);
-            statSetRoot.SetAttributeValue(XName.Get(_xpAttributeName), statSet.Xp);
+            statSetRoot.SetAttributeValue(_armorAttributeName, statSet.Armor);
+            statSetRoot.SetAttributeValue(_hpAttributeName, statSet.Hp);
+            statSetRoot.SetAttributeValue(_scrapAttributeName, statSet.Scrap);
+            statSetRoot.SetAttributeValue(_speedAttributeName, statSet.Speed);
+            statSetRoot.SetAttributeValue(_strengthAttributeName, statSet.Strength);
+            statSetRoot.SetAttributeValue(_psiAttributeName, statSet.Psi);
+            statSetRoot.SetAttributeValue(_xpAttributeName, statSet.Xp);
         }
 
         private readonly string _enemyXmlPath;
+
+        private readonly static string _internalNameAttributeName = "name";
+        private readonly static string _displayNameAttributeName = "nick";
+        private readonly static string _flavorElementName = "flavor";
+        private readonly static string _flavorNameAttributeName = "name";
+        private readonly static string _flavorDescriptionAttributeName = "text";
 
         private readonly static string _statsElementName = "stats";
         private readonly static string _levelupElementName = "levelup";

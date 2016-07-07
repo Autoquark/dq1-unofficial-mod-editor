@@ -46,7 +46,7 @@
             // 
             // strengthSpinner
             // 
-            this.strengthSpinner.DecimalPlaces = 1;
+            this.strengthSpinner.DecimalPlaces = 2;
             this.strengthSpinner.Increment = new decimal(new int[] {
             1,
             0,
@@ -64,7 +64,7 @@
             // 
             // xpSpinner
             // 
-            this.xpSpinner.DecimalPlaces = 1;
+            this.xpSpinner.DecimalPlaces = 2;
             this.xpSpinner.Location = new System.Drawing.Point(0, 120);
             this.xpSpinner.Maximum = new decimal(new int[] {
             2000000000,
@@ -77,7 +77,7 @@
             // 
             // psiSpinner
             // 
-            this.psiSpinner.DecimalPlaces = 1;
+            this.psiSpinner.DecimalPlaces = 2;
             this.psiSpinner.Location = new System.Drawing.Point(0, 96);
             this.psiSpinner.Maximum = new decimal(new int[] {
             2000000000,
@@ -90,7 +90,7 @@
             // 
             // scrapSpinner
             // 
-            this.scrapSpinner.DecimalPlaces = 1;
+            this.scrapSpinner.DecimalPlaces = 2;
             this.scrapSpinner.Location = new System.Drawing.Point(0, 72);
             this.scrapSpinner.Maximum = new decimal(new int[] {
             2000000000,
@@ -103,7 +103,7 @@
             // 
             // speedSpinner
             // 
-            this.speedSpinner.DecimalPlaces = 1;
+            this.speedSpinner.DecimalPlaces = 2;
             this.speedSpinner.Increment = new decimal(new int[] {
             1,
             0,
@@ -121,7 +121,7 @@
             // 
             // armorSpinner
             // 
-            this.armorSpinner.DecimalPlaces = 1;
+            this.armorSpinner.DecimalPlaces = 2;
             this.armorSpinner.Location = new System.Drawing.Point(0, 24);
             this.armorSpinner.Maximum = new decimal(new int[] {
             2000000000,

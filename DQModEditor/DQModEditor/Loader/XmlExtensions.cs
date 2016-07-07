@@ -22,6 +22,11 @@ namespace DQModEditor.Loader
             return element.Attribute(XName.Get(name))?.Value;
         }
 
+        internal static void SetAttributeValue(this XElement element, string name, object value)
+        {
+            element.SetAttributeValue(XName.Get(name), value);
+        }
+
         internal static IEnumerable<XElement> Descendents(this XElement element, string name)
         {
             return element.Descendants(XName.Get(name));
