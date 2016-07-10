@@ -16,7 +16,7 @@ namespace DQModEditor.Gui
     /// <summary>
     /// Control that allows the user to load a mod directory.
     /// </summary>
-    public partial class OpenModControl : UserControl
+    internal partial class OpenModControl : UserControl
     {
         internal event Action<Mod, string> ModLoaded;
 

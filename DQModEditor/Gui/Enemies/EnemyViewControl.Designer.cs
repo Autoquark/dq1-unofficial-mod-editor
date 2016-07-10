@@ -1,4 +1,4 @@
-﻿namespace DQModEditor.Gui
+﻿namespace DQModEditor.Gui.Enemies
 {
     partial class EnemyViewControl
     {
@@ -47,8 +47,13 @@
             this.flavorDescriptionTextBox = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
             this.flavorNameTextBox = new System.Windows.Forms.TextBox();
+            this.spawnsGroupBox = new System.Windows.Forms.GroupBox();
+            this.enemySpawnListViewControl = new DQModEditor.Gui.Enemies.Spawns.EnemySpawnListViewControl();
+            this.baseStatsViewControl = new DQModEditor.Gui.Enemies.StatSetViewControl();
+            this.perLevelStatsViewControl = new DQModEditor.Gui.Enemies.StatSetViewControl();
             this.statsGroupBox.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.spawnsGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // displayNameTextBox
@@ -88,6 +93,8 @@
             // 
             // statsGroupBox
             // 
+            this.statsGroupBox.Controls.Add(this.perLevelStatsViewControl);
+            this.statsGroupBox.Controls.Add(this.baseStatsViewControl);
             this.statsGroupBox.Controls.Add(this.label10);
             this.statsGroupBox.Controls.Add(this.label9);
             this.statsGroupBox.Controls.Add(this.label8);
@@ -236,10 +243,43 @@
             this.flavorNameTextBox.TabIndex = 3;
             this.flavorNameTextBox.Text = "(display name)";
             // 
+            // spawnsGroupBox
+            // 
+            this.spawnsGroupBox.Controls.Add(this.enemySpawnListViewControl);
+            this.spawnsGroupBox.Location = new System.Drawing.Point(248, 104);
+            this.spawnsGroupBox.Name = "spawnsGroupBox";
+            this.spawnsGroupBox.Size = new System.Drawing.Size(280, 216);
+            this.spawnsGroupBox.TabIndex = 9;
+            this.spawnsGroupBox.TabStop = false;
+            this.spawnsGroupBox.Text = "Spawns";
+            // 
+            // enemySpawnListViewControl
+            // 
+            this.enemySpawnListViewControl.DisplayedItem = null;
+            this.enemySpawnListViewControl.Location = new System.Drawing.Point(8, 24);
+            this.enemySpawnListViewControl.Name = "enemySpawnListViewControl";
+            this.enemySpawnListViewControl.Size = new System.Drawing.Size(264, 160);
+            this.enemySpawnListViewControl.TabIndex = 0;
+            // 
+            // baseStatsViewControl
+            // 
+            this.baseStatsViewControl.Location = new System.Drawing.Point(56, 45);
+            this.baseStatsViewControl.Name = "baseStatsViewControl";
+            this.baseStatsViewControl.Size = new System.Drawing.Size(80, 168);
+            this.baseStatsViewControl.TabIndex = 26;
+            // 
+            // perLevelStatsViewControl
+            // 
+            this.perLevelStatsViewControl.Location = new System.Drawing.Point(144, 45);
+            this.perLevelStatsViewControl.Name = "perLevelStatsViewControl";
+            this.perLevelStatsViewControl.Size = new System.Drawing.Size(80, 168);
+            this.perLevelStatsViewControl.TabIndex = 27;
+            // 
             // EnemyViewControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.spawnsGroupBox);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.statsGroupBox);
             this.Name = "EnemyViewControl";
@@ -248,6 +288,7 @@
             this.statsGroupBox.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            this.spawnsGroupBox.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -272,5 +313,9 @@
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.TextBox internalNameTextBox;
         private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.GroupBox spawnsGroupBox;
+        private Spawns.EnemySpawnListViewControl enemySpawnListViewControl;
+        private StatSetViewControl perLevelStatsViewControl;
+        private StatSetViewControl baseStatsViewControl;
     }
 }

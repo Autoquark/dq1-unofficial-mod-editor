@@ -20,14 +20,5 @@ namespace DQModEditor.Loader
         }
 
         protected string ModDirectoryPath { get; }
-
-        protected XElement GetFileRootElement(string relativePath)
-        {
-            using (XmlReader reader = XmlReader.Create(Path.Combine(ModDirectoryPath, relativePath)))
-            {
-                while (reader.NodeType != XmlNodeType.Element) reader.Read();
-                return XElement.Load(reader);
-            }
-        }
     }
 }
