@@ -34,32 +34,35 @@ namespace DQModEditor.Model
             set
             {
                 if (_DisplayName == value) return;
+                if (value == null) value = "";
                 _DisplayName = value;
                 NotifyPropertyChanged();
             }
         }
-        private string _DisplayName;
+        private string _DisplayName = "";
         public string FlavorName {
             get { return _FlavorName; }
             set
             {
                 if (_FlavorName == value) return;
+                if (value == null) value = "";
                 _FlavorName = value;
                 NotifyPropertyChanged();
             }
         }
-        private string _FlavorName;
+        private string _FlavorName = "";
         public string FlavorDescription
         {
             get { return _FlavorDescription; }
             set
             {
                 if (_FlavorDescription == value) return;
+                if (value == null) value = "";
                 _FlavorDescription = value;
                 NotifyPropertyChanged();
             }
         }
-        private string _FlavorDescription;
+        private string _FlavorDescription = "";
 
         // Sound & Graphics
         public string DeathSound
@@ -68,31 +71,34 @@ namespace DQModEditor.Model
             set
             {
                 if (_DeathSound == value) return;
+                if (value == null) value = "";
                 _DeathSound = value;
                 NotifyPropertyChanged();
             }
         }
-        private string _DeathSound;
+        private string _DeathSound = "";
         public string GraphicId {
             get { return _GraphicId; }
             set
             {
                 if (_GraphicId == value) return;
+                if (value == null) value = "";
                 _GraphicId = value;
                 NotifyPropertyChanged();
             }
         }
-        private string _GraphicId;
+        private string _GraphicId = "";
         public string GraphicSkinId {
             get { return _GraphicSkinId; }
             set
             {
                 if (_GraphicSkinId == value) return;
+                if (value == null) value = "";
                 _GraphicSkinId = value;
                 NotifyPropertyChanged();
             }
         }
-        private string _GraphicSkinId;
+        private string _GraphicSkinId = "";
 
         //Stats
         public StatSet BaseStats { get; } = new StatSet();

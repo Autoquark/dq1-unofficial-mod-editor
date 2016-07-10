@@ -29,22 +29,24 @@ namespace DQModEditor.Model
             set
             {
                 if (_SpawnId == value) return;
+                if(value == null) value = "";
                 _SpawnId = value;
                 NotifyPropertyChanged();
             }
         }
-        private string _SpawnId;
+        private string _SpawnId = "";
         public string EffectId
         {
             get { return _EffectId; }
             set
             {
                 if (_EffectId == value) return;
+                if (value == null) value = "";
                 _EffectId = value;
                 NotifyPropertyChanged();
             }
         }
-        private string _EffectId;
+        private string _EffectId = "";
         public SpawnLocation Location {
             get { return _Location; }
             set

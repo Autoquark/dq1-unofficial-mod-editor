@@ -20,13 +20,6 @@ namespace DQModEditor.Gui.Enemies.Spawns
 
             xPosSpinner.Validated += (s, e) => _validX = xPosSpinner.Value;
             yPosSpinner.Validated += (s, e) => _validY = yPosSpinner.Value;
-
-            Validated += SpawnLocationViewControl_Validated;
-        }
-
-        private void SpawnLocationViewControl_Validated(object sender, EventArgs e)
-        {
-            return;
         }
 
         public SpawnLocation Value
