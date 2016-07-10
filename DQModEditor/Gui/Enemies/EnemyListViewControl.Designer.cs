@@ -1,6 +1,6 @@
-﻿namespace DQModEditor.Gui
+﻿namespace DQModEditor.Gui.Enemies
 {
-    partial class EnemiesViewControl
+    partial class EnemyListViewControl
     {
         /// <summary> 
         /// Required designer variable.
@@ -30,6 +30,7 @@
         {
             this.label1 = new System.Windows.Forms.Label();
             this.enemiesListBox = new System.Windows.Forms.ListBox();
+            this.enemyViewControl = new DQModEditor.Gui.Enemies.EnemyViewControl();
             this.SuspendLayout();
             // 
             // label1
@@ -49,13 +50,21 @@
             this.enemiesListBox.Size = new System.Drawing.Size(128, 446);
             this.enemiesListBox.TabIndex = 2;
             // 
-            // EnemiesViewControl
+            // enemyViewControl1
+            // 
+            this.enemyViewControl.Location = new System.Drawing.Point(152, 8);
+            this.enemyViewControl.Name = "enemyViewControl1";
+            this.enemyViewControl.Size = new System.Drawing.Size(624, 534);
+            this.enemyViewControl.TabIndex = 4;
+            // 
+            // EnemyListViewControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.enemyViewControl);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.enemiesListBox);
-            this.Name = "EnemiesViewControl";
+            this.Name = "EnemyListViewControl";
             this.Size = new System.Drawing.Size(768, 494);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -66,5 +75,6 @@
 
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ListBox enemiesListBox;
+        private EnemyViewControl enemyViewControl;
     }
 }

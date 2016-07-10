@@ -7,8 +7,8 @@
     <ProjectGuid>{D90BDF1F-D436-45F6-AA08-8A4668D4C442}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DQModEditor</RootNamespace>
-    <AssemblyName>DQModEditor</AssemblyName>
+    <RootNamespace>DQModEditor.Gui</RootNamespace>
+    <AssemblyName>Gui</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -46,17 +46,35 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EnemiesViewControl.cs">
+    <Compile Include="Enemies\EnemyListViewControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="EnemiesViewControl.Designer.cs">
-      <DependentUpon>EnemiesViewControl.cs</DependentUpon>
+    <Compile Include="Enemies\EnemyListViewControl.Designer.cs">
+      <DependentUpon>EnemyListViewControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="EnemyViewControl.cs">
+    <Compile Include="Enemies\Spawns\EnemySpawnListViewControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="EnemyViewControl.Designer.cs">
+    <Compile Include="Enemies\Spawns\EnemySpawnListViewControl.Designer.cs">
+      <DependentUpon>EnemySpawnListViewControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Enemies\Spawns\EnemySpawnViewControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Enemies\Spawns\EnemySpawnViewControl.Designer.cs">
+      <DependentUpon>EnemySpawnViewControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Enemies\EnemyViewControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Enemies\EnemyViewControl.Designer.cs">
       <DependentUpon>EnemyViewControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Enemies\Spawns\SpawnLocationViewControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Enemies\Spawns\SpawnLocationViewControl.Designer.cs">
+      <DependentUpon>SpawnLocationViewControl.cs</DependentUpon>
     </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -76,20 +94,32 @@
     <Compile Include="OpenModControl.Designer.cs">
       <DependentUpon>OpenModControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="StatSetViewControl.cs">
+    <Compile Include="Enemies\StatSetViewControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="StatSetViewControl.Designer.cs">
+    <Compile Include="Enemies\StatSetViewControl.Designer.cs">
       <DependentUpon>StatSetViewControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Utility.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="EnemiesViewControl.resx">
-      <DependentUpon>EnemiesViewControl.cs</DependentUpon>
+    <Compile Include="ViewControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <EmbeddedResource Include="Enemies\EnemyListViewControl.resx">
+      <DependentUpon>EnemyListViewControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="EnemyViewControl.resx">
+    <EmbeddedResource Include="Enemies\Spawns\EnemySpawnListViewControl.resx">
+      <DependentUpon>EnemySpawnListViewControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Enemies\Spawns\EnemySpawnViewControl.resx">
+      <DependentUpon>EnemySpawnViewControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Enemies\EnemyViewControl.resx">
       <DependentUpon>EnemyViewControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Enemies\Spawns\SpawnLocationViewControl.resx">
+      <DependentUpon>SpawnLocationViewControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
@@ -100,7 +130,7 @@
     <EmbeddedResource Include="OpenModControl.resx">
       <DependentUpon>OpenModControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="StatSetViewControl.resx">
+    <EmbeddedResource Include="Enemies\StatSetViewControl.resx">
       <DependentUpon>StatSetViewControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -111,6 +141,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

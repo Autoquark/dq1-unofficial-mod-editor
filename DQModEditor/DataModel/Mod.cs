@@ -28,6 +28,15 @@ namespace DQModEditor.Model
             enemies.BeforeRemove += Enemies_BeforeRemove;
         }
 
+        public BindingList<Enemy> Enemies { get; }
+
+        public Enemy GetEnemyByIdOrNull(string id)
+        {
+            Enemy e;
+            _enemiesByInternalName.TryGetValue(id, out e);
+            return e;
+        }
+
         private void Enemies_BeforeRemove(Enemy deletedItem)
         {
             _enemiesByInternalName.Remove(deletedItem.InternalName);
@@ -39,14 +48,6 @@ namespace DQModEditor.Model
             else if (e.ListChangedType == ListChangedType.Reset) _enemiesByInternalName.Clear();
         }
 
-        public BindingList<Enemy> Enemies { get; }
         private Dictionary<string, Enemy> _enemiesByInternalName = new Dictionary<string, Enemy>();
-
-        public Enemy GetEnemyByIdOrNull(string id)
-        {
-            Enemy e;
-            _enemiesByInternalName.TryGetValue(id, out e);
-            return e;
-        }
     }
 }

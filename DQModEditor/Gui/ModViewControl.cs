@@ -9,13 +9,14 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using DQModEditor.Model;
 using DQModEditor.Loader;
+using DQModEditor.Gui.Enemies;
 
 namespace DQModEditor.Gui
 {
     /// <summary>
     /// Control that displays a mod.
     /// </summary>
-    public partial class ModViewControl : UserControl
+    internal partial class ModViewControl : UserControl
     {
         public ModViewControl(Mod mod, string modDirectory)
         {
@@ -23,7 +24,7 @@ namespace DQModEditor.Gui
             _mod = mod;
             _modDirectory = modDirectory;
 
-            EnemiesViewControl enemiesControl = new EnemiesViewControl(mod);
+            EnemyListViewControl enemiesControl = new EnemyListViewControl(mod);
             enemiesControl.Location = new Point(0, 8);
             enemiesTabPage.Controls.Add(enemiesControl);
 

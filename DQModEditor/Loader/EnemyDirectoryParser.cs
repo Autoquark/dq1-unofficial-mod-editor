@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 using System.Xml.Linq;
 using DataModel;
 using DQModEditor.Model;
@@ -25,15 +26,15 @@ namespace DQModEditor.Loader
 
         public void LoadEnemyInfo(Mod mod)
         {
-            XElement enemyRoot = GetFileRootElement(_enemyXmlPath);
+            XElement enemyRoot = XElement.Load(Path.Combine(ModDirectoryPath, _enemyXmlPath));
             foreach (XElement e in GetEnemyDefinitions(enemyRoot)) mod.Enemies.Add(CreateEnemyFromXml(e));
         }
 
         public void SaveEnemyInfo(Mod mod)
         {
-            XElement enemyRoot = GetFileRootElement(_enemyXmlPath);
+            XElement enemyRoot = XElement.Load(Path.Combine(ModDirectoryPath, _enemyXmlPath));
             //Remove enemy definitions from the XML that are not present in the Mod
-            foreach (XElement enemyXml in GetEnemyDefinitions(enemyRoot))
+            foreach (XElement enemyXml in GetEnemyDefinitions(enemyRoot).ToList())
             {
                 if (mod.GetEnemyByIdOrNull(enemyXml.AttributeValue("name")) == null) enemyXml.Remove();
             }
@@ -42,6 +43,15 @@ namespace DQModEditor.Loader
             {
                 EditXmlFromEnemy(enemy, GetEnemyDefinition(enemyRoot, enemy.InternalName));
             }
+
+            //XmlWriterSettings settings = new XmlWriterSettings();
+            //settings.Indent = true;
+            //settings.IndentChars = "   ";
+            //using (XmlWriter writer = XmlWriter.Create(_enemyXmlPath, settings))
+            //{
+            //    new XDocument(enemyRoot).Save(writer);
+            //}
+
             enemyRoot.Save(_enemyXmlPath);
         }
 
@@ -58,31 +68,31 @@ namespace DQModEditor.Loader
             return enemyRoot.Descendants("enemy").Where(x => x.AttributeValue("name") == id).Single();
         }
 
-        private Enemy CreateEnemyFromXml(XElement enemyXml)
+        private Enemy CreateEnemyFromXml(XElement enemyRoot)
         {
             // Name & Description
-            Enemy enemy = new Enemy(enemyXml.AttributeValue(_internalNameAttributeName));
-            enemy.DisplayName = enemyXml.AttributeValue(_displayNameAttributeName);
-            XElement flavorElement = enemyXml.Descendants(_flavorElementName).Single();
+            Enemy enemy = new Enemy(enemyRoot.AttributeValue(_internalNameAttributeName));
+            enemy.DisplayName = enemyRoot.AttributeValue(_displayNameAttributeName);
+            XElement flavorElement = enemyRoot.Descendants(_flavorElementName).Single();
             enemy.FlavorName = flavorElement.AttributeValue(_flavorNameAttributeName);
             enemy.FlavorDescription = flavorElement.AttributeValue(_flavorDescriptionAttributeName);
 
             // Sound & Graphics
-            enemy.DeathSound = enemyXml.Descendants("sounds").SingleOrDefault()?.AttributeValue("death");
-            XElement graphicsElement = enemyXml.Descendants("graphic").Single();
+            enemy.DeathSound = enemyRoot.Descendants("sounds").SingleOrDefault()?.AttributeValue("death");
+            XElement graphicsElement = enemyRoot.Descendants("graphic").Single();
             enemy.GraphicId = graphicsElement.AttributeValue("id");
             enemy.GraphicSkinId = graphicsElement.AttributeValueOrNull("skin");
 
             // Stats
-            enemy.BaseStats.SetFrom(CreateStatSetFromXml(enemyXml.Descendants(_statsElementName).Single()));
-            enemy.LevelUpIncrement.SetFrom(CreateStatSetFromXml(enemyXml.Descendants(_levelupElementName).Single()));
+            enemy.BaseStats.SetFrom(CreateStatSetFromXml(enemyRoot.Descendants(_statsElementName).Single()));
+            enemy.LevelUpIncrement.SetFrom(CreateStatSetFromXml(enemyRoot.Descendants(_levelupElementName).Single()));
 
             // Misc
-            XElement offsetElement = enemyXml.Descendants("select_box_offset").SingleOrDefault();
+            XElement offsetElement = enemyRoot.Descendants("select_box_offset").SingleOrDefault();
             if (offsetElement != null) enemy.SelectBoxOffset = new Point(int.Parse(offsetElement.AttributeValue("x")),
                  int.Parse(offsetElement.AttributeValue("y")));
-            foreach (XElement e in enemyXml.Descendants("type")) enemy.Types.Add(e.AttributeValue("value"));
-            foreach (XElement spawnElement in enemyXml.Descendants("spawn"))
+            foreach (XElement e in enemyRoot.Descendants("type")) enemy.Types.Add(e.AttributeValue("value"));
+            foreach (XElement spawnElement in enemyRoot.Descendants("spawn"))
             {
                 string spawnId = spawnElement.AttributeValue("id");
                 string effectId = spawnElement.AttributeValueOrNull("effect");
@@ -91,7 +101,7 @@ namespace DQModEditor.Loader
                 {
                     decimal x = decimal.Parse(locationElement.AttributeValue("x"));
                     decimal y = decimal.Parse(locationElement.AttributeValue("y"));
-                    enemy.Spawns.Add(new SpawnInfo(spawnId, new SpawnInfo.SpawnLocation(x, y)));
+                    enemy.Spawns.Add(new SpawnInfo { SpawnId = spawnId, Location = new SpawnInfo.SpawnLocation(x, y) });
                     enemy.Spawns.Last().EffectId = effectId;
                 }
             }
@@ -129,6 +139,32 @@ namespace DQModEditor.Loader
 
             EditXmlFromStatSet(enemy.BaseStats, enemyRoot.Descendants(_statsElementName).Single());
             EditXmlFromStatSet(enemy.LevelUpIncrement, enemyRoot.Descendants(_levelupElementName).Single());
+
+            EditSpawnsFromSpawnInfoList(enemy.Spawns, enemyRoot);
+        }
+
+        private void EditSpawnsFromSpawnInfoList(IList<SpawnInfo> infoList, XElement enemyRoot)
+        {
+            //Remove existing spawns and rewrite. This won't preserve any information in the existing spawn definitions that we
+            //don't understand, but there's no clear way to define having edited a spawn vs removed it and added another, so this
+            //is the best we can do.
+            foreach (XElement spawnElement in enemyRoot.Descendants(_spawnsElementName).ToList()) spawnElement.Remove();
+
+            //Group spawns with the same id and effect, as we can use a single spawn element for them.
+            foreach(IGrouping<Tuple<string, string>, SpawnInfo> spawnGroup in infoList.GroupBy(x => Tuple.Create(x.SpawnId, x.EffectId)))
+            {
+                XElement spawnElement = new XElement(XName.Get(_spawnsElementName));
+                spawnElement.SetAttributeValue(_spawnIdAttributeName, spawnGroup.Key.Item1);
+                spawnElement.SetAttributeValue(_spawnEffectIdAttributeName, spawnGroup.Key.Item2);
+                foreach (SpawnInfo info in spawnGroup)
+                {
+                    XElement locationElement = new XElement(XName.Get(_spawnLocationElementName));
+                    locationElement.SetAttributeValue("x", info.Location.X);
+                    locationElement.SetAttributeValue("y", info.Location.Y);
+                    spawnElement.Add(locationElement);
+                }
+                enemyRoot.Add(spawnElement);
+            }
         }
 
         private void EditXmlFromStatSet(StatSet statSet, XElement statSetRoot)
@@ -143,13 +179,13 @@ namespace DQModEditor.Loader
         }
 
         private readonly string _enemyXmlPath;
-
+        // Name & Description
         private readonly static string _internalNameAttributeName = "name";
         private readonly static string _displayNameAttributeName = "nick";
         private readonly static string _flavorElementName = "flavor";
         private readonly static string _flavorNameAttributeName = "name";
         private readonly static string _flavorDescriptionAttributeName = "text";
-
+        // Stats
         private readonly static string _statsElementName = "stats";
         private readonly static string _levelupElementName = "levelup";
 
@@ -160,5 +196,10 @@ namespace DQModEditor.Loader
         private readonly static string _strengthAttributeName = "str";
         private readonly static string _psiAttributeName = "psi";
         private readonly static string _xpAttributeName = "xp";
+        // Spawns
+        private readonly static string _spawnsElementName = "spawn";
+        private readonly static string _spawnIdAttributeName = "id";
+        private readonly static string _spawnEffectIdAttributeName = "effect";
+        private readonly static string _spawnLocationElementName = "loc";
     }
 }
