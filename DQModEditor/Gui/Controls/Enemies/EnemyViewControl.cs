@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using DQModEditor.Model;
 
-namespace DQModEditor.Gui.Enemies
+namespace DQModEditor.Gui.Controls.Enemies
 {
     /// <summary>
     /// Control that displays an enemy definition from a mod.

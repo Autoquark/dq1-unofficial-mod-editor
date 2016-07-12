@@ -1,4 +1,4 @@
-﻿namespace DQModEditor.Gui.Enemies
+﻿namespace DQModEditor.Gui.Controls.Enemies
 {
     partial class EnemyViewControl
     {
@@ -48,9 +48,9 @@
             this.label11 = new System.Windows.Forms.Label();
             this.flavorNameTextBox = new System.Windows.Forms.TextBox();
             this.spawnsGroupBox = new System.Windows.Forms.GroupBox();
-            this.enemySpawnListViewControl = new DQModEditor.Gui.Enemies.Spawns.EnemySpawnListViewControl();
-            this.baseStatsViewControl = new DQModEditor.Gui.Enemies.StatSetViewControl();
-            this.perLevelStatsViewControl = new DQModEditor.Gui.Enemies.StatSetViewControl();
+            this.enemySpawnListViewControl = new DQModEditor.Gui.Controls.Enemies.Spawns.EnemySpawnListViewControl();
+            this.baseStatsViewControl = new DQModEditor.Gui.Controls.Enemies.StatSetViewControl();
+            this.perLevelStatsViewControl = new DQModEditor.Gui.Controls.Enemies.StatSetViewControl();
             this.statsGroupBox.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.spawnsGroupBox.SuspendLayout();

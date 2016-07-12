@@ -10,7 +10,7 @@ using System.Windows.Forms;
 using DQModEditor.Model;
 using static DQModEditor.Model.SpawnInfo;
 
-namespace DQModEditor.Gui.Enemies.Spawns
+namespace DQModEditor.Gui.Controls.Enemies.Spawns
 {
     internal partial class SpawnLocationViewControl : UserControl
     {

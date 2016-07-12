@@ -1,4 +1,4 @@
-﻿namespace DQModEditor.Gui
+﻿namespace DQModEditor.Gui.Controls
 {
     partial class ModViewControl
     {
@@ -30,9 +30,11 @@
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.enemiesTabPage = new System.Windows.Forms.TabPage();
+            this.enemyListViewControl = new DQModEditor.Gui.Controls.Enemies.EnemyListViewControl();
             this.saveButton = new System.Windows.Forms.ToolStripButton();
             this.toolStrip = new System.Windows.Forms.ToolStrip();
             this.tabControl1.SuspendLayout();
+            this.enemiesTabPage.SuspendLayout();
             this.toolStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -47,6 +49,7 @@
             // 
             // enemiesTabPage
             // 
+            this.enemiesTabPage.Controls.Add(this.enemyListViewControl);
             this.enemiesTabPage.Location = new System.Drawing.Point(4, 22);
             this.enemiesTabPage.Name = "enemiesTabPage";
             this.enemiesTabPage.Padding = new System.Windows.Forms.Padding(3);
@@ -54,6 +57,15 @@
             this.enemiesTabPage.TabIndex = 1;
             this.enemiesTabPage.Text = "Enemies";
             this.enemiesTabPage.UseVisualStyleBackColor = true;
+            // 
+            // enemyListViewControl
+            // 
+            this.enemyListViewControl.DisplayedItem = null;
+            this.enemyListViewControl.Enabled = false;
+            this.enemyListViewControl.Location = new System.Drawing.Point(0, 8);
+            this.enemyListViewControl.Name = "enemyListViewControl";
+            this.enemyListViewControl.Size = new System.Drawing.Size(768, 494);
+            this.enemyListViewControl.TabIndex = 0;
             // 
             // saveButton
             // 
@@ -82,6 +94,7 @@
             this.Name = "ModViewControl";
             this.Size = new System.Drawing.Size(784, 564);
             this.tabControl1.ResumeLayout(false);
+            this.enemiesTabPage.ResumeLayout(false);
             this.toolStrip.ResumeLayout(false);
             this.toolStrip.PerformLayout();
             this.ResumeLayout(false);
@@ -95,5 +108,6 @@
         private System.Windows.Forms.TabPage enemiesTabPage;
         private System.Windows.Forms.ToolStripButton saveButton;
         private System.Windows.Forms.ToolStrip toolStrip;
+        private Enemies.EnemyListViewControl enemyListViewControl;
     }
 }

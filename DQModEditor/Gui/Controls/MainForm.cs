@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using DQModEditor.Model;
 
-namespace DQModEditor.Gui
+namespace DQModEditor.Gui.Controls
 {
     /// <summary>
     /// The main program window.
@@ -26,15 +26,13 @@ namespace DQModEditor.Gui
             openModControl.ModLoaded += OpenModControl_ModLoaded;
         }
 
-        private void OpenModControl_ModLoaded(Mod mod, string path)
+        private void OpenModControl_ModLoaded(ModLoadInformation info)
         {
             openModControl.Visible = false;
-            modViewControl?.Dispose();
-            modViewControl = new ModViewControl(mod, path);
-            Controls.Add(modViewControl);
+            modViewControl.Visible = true;
+            modViewControl.DisplayedItem = info;
         }
 
         private readonly OpenModControl openModControl;
-        private ModViewControl modViewControl = null;
     }
 }

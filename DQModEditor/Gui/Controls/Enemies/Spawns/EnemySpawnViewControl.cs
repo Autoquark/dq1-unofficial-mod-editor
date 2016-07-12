@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using DQModEditor.Model;
 
-namespace DQModEditor.Gui.Enemies.Spawns
+namespace DQModEditor.Gui.Controls.Enemies.Spawns
 {
     internal partial class EnemySpawnViewControl : ViewControl<SpawnInfo>
     {

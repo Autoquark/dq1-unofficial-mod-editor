@@ -1,4 +1,4 @@
-﻿namespace DQModEditor.Gui
+﻿namespace DQModEditor.Gui.Controls
 {
     partial class OpenModControl
     {

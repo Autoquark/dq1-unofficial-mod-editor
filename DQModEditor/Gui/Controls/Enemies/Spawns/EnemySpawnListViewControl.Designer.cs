@@ -1,4 +1,4 @@
-﻿namespace DQModEditor.Gui.Enemies.Spawns
+﻿namespace DQModEditor.Gui.Controls.Enemies.Spawns
 {
     partial class EnemySpawnListViewControl
     {
@@ -32,7 +32,7 @@
             this.addButton = new System.Windows.Forms.Button();
             this.deleteButton = new System.Windows.Forms.Button();
             this.clearButton = new System.Windows.Forms.Button();
-            this.enemySpawnViewControl = new DQModEditor.Gui.Enemies.Spawns.EnemySpawnViewControl();
+            this.enemySpawnViewControl = new DQModEditor.Gui.Controls.Enemies.Spawns.EnemySpawnViewControl();
             this.cloneButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 

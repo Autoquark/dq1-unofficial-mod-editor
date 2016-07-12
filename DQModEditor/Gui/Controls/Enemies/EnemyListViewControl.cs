@@ -9,20 +9,26 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using DQModEditor.Model;
 
-namespace DQModEditor.Gui.Enemies
+namespace DQModEditor.Gui.Controls.Enemies
 {
     /// <summary>
     /// Control that displays the enemies defined by a mod.
     /// </summary>
-    internal partial class EnemyListViewControl : UserControl
+    internal partial class EnemyListViewControl : ViewControl<Mod>
     {
-        public EnemyListViewControl(Mod mod)
+        public EnemyListViewControl()
         {
             InitializeComponent();
 
             enemiesListBox.Format += (sender, args) => { args.Value = ((Enemy)args.Value).InternalName; };
             enemiesListBox.SelectedValueChanged += (o, e) => { enemyViewControl.DisplayedItem = (Enemy)enemiesListBox.SelectedItem; };
-            enemiesListBox.DataSource = mod.Enemies;
+
+            DisplayedItemSetNonNull += ChangeDisplayedItem;
+        }
+
+        private void ChangeDisplayedItem(ViewControl<Mod> source)
+        {
+            enemiesListBox.DataSource = DisplayedItem.Enemies;
         }
     }
 }

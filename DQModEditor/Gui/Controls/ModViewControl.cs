@@ -9,29 +9,30 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using DQModEditor.Model;
 using DQModEditor.Loader;
-using DQModEditor.Gui.Enemies;
+using DQModEditor.Gui.Controls.Enemies;
 
-namespace DQModEditor.Gui
+namespace DQModEditor.Gui.Controls
 {
     /// <summary>
     /// Control that displays a mod.
     /// </summary>
-    internal partial class ModViewControl : UserControl
+    internal partial class ModViewControl : ViewControl<ModLoadInformation>
     {
-        public ModViewControl(Mod mod, string modDirectory)
+        public ModViewControl()
         {
             InitializeComponent();
-            _mod = mod;
-            _modDirectory = modDirectory;
-
-            EnemyListViewControl enemiesControl = new EnemyListViewControl(mod);
-            enemiesControl.Location = new Point(0, 8);
-            enemiesTabPage.Controls.Add(enemiesControl);
 
             saveButton.Click += SaveButton_Click;
             saveButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
 
             toolStrip.CausesValidation = true;
+
+            DisplayedItemSetNonNull += ChangeDisplayedItem;
+        }
+
+        private void ChangeDisplayedItem(ViewControl<ModLoadInformation> source)
+        {
+            enemyListViewControl.DisplayedItem = DisplayedItem.Mod;
         }
 
         private void SaveButton_Click(object sender, EventArgs e)
@@ -41,11 +42,8 @@ namespace DQModEditor.Gui
             //focus manually causes events to fire on other controls which we can hook in order to manually force the data binding to update the model object.
             toolStrip.Focus();
 
-            ModDirectoryParser parser = new ModDirectoryParser(_modDirectory);
-            parser.Save(_mod);
+            ModDirectoryParser parser = new ModDirectoryParser(DisplayedItem.DirectoryPath);
+            parser.Save(DisplayedItem.Mod);
         }
-
-        private readonly Mod _mod;
-        private readonly string _modDirectory;
     }
 }

@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace DQModEditor.Gui
+namespace DQModEditor.Gui.Controls
 {
     /// <summary>
     /// Base class for user controls that display and object of a given type T.
@@ -19,6 +19,10 @@ namespace DQModEditor.Gui
         protected ViewControl()
         {
             Enabled = false;
+            ControlAdded += (s, e) =>
+            {
+                if (e.Control is NumericUpDown) Utility.PreventEmptyText((NumericUpDown)e.Control);
+            };
         }
 
         public T DisplayedItem

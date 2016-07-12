@@ -1,4 +1,4 @@
-﻿namespace DQModEditor.Gui.Enemies
+﻿namespace DQModEditor.Gui.Controls.Enemies
 {
     partial class EnemyListViewControl
     {
@@ -30,7 +30,7 @@
         {
             this.label1 = new System.Windows.Forms.Label();
             this.enemiesListBox = new System.Windows.Forms.ListBox();
-            this.enemyViewControl = new DQModEditor.Gui.Enemies.EnemyViewControl();
+            this.enemyViewControl = new DQModEditor.Gui.Controls.Enemies.EnemyViewControl();
             this.SuspendLayout();
             // 
             // label1

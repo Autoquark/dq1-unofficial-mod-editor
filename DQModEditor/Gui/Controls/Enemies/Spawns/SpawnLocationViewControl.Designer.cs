@@ -1,4 +1,4 @@
-﻿namespace DQModEditor.Gui.Enemies.Spawns
+﻿namespace DQModEditor.Gui.Controls.Enemies.Spawns
 {
     partial class SpawnLocationViewControl
     {

@@ -1,4 +1,4 @@
-﻿namespace DQModEditor.Gui.Enemies.Spawns
+﻿namespace DQModEditor.Gui.Controls.Enemies.Spawns
 {
     partial class EnemySpawnViewControl
     {
@@ -33,7 +33,7 @@
             this.spawnIdTextBox = new System.Windows.Forms.TextBox();
             this.effectIdTextBox = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.spawnLocationViewControl = new DQModEditor.Gui.Enemies.Spawns.SpawnLocationViewControl();
+            this.spawnLocationViewControl = new DQModEditor.Gui.Controls.Enemies.Spawns.SpawnLocationViewControl();
             this.SuspendLayout();
             // 
             // label3

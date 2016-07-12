@@ -8,8 +8,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static DQModEditor.Model.Enemy;
+using DQModEditor.Model;
 
-namespace DQModEditor.Gui.Enemies
+namespace DQModEditor.Gui.Controls.Enemies
 {
     internal partial class StatSetViewControl : ViewControl<StatSet>
     {

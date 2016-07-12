@@ -1,4 +1,4 @@
-﻿namespace DQModEditor.Gui.Enemies
+﻿namespace DQModEditor.Gui.Controls.Enemies
 {
     partial class StatSetViewControl
     {
