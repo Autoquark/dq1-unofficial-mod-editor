@@ -79,10 +79,10 @@
             this.label5.TabIndex = 7;
             this.label5.Text = "Effect Id:";
             // 
-            // spawnLocationViewControl1
+            // spawnLocationViewControl
             // 
             this.spawnLocationViewControl.Location = new System.Drawing.Point(8, 16);
-            this.spawnLocationViewControl.Name = "spawnLocationViewControl1";
+            this.spawnLocationViewControl.Name = "spawnLocationViewControl";
             this.spawnLocationViewControl.Size = new System.Drawing.Size(152, 24);
             this.spawnLocationViewControl.TabIndex = 9;
             // 
