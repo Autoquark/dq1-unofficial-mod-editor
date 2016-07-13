@@ -20,15 +20,10 @@ namespace DQModEditor.Model
         /// <summary>
         /// Creates an empty Mod.
         /// </summary>
-        public Mod()
-        {
-            ExtendedBindingList<Enemy> enemies = new ExtendedBindingList<Enemy>();
-            Enemies = enemies;
-            Enemies.ListChanged += Enemies_ListChanged;
-            enemies.BeforeRemove += Enemies_BeforeRemove;
-        }
+        public Mod() { }
 
-        public BindingList<Enemy> Enemies { get; }
+        public delegate void EnemyAddedHandler(Enemy enemy);
+        public event EnemyAddedHandler EnemyAdded;
 
         public Enemy GetEnemyByIdOrNull(string id)
         {
@@ -37,17 +32,22 @@ namespace DQModEditor.Model
             return e;
         }
 
+        public void AddEnemy(Enemy enemy)
+        {
+            _enemiesByInternalName.Add(enemy.InternalName, enemy);
+            EnemyAdded?.Invoke(enemy);
+        }
+
         private void Enemies_BeforeRemove(Enemy deletedItem)
         {
             _enemiesByInternalName.Remove(deletedItem.InternalName);
         }
 
-        private void Enemies_ListChanged(object sender, ListChangedEventArgs e)
+        public IReadOnlyDictionary<string, Enemy> EnemiesByInternalName
         {
-            if (e.ListChangedType == ListChangedType.ItemAdded) _enemiesByInternalName.Add(Enemies[e.NewIndex].InternalName, Enemies[e.NewIndex]);
-            else if (e.ListChangedType == ListChangedType.Reset) _enemiesByInternalName.Clear();
+            get { return new ReadOnlyDictionary<string, Enemy>(_enemiesByInternalName);}
         }
 
-        private Dictionary<string, Enemy> _enemiesByInternalName = new Dictionary<string, Enemy>();
+        private SortedDictionary<string, Enemy> _enemiesByInternalName = new SortedDictionary<string, Enemy>();
     }
 }

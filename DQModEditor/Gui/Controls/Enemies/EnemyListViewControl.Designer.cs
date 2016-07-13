@@ -50,11 +50,13 @@
             this.enemiesListBox.Size = new System.Drawing.Size(128, 446);
             this.enemiesListBox.TabIndex = 2;
             // 
-            // enemyViewControl1
+            // enemyViewControl
             // 
+            this.enemyViewControl.DisplayedItem = null;
+            this.enemyViewControl.Enabled = false;
             this.enemyViewControl.Location = new System.Drawing.Point(152, 8);
-            this.enemyViewControl.Name = "enemyViewControl1";
-            this.enemyViewControl.Size = new System.Drawing.Size(624, 534);
+            this.enemyViewControl.Name = "enemyViewControl";
+            this.enemyViewControl.Size = new System.Drawing.Size(624, 472);
             this.enemyViewControl.TabIndex = 4;
             // 
             // EnemyListViewControl

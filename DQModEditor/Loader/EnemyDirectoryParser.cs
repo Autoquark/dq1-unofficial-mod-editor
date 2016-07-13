@@ -27,7 +27,7 @@ namespace DQModEditor.Loader
         public void LoadEnemyInfo(Mod mod)
         {
             XElement enemyRoot = XElement.Load(Path.Combine(ModDirectoryPath, _enemyXmlPath));
-            foreach (XElement e in GetEnemyDefinitions(enemyRoot)) mod.Enemies.Add(CreateEnemyFromXml(e));
+            foreach (XElement e in GetEnemyDefinitions(enemyRoot)) mod.AddEnemy(CreateEnemyFromXml(e));
         }
 
         public void SaveEnemyInfo(Mod mod)
@@ -39,7 +39,7 @@ namespace DQModEditor.Loader
                 if (mod.GetEnemyByIdOrNull(enemyXml.AttributeValue("name")) == null) enemyXml.Remove();
             }
             //Edit/add enemy definitions to the XML that are present in the mod
-            foreach (Enemy enemy in mod.Enemies)
+            foreach (Enemy enemy in mod.EnemiesByInternalName.Values)
             {
                 EditXmlFromEnemy(enemy, GetEnemyDefinition(enemyRoot, enemy.InternalName));
             }

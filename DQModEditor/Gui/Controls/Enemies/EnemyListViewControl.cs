@@ -20,15 +20,23 @@ namespace DQModEditor.Gui.Controls.Enemies
         {
             InitializeComponent();
 
-            enemiesListBox.Format += (sender, args) => { args.Value = ((Enemy)args.Value).InternalName; };
-            enemiesListBox.SelectedValueChanged += (o, e) => { enemyViewControl.DisplayedItem = (Enemy)enemiesListBox.SelectedItem; };
+            enemiesListBox.DisplayMember = nameof(KeyValuePair<string, Enemy>.Key);
+            enemiesListBox.ValueMember = nameof(KeyValuePair<string, Enemy>.Value);
+            enemiesListBox.SelectedValueChanged += (o, e) => { enemyViewControl.DisplayedItem = (Enemy)enemiesListBox.SelectedValue; };
 
             DisplayedItemSetNonNull += ChangeDisplayedItem;
         }
 
         private void ChangeDisplayedItem(ViewControl<Mod> source)
         {
-            enemiesListBox.DataSource = DisplayedItem.Enemies;
+            enemiesListBox.DataSource = new BindingSource(DisplayedItem.EnemiesByInternalName, null);
+            DisplayedItem.EnemyAdded += DisplayedItem_EnemyAdded;
+        }
+
+        private void DisplayedItem_EnemyAdded(Enemy enemy)
+        {
+            ((BindingSource)enemiesListBox.DataSource).DataSource = null;
+            ((BindingSource)enemiesListBox.DataSource).DataSource = DisplayedItem.EnemiesByInternalName;
         }
     }
 }

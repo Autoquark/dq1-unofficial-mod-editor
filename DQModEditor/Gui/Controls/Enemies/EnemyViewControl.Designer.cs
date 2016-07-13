@@ -49,8 +49,8 @@
             this.flavorNameTextBox = new System.Windows.Forms.TextBox();
             this.spawnsGroupBox = new System.Windows.Forms.GroupBox();
             this.enemySpawnListViewControl = new DQModEditor.Gui.Controls.Enemies.Spawns.EnemySpawnListViewControl();
-            this.baseStatsViewControl = new DQModEditor.Gui.Controls.Enemies.StatSetViewControl();
             this.perLevelStatsViewControl = new DQModEditor.Gui.Controls.Enemies.StatSetViewControl();
+            this.baseStatsViewControl = new DQModEditor.Gui.Controls.Enemies.StatSetViewControl();
             this.statsGroupBox.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.spawnsGroupBox.SuspendLayout();
@@ -256,24 +256,29 @@
             // enemySpawnListViewControl
             // 
             this.enemySpawnListViewControl.DisplayedItem = null;
+            this.enemySpawnListViewControl.Enabled = false;
             this.enemySpawnListViewControl.Location = new System.Drawing.Point(8, 24);
             this.enemySpawnListViewControl.Name = "enemySpawnListViewControl";
             this.enemySpawnListViewControl.Size = new System.Drawing.Size(264, 160);
             this.enemySpawnListViewControl.TabIndex = 0;
             // 
-            // baseStatsViewControl
-            // 
-            this.baseStatsViewControl.Location = new System.Drawing.Point(56, 45);
-            this.baseStatsViewControl.Name = "baseStatsViewControl";
-            this.baseStatsViewControl.Size = new System.Drawing.Size(80, 168);
-            this.baseStatsViewControl.TabIndex = 26;
-            // 
             // perLevelStatsViewControl
             // 
+            this.perLevelStatsViewControl.DisplayedItem = null;
+            this.perLevelStatsViewControl.Enabled = false;
             this.perLevelStatsViewControl.Location = new System.Drawing.Point(144, 45);
             this.perLevelStatsViewControl.Name = "perLevelStatsViewControl";
             this.perLevelStatsViewControl.Size = new System.Drawing.Size(80, 168);
             this.perLevelStatsViewControl.TabIndex = 27;
+            // 
+            // baseStatsViewControl
+            // 
+            this.baseStatsViewControl.DisplayedItem = null;
+            this.baseStatsViewControl.Enabled = false;
+            this.baseStatsViewControl.Location = new System.Drawing.Point(56, 45);
+            this.baseStatsViewControl.Name = "baseStatsViewControl";
+            this.baseStatsViewControl.Size = new System.Drawing.Size(80, 168);
+            this.baseStatsViewControl.TabIndex = 26;
             // 
             // EnemyViewControl
             // 
@@ -283,7 +288,7 @@
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.statsGroupBox);
             this.Name = "EnemyViewControl";
-            this.Size = new System.Drawing.Size(624, 534);
+            this.Size = new System.Drawing.Size(624, 472);
             this.statsGroupBox.ResumeLayout(false);
             this.statsGroupBox.PerformLayout();
             this.groupBox2.ResumeLayout(false);
