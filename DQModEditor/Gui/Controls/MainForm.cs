@@ -24,6 +24,18 @@ namespace DQModEditor.Gui.Controls
             Controls.Add(openModControl);
             openModControl.Location = new Point((Width - openModControl.Width) / 2, (Height - openModControl.Height) / 2);
             openModControl.ModLoaded += OpenModControl_ModLoaded;
+
+            Text = Utility.ProgramName + " (" + Utility.VersionString + ") ";
+            modViewControl.DisplayedItemChanged += s =>
+            {
+                Text = Utility.ProgramName + " (" + Utility.VersionString + ") " 
+                    + (modViewControl.DisplayedItem?.DirectoryPath ?? "");
+                if(modViewControl.DisplayedItem == null)
+                {
+                    openModControl.Visible = true;
+                    modViewControl.Visible = false;
+                }
+            };
         }
 
         private void OpenModControl_ModLoaded(ModLoadInformation info)

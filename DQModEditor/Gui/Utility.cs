@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using DQModEditor.Loader;
+using DQModEditor.Model;
 
 namespace DQModEditor.Gui
 {
@@ -13,6 +16,21 @@ namespace DQModEditor.Gui
     /// </summary>
     static internal class Utility
     {
+        internal static string ProgramName { get; } = "Defender's Quest Unofficial Mod Editor";
+        internal static string VersionString { get; } = "v0.2";
+
+        internal static ModLoadInformation ShowLoadModDialog()
+        {
+            FolderBrowserDialog dialog = new FolderBrowserDialog();
+            dialog.SelectedPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+                "LevelUpLabs", "DefendersQuest", "mods");
+            dialog.Description = "Select mod folder";
+            if (dialog.ShowDialog() != DialogResult.OK) return null;
+
+            ModDirectoryParser parser = new ModDirectoryParser(dialog.SelectedPath);
+            return new ModLoadInformation(parser.Load(), dialog.SelectedPath);
+        }
+
         /// <summary>
         /// Causes a control to draw a black rectangle around the edge of its area. For debugging/UI design.
         /// </summary>

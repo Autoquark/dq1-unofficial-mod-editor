@@ -17,11 +17,12 @@ namespace DQModEditor.Gui.Controls.Enemies.Spawns
         {
             InitializeComponent();
 
-            DisplayedItemSetNonNull += ChangeDisplayedItem;
+            DisplayedItemChanged += ChangeDisplayedItem;
         }
 
         private void ChangeDisplayedItem(ViewControl<SpawnInfo> source)
         {
+            if (DisplayedItem == null) return;
             spawnLocationViewControl.DataBindings.Clear();
             spawnLocationViewControl.DataBindings.Add(nameof(spawnLocationViewControl.Value), DisplayedItem, nameof(DisplayedItem.Location));
             spawnIdTextBox.DataBindings.Clear();

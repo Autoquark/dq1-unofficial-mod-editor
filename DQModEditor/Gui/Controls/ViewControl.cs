@@ -34,14 +34,13 @@ namespace DQModEditor.Gui.Controls
                 _DisplayedItem = value;
 
                 Enabled = !(_DisplayedItem == null);
-                if (_DisplayedItem == null) return;
 
-                DisplayedItemSetNonNull?.Invoke(this);
+                DisplayedItemChanged?.Invoke(this);
             }
         }
         private T _DisplayedItem;
 
         public delegate void DisplayedItemChangedHandler(ViewControl<T> source);
-        public event DisplayedItemChangedHandler DisplayedItemSetNonNull;
+        public event DisplayedItemChangedHandler DisplayedItemChanged;
     }
 }

@@ -28,11 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ModViewControl));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.enemiesTabPage = new System.Windows.Forms.TabPage();
             this.enemyListViewControl = new DQModEditor.Gui.Controls.Enemies.EnemyListViewControl();
             this.saveButton = new System.Windows.Forms.ToolStripButton();
             this.toolStrip = new System.Windows.Forms.ToolStrip();
+            this.openButton = new System.Windows.Forms.ToolStripButton();
+            this.closeButton = new System.Windows.Forms.ToolStripButton();
             this.tabControl1.SuspendLayout();
             this.enemiesTabPage.SuspendLayout();
             this.toolStrip.SuspendLayout();
@@ -69,21 +72,42 @@
             // 
             // saveButton
             // 
-            this.saveButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.saveButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.saveButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.saveButton.Name = "saveButton";
-            this.saveButton.Size = new System.Drawing.Size(23, 22);
+            this.saveButton.Size = new System.Drawing.Size(35, 22);
             this.saveButton.Text = "Save";
             // 
             // toolStrip
             // 
             this.toolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.saveButton});
+            this.saveButton,
+            this.openButton,
+            this.closeButton});
             this.toolStrip.Location = new System.Drawing.Point(0, 0);
             this.toolStrip.Name = "toolStrip";
             this.toolStrip.Size = new System.Drawing.Size(784, 25);
             this.toolStrip.TabIndex = 1;
             this.toolStrip.Text = "toolStrip1";
+            // 
+            // openButton
+            // 
+            this.openButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.openButton.Image = ((System.Drawing.Image)(resources.GetObject("openButton.Image")));
+            this.openButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.openButton.Name = "openButton";
+            this.openButton.Size = new System.Drawing.Size(40, 22);
+            this.openButton.Text = "Open";
+            // 
+            // closeButton
+            // 
+            this.closeButton.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.closeButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.closeButton.Image = ((System.Drawing.Image)(resources.GetObject("closeButton.Image")));
+            this.closeButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.closeButton.Name = "closeButton";
+            this.closeButton.Size = new System.Drawing.Size(40, 22);
+            this.closeButton.Text = "Close";
             // 
             // ModViewControl
             // 
@@ -109,5 +133,7 @@
         private System.Windows.Forms.ToolStripButton saveButton;
         private System.Windows.Forms.ToolStrip toolStrip;
         private Enemies.EnemyListViewControl enemyListViewControl;
+        private System.Windows.Forms.ToolStripButton openButton;
+        private System.Windows.Forms.ToolStripButton closeButton;
     }
 }

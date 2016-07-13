@@ -24,19 +24,12 @@ namespace DQModEditor.Gui.Controls
         {
             InitializeComponent();
 
-            loadModButton.Click += LoadModButton_Click;
-        }
-
-        private void LoadModButton_Click(object sender, EventArgs e)
-        {
-            FolderBrowserDialog dialog = new FolderBrowserDialog();
-            dialog.SelectedPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
-                "LevelUpLabs", "DefendersQuest", "mods");
-            if (dialog.ShowDialog() != DialogResult.OK) return;
-
-            ModDirectoryParser parser = new ModDirectoryParser(dialog.SelectedPath);
-            Mod mod = parser.Load();
-            ModLoaded?.Invoke(new ModLoadInformation(mod, dialog.SelectedPath));
+            loadModButton.Click += (s, e) =>
+            {
+                ModLoadInformation info = Utility.ShowLoadModDialog();
+                if (info == null) return;
+                ModLoaded?.Invoke(info);
+            };
         }
     }
 }

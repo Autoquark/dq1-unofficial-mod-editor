@@ -18,11 +18,12 @@ namespace DQModEditor.Gui.Controls.Enemies
         {
             InitializeComponent();
 
-            DisplayedItemSetNonNull += ChangeDisplayedItem;
+            DisplayedItemChanged += ChangeDisplayedItem;
         }
 
         private void ChangeDisplayedItem(ViewControl<StatSet> source)
         {
+            if (DisplayedItem == null) return;
             string valuePropertyName = nameof(hpSpinner.Value);
             hpSpinner.DataBindings.Clear();
             hpSpinner.DataBindings.Add(valuePropertyName, DisplayedItem, nameof(DisplayedItem.Hp));

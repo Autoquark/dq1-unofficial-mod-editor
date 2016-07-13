@@ -23,16 +23,21 @@ namespace DQModEditor.Gui.Controls
             InitializeComponent();
 
             saveButton.Click += SaveButton_Click;
-            saveButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
+            openButton.Click += (s, e) =>
+            {
+                ModLoadInformation info = Utility.ShowLoadModDialog();
+                if (info == null) return;
+                DisplayedItem = info;
+            };
+            closeButton.Click += (s, e) => DisplayedItem = null;
 
             toolStrip.CausesValidation = true;
 
-            DisplayedItemSetNonNull += ChangeDisplayedItem;
-        }
-
-        private void ChangeDisplayedItem(ViewControl<ModLoadInformation> source)
-        {
-            enemyListViewControl.DisplayedItem = DisplayedItem.Mod;
+            DisplayedItemChanged += s =>
+            {
+                if (DisplayedItem == null) return;
+                enemyListViewControl.DisplayedItem = DisplayedItem.Mod;
+            };
         }
 
         private void SaveButton_Click(object sender, EventArgs e)

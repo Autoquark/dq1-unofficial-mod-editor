@@ -20,11 +20,12 @@ namespace DQModEditor.Gui.Controls.Enemies
         {
             InitializeComponent();
 
-            DisplayedItemSetNonNull += ChangeDisplayedItem;
+            DisplayedItemChanged += ChangeDisplayedItem;
         }
 
         private void ChangeDisplayedItem(ViewControl<Enemy> source)
         {
+            if (DisplayedItem == null) return;
             // Text & Description
             string textPropertyName = nameof(displayNameTextBox.Text);
             internalNameTextBox.DataBindings.Clear();
