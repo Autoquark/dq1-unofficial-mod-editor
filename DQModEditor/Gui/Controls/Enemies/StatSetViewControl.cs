@@ -21,24 +21,21 @@ namespace DQModEditor.Gui.Controls.Enemies
             DisplayedItemChanged += ChangeDisplayedItem;
         }
 
-        private void ChangeDisplayedItem(ViewControl<StatSet> source)
+        private void ChangeDisplayedItem(ViewControl<StatSet> source, StatSet previous)
         {
-            if (DisplayedItem == null) return;
-            string valuePropertyName = nameof(hpSpinner.Value);
-            hpSpinner.DataBindings.Clear();
-            hpSpinner.DataBindings.Add(valuePropertyName, DisplayedItem, nameof(DisplayedItem.Hp));
-            psiSpinner.DataBindings.Clear();
-            psiSpinner.DataBindings.Add(valuePropertyName, DisplayedItem, nameof(DisplayedItem.Psi));
-            scrapSpinner.DataBindings.Clear();
-            scrapSpinner.DataBindings.Add(valuePropertyName, DisplayedItem, nameof(DisplayedItem.Scrap));
-            speedSpinner.DataBindings.Clear();
-            speedSpinner.DataBindings.Add(valuePropertyName, DisplayedItem, nameof(DisplayedItem.Speed));
-            strengthSpinner.DataBindings.Clear();
-            strengthSpinner.DataBindings.Add(valuePropertyName, DisplayedItem, nameof(DisplayedItem.Strength));
-            armorSpinner.DataBindings.Clear();
-            armorSpinner.DataBindings.Add(valuePropertyName, DisplayedItem, nameof(DisplayedItem.Armor));
-            xpSpinner.DataBindings.Clear();
-            xpSpinner.DataBindings.Add(valuePropertyName, DisplayedItem, nameof(DisplayedItem.Xp));
+            if (previous != null) Utility.ClearBindings(this);
+
+            if (DisplayedItem != null)
+            {
+                string valuePropertyName = nameof(hpSpinner.Value);
+                hpSpinner.DataBindings.Add(valuePropertyName, DisplayedItem, nameof(DisplayedItem.Hp));
+                psiSpinner.DataBindings.Add(valuePropertyName, DisplayedItem, nameof(DisplayedItem.Psi));
+                scrapSpinner.DataBindings.Add(valuePropertyName, DisplayedItem, nameof(DisplayedItem.Scrap));
+                speedSpinner.DataBindings.Add(valuePropertyName, DisplayedItem, nameof(DisplayedItem.Speed));
+                strengthSpinner.DataBindings.Add(valuePropertyName, DisplayedItem, nameof(DisplayedItem.Strength));
+                armorSpinner.DataBindings.Add(valuePropertyName, DisplayedItem, nameof(DisplayedItem.Armor));
+                xpSpinner.DataBindings.Add(valuePropertyName, DisplayedItem, nameof(DisplayedItem.Xp));
+            }
         }
     }
 }

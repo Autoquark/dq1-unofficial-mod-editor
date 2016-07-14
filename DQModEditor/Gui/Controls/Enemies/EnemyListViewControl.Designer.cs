@@ -36,7 +36,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(11, 0);
+            this.label1.Location = new System.Drawing.Point(0, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(121, 13);
             this.label1.TabIndex = 3;
@@ -45,7 +45,7 @@
             // enemiesListBox
             // 
             this.enemiesListBox.FormattingEnabled = true;
-            this.enemiesListBox.Location = new System.Drawing.Point(16, 24);
+            this.enemiesListBox.Location = new System.Drawing.Point(0, 24);
             this.enemiesListBox.Name = "enemiesListBox";
             this.enemiesListBox.Size = new System.Drawing.Size(128, 446);
             this.enemiesListBox.TabIndex = 2;
@@ -54,9 +54,9 @@
             // 
             this.enemyViewControl.DisplayedItem = null;
             this.enemyViewControl.Enabled = false;
-            this.enemyViewControl.Location = new System.Drawing.Point(152, 8);
+            this.enemyViewControl.Location = new System.Drawing.Point(136, 0);
             this.enemyViewControl.Name = "enemyViewControl";
-            this.enemyViewControl.Size = new System.Drawing.Size(624, 472);
+            this.enemyViewControl.Size = new System.Drawing.Size(624, 496);
             this.enemyViewControl.TabIndex = 4;
             // 
             // EnemyListViewControl

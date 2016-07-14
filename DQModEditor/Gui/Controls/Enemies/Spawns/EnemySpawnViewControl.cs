@@ -20,15 +20,17 @@ namespace DQModEditor.Gui.Controls.Enemies.Spawns
             DisplayedItemChanged += ChangeDisplayedItem;
         }
 
-        private void ChangeDisplayedItem(ViewControl<SpawnInfo> source)
+        private void ChangeDisplayedItem(ViewControl<SpawnInfo> source, SpawnInfo previous)
         {
-            if (DisplayedItem == null) return;
-            spawnLocationViewControl.DataBindings.Clear();
-            spawnLocationViewControl.DataBindings.Add(nameof(spawnLocationViewControl.Value), DisplayedItem, nameof(DisplayedItem.Location));
-            spawnIdTextBox.DataBindings.Clear();
-            spawnIdTextBox.DataBindings.Add(nameof(spawnIdTextBox.Text), DisplayedItem, nameof(DisplayedItem.SpawnId));
-            effectIdTextBox.DataBindings.Clear();
-            effectIdTextBox.DataBindings.Add(nameof(effectIdTextBox.Text), DisplayedItem, nameof(DisplayedItem.EffectId));
+            if (previous != null) Utility.ClearBindings(this);
+
+            if (DisplayedItem != null)
+            {
+                spawnLocationViewControl.DataBindings.Add(nameof(spawnLocationViewControl.Value), DisplayedItem, 
+                    nameof(DisplayedItem.Location));
+                spawnIdTextBox.DataBindings.Add(nameof(spawnIdTextBox.Text), DisplayedItem, nameof(DisplayedItem.SpawnId));
+                effectIdTextBox.DataBindings.Add(nameof(effectIdTextBox.Text), DisplayedItem, nameof(DisplayedItem.EffectId));
+            }
         }
     }
 }

@@ -100,6 +100,12 @@
     <Compile Include="Controls\Enemies\StatSetViewControl.Designer.cs">
       <DependentUpon>StatSetViewControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\StringListViewControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\StringListViewControl.Designer.cs">
+      <DependentUpon>StringListViewControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="ModLoadInformation.cs" />
     <Compile Include="Utility.cs" />
     <Compile Include="Program.cs" />
@@ -133,6 +139,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\Enemies\StatSetViewControl.resx">
       <DependentUpon>StatSetViewControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\StringListViewControl.resx">
+      <DependentUpon>StringListViewControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

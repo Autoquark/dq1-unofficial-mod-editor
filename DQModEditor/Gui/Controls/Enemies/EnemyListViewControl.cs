@@ -27,11 +27,15 @@ namespace DQModEditor.Gui.Controls.Enemies
             DisplayedItemChanged += ChangeDisplayedItem;
         }
 
-        private void ChangeDisplayedItem(ViewControl<Mod> source)
+        private void ChangeDisplayedItem(ViewControl<Mod> source, Mod previous)
         {
-            if (DisplayedItem == null) return;
-            enemiesListBox.DataSource = new BindingSource(DisplayedItem.EnemiesByInternalName, null);
-            DisplayedItem.EnemyAdded += DisplayedItem_EnemyAdded;
+            if(previous != null) DisplayedItem.EnemyCollectionChanged -= DisplayedItem_EnemyAdded;
+
+            if (DisplayedItem != null)
+            {
+                enemiesListBox.DataSource = new BindingSource(DisplayedItem.EnemiesByInternalName, null);
+                DisplayedItem.EnemyCollectionChanged += DisplayedItem_EnemyAdded;
+            }
         }
 
         private void DisplayedItem_EnemyAdded(Enemy enemy)

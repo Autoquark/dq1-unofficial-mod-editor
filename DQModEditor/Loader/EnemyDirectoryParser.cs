@@ -26,7 +26,9 @@ namespace DQModEditor.Loader
 
         public void LoadEnemyInfo(Mod mod)
         {
-            XElement enemyRoot = XElement.Load(Path.Combine(ModDirectoryPath, _enemyXmlPath));
+            string path = Path.Combine(ModDirectoryPath, _enemyXmlPath);
+            if (!File.Exists(path)) return;
+            XElement enemyRoot = XElement.Load(path);
             foreach (XElement e in GetEnemyDefinitions(enemyRoot)) mod.AddEnemy(CreateEnemyFromXml(e));
         }
 
@@ -43,14 +45,6 @@ namespace DQModEditor.Loader
             {
                 EditXmlFromEnemy(enemy, GetEnemyDefinition(enemyRoot, enemy.InternalName));
             }
-
-            //XmlWriterSettings settings = new XmlWriterSettings();
-            //settings.Indent = true;
-            //settings.IndentChars = "   ";
-            //using (XmlWriter writer = XmlWriter.Create(_enemyXmlPath, settings))
-            //{
-            //    new XDocument(enemyRoot).Save(writer);
-            //}
 
             enemyRoot.Save(_enemyXmlPath);
         }
@@ -87,17 +81,29 @@ namespace DQModEditor.Loader
             enemy.BaseStats.SetFrom(CreateStatSetFromXml(enemyRoot.Descendants(_statsElementName).Single()));
             enemy.LevelUpIncrement.SetFrom(CreateStatSetFromXml(enemyRoot.Descendants(_levelupElementName).Single()));
 
-            // Misc
-            XElement offsetElement = enemyRoot.Descendants("select_box_offset").SingleOrDefault();
+            // Immunities
+            XElement immunitiesRoot = enemyRoot.Descendants(_immunityListElementName).SingleOrDefault();
+            if(immunitiesRoot != null)
+            {
+                foreach (XElement immunityElement in immunitiesRoot.Descendants(_immunityElementName))
+                {
+                    enemy.AddImmunity(immunityElement.AttributeValue(_immunityAttributeName));
+                }
+            }
+
+            // Select Box Offset
+            XElement offsetElement = enemyRoot.Descendants(_selectBoxOffsetElementName).SingleOrDefault();
             if (offsetElement != null) enemy.SelectBoxOffset = new Point(int.Parse(offsetElement.AttributeValue("x")),
                  int.Parse(offsetElement.AttributeValue("y")));
-            foreach (XElement e in enemyRoot.Descendants("type")) enemy.Types.Add(e.AttributeValue("value"));
-            foreach (XElement spawnElement in enemyRoot.Descendants("spawn"))
+            // Types
+            foreach (XElement e in enemyRoot.Descendants(_typeElementName)) enemy.AddType(e.AttributeValue(_typeAttributeName));
+            // Spawns
+            foreach (XElement spawnElement in enemyRoot.Descendants(_spawnsElementName))
             {
-                string spawnId = spawnElement.AttributeValue("id");
-                string effectId = spawnElement.AttributeValueOrNull("effect");
+                string spawnId = spawnElement.AttributeValue(_spawnIdAttributeName);
+                string effectId = spawnElement.AttributeValueOrNull(_spawnEffectIdAttributeName);
 
-                foreach (XElement locationElement in spawnElement.Descendants("loc"))
+                foreach (XElement locationElement in spawnElement.Descendants(_spawnLocationElementName))
                 {
                     decimal x = decimal.Parse(locationElement.AttributeValue("x"));
                     decimal y = decimal.Parse(locationElement.AttributeValue("y"));
@@ -132,14 +138,37 @@ namespace DQModEditor.Loader
         {
             if (enemyRoot.AttributeValue("name") != enemy.InternalName) throw new ModLoadException();
 
+            // Name & Description
             enemyRoot.SetAttributeValue(_displayNameAttributeName, enemy.DisplayName);
             XElement flavorElement = enemyRoot.Descendants(_flavorElementName).Single();
             flavorElement.SetAttributeValue(_flavorNameAttributeName, enemy.FlavorName);
             flavorElement.SetAttributeValue(_flavorDescriptionAttributeName, enemy.FlavorDescription);
-
+            // Stats
             EditXmlFromStatSet(enemy.BaseStats, enemyRoot.Descendants(_statsElementName).Single());
             EditXmlFromStatSet(enemy.LevelUpIncrement, enemyRoot.Descendants(_levelupElementName).Single());
-
+            // Types
+            foreach (XElement typeElement in enemyRoot.Descendants(_typeElementName).ToList()) typeElement.Remove();
+            foreach (string type in enemy.Types.Keys)
+            {
+                XElement typeElement = new XElement(XName.Get(_typeElementName));
+                typeElement.SetAttributeValue(_typeAttributeName, type);
+                enemyRoot.Add(typeElement);
+            }
+            // Immunities
+            XElement immunityListElement = enemyRoot.Descendants(_immunityListElementName).SingleOrDefault();
+            if (immunityListElement == null)
+            {
+                immunityListElement = new XElement(XName.Get(_immunityListElementName));
+                enemyRoot.Add(immunityListElement);
+            }
+            foreach (XElement immunityElement in immunityListElement.Descendants(_immunityElementName).ToList()) immunityElement.Remove();
+            foreach(string immunity in enemy.Immunities.Keys)
+            {
+                XElement immunityElement = new XElement(XName.Get(_immunityElementName));
+                immunityElement.SetAttributeValue(_immunityAttributeName, immunity);
+                immunityListElement.Add(immunityElement);
+            }
+            // Spawns
             EditSpawnsFromSpawnInfoList(enemy.Spawns, enemyRoot);
         }
 
@@ -196,6 +225,15 @@ namespace DQModEditor.Loader
         private readonly static string _strengthAttributeName = "str";
         private readonly static string _psiAttributeName = "psi";
         private readonly static string _xpAttributeName = "xp";
+        // Select Box Offset
+        private readonly static string _selectBoxOffsetElementName = "select_box_offset";
+        // Immunities
+        private readonly static string _immunityListElementName = "immunities";
+        private readonly static string _immunityElementName = "immune";
+        private readonly static string _immunityAttributeName = "value";
+        // Type
+        private readonly static string _typeElementName = "type";
+        private readonly static string _typeAttributeName = "value";
         // Spawns
         private readonly static string _spawnsElementName = "spawn";
         private readonly static string _spawnIdAttributeName = "id";

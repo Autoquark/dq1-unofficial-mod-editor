@@ -65,9 +65,9 @@
             // 
             this.enemyListViewControl.DisplayedItem = null;
             this.enemyListViewControl.Enabled = false;
-            this.enemyListViewControl.Location = new System.Drawing.Point(0, 8);
+            this.enemyListViewControl.Location = new System.Drawing.Point(8, 8);
             this.enemyListViewControl.Name = "enemyListViewControl";
-            this.enemyListViewControl.Size = new System.Drawing.Size(768, 494);
+            this.enemyListViewControl.Size = new System.Drawing.Size(768, 496);
             this.enemyListViewControl.TabIndex = 0;
             // 
             // saveButton

@@ -23,7 +23,7 @@ namespace DQModEditor.Model
         public Mod() { }
 
         public delegate void EnemyAddedHandler(Enemy enemy);
-        public event EnemyAddedHandler EnemyAdded;
+        public event EnemyAddedHandler EnemyCollectionChanged;
 
         public Enemy GetEnemyByIdOrNull(string id)
         {
@@ -35,19 +35,11 @@ namespace DQModEditor.Model
         public void AddEnemy(Enemy enemy)
         {
             _enemiesByInternalName.Add(enemy.InternalName, enemy);
-            EnemyAdded?.Invoke(enemy);
+            EnemyCollectionChanged?.Invoke(enemy);
         }
 
-        private void Enemies_BeforeRemove(Enemy deletedItem)
-        {
-            _enemiesByInternalName.Remove(deletedItem.InternalName);
-        }
-
-        public IReadOnlyDictionary<string, Enemy> EnemiesByInternalName
-        {
-            get { return new ReadOnlyDictionary<string, Enemy>(_enemiesByInternalName);}
-        }
-
+        public IReadOnlyDictionary<string, Enemy> EnemiesByInternalName 
+            => new ReadOnlyDictionary<string, Enemy>(_enemiesByInternalName);
         private SortedDictionary<string, Enemy> _enemiesByInternalName = new SortedDictionary<string, Enemy>();
     }
 }

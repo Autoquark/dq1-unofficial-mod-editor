@@ -25,22 +25,32 @@ namespace DQModEditor.Gui.Controls
             };
         }
 
+        /// <summary>
+        /// Gets or sets the object currently displayed by the ViewControl.
+        /// </summary>
+        /// <remarks>Setting DisplayedItem to null disables the control (and setting a non-null value reenables it).</remarks>
         public T DisplayedItem
         {
             get { return _DisplayedItem; }
             set
             {
                 if (Equals(_DisplayedItem, value)) return;
+                T previous = _DisplayedItem;
                 _DisplayedItem = value;
 
                 Enabled = !(_DisplayedItem == null);
 
-                DisplayedItemChanged?.Invoke(this);
+                DisplayedItemChanged?.Invoke(this, previous);
             }
         }
         private T _DisplayedItem;
 
-        public delegate void DisplayedItemChangedHandler(ViewControl<T> source);
+        /// <summary>
+        /// Occurs the value of DisplayedItem changes.
+        /// </summary>
+        /// <param name="source">The ViewControl from which the event originates</param>
+        /// <param name="previous">The previous value of DisplayedItem</param>
+        public delegate void DisplayedItemChangedHandler(ViewControl<T> source, T previous);
         public event DisplayedItemChangedHandler DisplayedItemChanged;
     }
 }

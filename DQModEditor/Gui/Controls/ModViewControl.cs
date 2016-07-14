@@ -33,7 +33,7 @@ namespace DQModEditor.Gui.Controls
 
             toolStrip.CausesValidation = true;
 
-            DisplayedItemChanged += s =>
+            DisplayedItemChanged += (s, p) =>
             {
                 if (DisplayedItem == null) return;
                 enemyListViewControl.DisplayedItem = DisplayedItem.Mod;

@@ -41,12 +41,12 @@ namespace DQModEditor.Gui.Controls.Enemies.Spawns
             addButton.Click += AddButton_Click;
             cloneButton.Click += CloneButton_Click;
 
-            DisplayedItemChanged += (s => {
+            DisplayedItemChanged += (s, p) => {
                 if (DisplayedItem == null) return;
                 spawnsListBox.DataSource = DisplayedItem;
                 //Because ListBox.SelectedValueChanged does not seem to fire when we change to displaying an empty list
                 enemySpawnViewControl.DisplayedItem = (SpawnInfo)spawnsListBox.SelectedItem;
-            });
+            };
         }
 
         private void CloneButton_Click(object sender, EventArgs e)

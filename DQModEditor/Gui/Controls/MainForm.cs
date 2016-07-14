@@ -26,16 +26,17 @@ namespace DQModEditor.Gui.Controls
             openModControl.ModLoaded += OpenModControl_ModLoaded;
 
             Text = Utility.ProgramName + " (" + Utility.VersionString + ") ";
-            modViewControl.DisplayedItemChanged += s =>
+            modViewControl.DisplayedItemChanged += ModViewControl_DisplayedItemChanged;
+        }
+
+        private void ModViewControl_DisplayedItemChanged(ViewControl<ModLoadInformation> source, ModLoadInformation previous)
+        {
+            Text = Utility.ProgramName + " (" + Utility.VersionString + ") " + (modViewControl.DisplayedItem?.DirectoryPath ?? "");
+            if (modViewControl.DisplayedItem == null)
             {
-                Text = Utility.ProgramName + " (" + Utility.VersionString + ") " 
-                    + (modViewControl.DisplayedItem?.DirectoryPath ?? "");
-                if(modViewControl.DisplayedItem == null)
-                {
-                    openModControl.Visible = true;
-                    modViewControl.Visible = false;
-                }
-            };
+                openModControl.Visible = true;
+                modViewControl.Visible = false;
+            }
         }
 
         private void OpenModControl_ModLoaded(ModLoadInformation info)

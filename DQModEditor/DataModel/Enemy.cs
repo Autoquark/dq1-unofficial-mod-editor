@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Drawing;
 using System.Globalization;
@@ -25,6 +26,8 @@ namespace DQModEditor.Model
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+        public event Action TypesCollectionChanged;
+        public event Action ImmunitiesCollectionChanged;
 
         //Name & Description
         public string InternalName { get; }
@@ -105,7 +108,12 @@ namespace DQModEditor.Model
         public StatSet LevelUpIncrement { get; } = new StatSet();
 
         // Misc
-        public BindingList<string> Types { get; } = new BindingList<string>();
+        public IReadOnlyDictionary<string, string> Types => new ReadOnlyDictionary<string, string>(_Types);
+        private SortedDictionary<string, string> _Types = new SortedDictionary<string, string>();
+
+        public IReadOnlyDictionary<string, string> Immunities => new ReadOnlyDictionary<string, string>(_Immunities);
+        private SortedDictionary<string, string> _Immunities = new SortedDictionary<string, string>();
+
         public Point SelectBoxOffset {
             get { return _SelectBoxOffset; }
             set
@@ -116,10 +124,47 @@ namespace DQModEditor.Model
             }
         }
         private Point _SelectBoxOffset;
+
         /// <summary>
         /// The enemies spawned by enemies of this type upon death.
         /// </summary>
         public BindingList<SpawnInfo> Spawns { get; } = new BindingList<SpawnInfo>();
+
+        public void AddType(string type)
+        {
+            if (!_Types.ContainsKey(type)) _Types.Add(type, type);
+            TypesCollectionChanged?.Invoke();
+        }
+
+        public void RemoveType(string type)
+        {
+            _Types.Remove(type);
+            TypesCollectionChanged?.Invoke();
+        }
+
+        public void ClearTypes()
+        {
+            _Types.Clear();
+            TypesCollectionChanged?.Invoke();
+        }
+
+        public void AddImmunity(string immunity)
+        {
+            if (!_Immunities.ContainsKey(immunity)) _Immunities.Add(immunity, immunity);
+            ImmunitiesCollectionChanged?.Invoke();
+        }
+
+        public void RemoveImmunity(string immunity)
+        {
+            _Immunities.Remove(immunity);
+            ImmunitiesCollectionChanged?.Invoke();
+        }
+
+        public void ClearImmunities()
+        {
+            _Immunities.Clear();
+            ImmunitiesCollectionChanged?.Invoke();
+        }
 
         private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
         {
