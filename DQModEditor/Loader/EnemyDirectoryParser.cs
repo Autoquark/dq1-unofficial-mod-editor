@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Xml;
 using System.Xml.Linq;
 using DataModel;
 using DQModEditor.Model;
@@ -26,9 +24,8 @@ namespace DQModEditor.Loader
 
         public void LoadEnemyInfo(Mod mod)
         {
-            string path = Path.Combine(ModDirectoryPath, _enemyXmlPath);
-            if (!File.Exists(path)) return;
-            XElement enemyRoot = XElement.Load(path);
+            if (!File.Exists(_enemyXmlPath)) return;
+            XElement enemyRoot = XElement.Load(_enemyXmlPath);
             foreach (XElement e in GetEnemyDefinitions(enemyRoot)) mod.AddEnemy(CreateEnemyFromXml(e));
         }
 
@@ -67,22 +64,22 @@ namespace DQModEditor.Loader
             // Name & Description
             Enemy enemy = new Enemy(enemyRoot.AttributeValue(_internalNameAttributeName));
             enemy.DisplayName = enemyRoot.AttributeValue(_displayNameAttributeName);
-            XElement flavorElement = enemyRoot.Descendants(_flavorElementName).Single();
+            XElement flavorElement = enemyRoot.Descendant(_flavorElementName);
             enemy.FlavorName = flavorElement.AttributeValue(_flavorNameAttributeName);
             enemy.FlavorDescription = flavorElement.AttributeValue(_flavorDescriptionAttributeName);
 
             // Sound & Graphics
-            enemy.DeathSound = enemyRoot.Descendants("sounds").SingleOrDefault()?.AttributeValue("death");
-            XElement graphicsElement = enemyRoot.Descendants("graphic").Single();
+            enemy.DeathSound = enemyRoot.Descendant("sounds")?.AttributeValue("death");
+            XElement graphicsElement = enemyRoot.Descendant("graphic");
             enemy.GraphicId = graphicsElement.AttributeValue("id");
             enemy.GraphicSkinId = graphicsElement.AttributeValueOrNull("skin");
 
             // Stats
-            enemy.BaseStats.SetFrom(CreateStatSetFromXml(enemyRoot.Descendants(_statsElementName).Single()));
-            enemy.LevelUpIncrement.SetFrom(CreateStatSetFromXml(enemyRoot.Descendants(_levelupElementName).Single()));
+            enemy.BaseStats.SetFrom(CreateStatSetFromXml(enemyRoot.Descendant(_statsElementName)));
+            enemy.LevelUpIncrement.SetFrom(CreateStatSetFromXml(enemyRoot.Descendant(_levelupElementName)));
 
             // Immunities
-            XElement immunitiesRoot = enemyRoot.Descendants(_immunityListElementName).SingleOrDefault();
+            XElement immunitiesRoot = enemyRoot.Descendant(_immunityListElementName);
             if(immunitiesRoot != null)
             {
                 foreach (XElement immunityElement in immunitiesRoot.Descendants(_immunityElementName))
@@ -92,7 +89,7 @@ namespace DQModEditor.Loader
             }
 
             // Select Box Offset
-            XElement offsetElement = enemyRoot.Descendants(_selectBoxOffsetElementName).SingleOrDefault();
+            XElement offsetElement = enemyRoot.Descendant(_selectBoxOffsetElementName);
             if (offsetElement != null) enemy.SelectBoxOffset = new Point(int.Parse(offsetElement.AttributeValue("x")),
                  int.Parse(offsetElement.AttributeValue("y")));
             // Types
@@ -140,12 +137,12 @@ namespace DQModEditor.Loader
 
             // Name & Description
             enemyRoot.SetAttributeValue(_displayNameAttributeName, enemy.DisplayName);
-            XElement flavorElement = enemyRoot.Descendants(_flavorElementName).Single();
+            XElement flavorElement = enemyRoot.Descendant(_flavorElementName);
             flavorElement.SetAttributeValue(_flavorNameAttributeName, enemy.FlavorName);
             flavorElement.SetAttributeValue(_flavorDescriptionAttributeName, enemy.FlavorDescription);
             // Stats
-            EditXmlFromStatSet(enemy.BaseStats, enemyRoot.Descendants(_statsElementName).Single());
-            EditXmlFromStatSet(enemy.LevelUpIncrement, enemyRoot.Descendants(_levelupElementName).Single());
+            EditXmlFromStatSet(enemy.BaseStats, enemyRoot.Descendant(_statsElementName));
+            EditXmlFromStatSet(enemy.LevelUpIncrement, enemyRoot.Descendant(_levelupElementName));
             // Types
             foreach (XElement typeElement in enemyRoot.Descendants(_typeElementName).ToList()) typeElement.Remove();
             foreach (string type in enemy.Types.Keys)
@@ -155,7 +152,7 @@ namespace DQModEditor.Loader
                 enemyRoot.Add(typeElement);
             }
             // Immunities
-            XElement immunityListElement = enemyRoot.Descendants(_immunityListElementName).SingleOrDefault();
+            XElement immunityListElement = enemyRoot.Descendant(_immunityListElementName);
             if (immunityListElement == null)
             {
                 immunityListElement = new XElement(XName.Get(_immunityListElementName));

@@ -46,6 +46,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\SharedAssemblyInfo.cs">
+      <Link>Properties\SharedAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="Controls\Enemies\EnemyListViewControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -81,6 +84,12 @@
     </Compile>
     <Compile Include="Controls\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ModInfoViewControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ModInfoViewControl.Designer.cs">
+      <DependentUpon>ModInfoViewControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\ModViewControl.cs">
       <SubType>UserControl</SubType>
@@ -130,6 +139,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ModInfoViewControl.resx">
+      <DependentUpon>ModInfoViewControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ModViewControl.resx">
       <DependentUpon>ModViewControl.cs</DependentUpon>

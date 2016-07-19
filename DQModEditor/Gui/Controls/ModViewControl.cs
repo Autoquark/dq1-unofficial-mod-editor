@@ -37,6 +37,7 @@ namespace DQModEditor.Gui.Controls
             {
                 if (DisplayedItem == null) return;
                 enemyListViewControl.DisplayedItem = DisplayedItem.Mod;
+                modInfoViewControl.DisplayedItem = DisplayedItem.Mod;
             };
         }
 

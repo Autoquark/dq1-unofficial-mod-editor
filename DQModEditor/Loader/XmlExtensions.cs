@@ -31,5 +31,10 @@ namespace DQModEditor.Loader
         {
             return element.Descendants(XName.Get(name));
         }
+
+        internal static XElement Descendant(this XElement element, string name)
+        {
+            return element.Descendants(name).SingleOrDefault();
+        }
     }
 }

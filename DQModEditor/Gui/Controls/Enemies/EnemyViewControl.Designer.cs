@@ -49,12 +49,12 @@
             this.flavorNameTextBox = new System.Windows.Forms.TextBox();
             this.spawnsGroupBox = new System.Windows.Forms.GroupBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.immunitiesListView = new DQModEditor.Gui.Controls.StringListViewControl();
             this.typesListView = new DQModEditor.Gui.Controls.StringListViewControl();
             this.enemySpawnListViewControl = new DQModEditor.Gui.Controls.Enemies.Spawns.EnemySpawnListViewControl();
             this.perLevelStatsViewControl = new DQModEditor.Gui.Controls.Enemies.StatSetViewControl();
             this.baseStatsViewControl = new DQModEditor.Gui.Controls.Enemies.StatSetViewControl();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.immunitiesListView = new DQModEditor.Gui.Controls.StringListViewControl();
             this.statsGroupBox.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.spawnsGroupBox.SuspendLayout();
@@ -269,8 +269,29 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Types";
             // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.immunitiesListView);
+            this.groupBox3.Location = new System.Drawing.Point(136, 304);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(128, 176);
+            this.groupBox3.TabIndex = 11;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Immunities";
+            // 
+            // immunitiesListView
+            // 
+            this.immunitiesListView.DisplayedItem = null;
+            this.immunitiesListView.Enabled = false;
+            this.immunitiesListView.Location = new System.Drawing.Point(16, 24);
+            this.immunitiesListView.Name = "immunitiesListView";
+            this.immunitiesListView.Size = new System.Drawing.Size(96, 144);
+            this.immunitiesListView.TabIndex = 11;
+            // 
             // typesListView
             // 
+            this.typesListView.DisplayedItem = null;
+            this.typesListView.Enabled = false;
             this.typesListView.Location = new System.Drawing.Point(16, 24);
             this.typesListView.Name = "typesListView";
             this.typesListView.Size = new System.Drawing.Size(96, 144);
@@ -303,23 +324,6 @@
             this.baseStatsViewControl.Size = new System.Drawing.Size(80, 168);
             this.baseStatsViewControl.TabIndex = 26;
             // 
-            // groupBox3
-            // 
-            this.groupBox3.Controls.Add(this.immunitiesListView);
-            this.groupBox3.Location = new System.Drawing.Point(136, 304);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(128, 176);
-            this.groupBox3.TabIndex = 11;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Immunities";
-            // 
-            // immunitiesListView
-            // 
-            this.immunitiesListView.Location = new System.Drawing.Point(16, 24);
-            this.immunitiesListView.Name = "immunitiesListView";
-            this.immunitiesListView.Size = new System.Drawing.Size(96, 144);
-            this.immunitiesListView.TabIndex = 11;
-            // 
             // EnemyViewControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -330,7 +334,7 @@
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.statsGroupBox);
             this.Name = "EnemyViewControl";
-            this.Size = new System.Drawing.Size(624, 496);
+            this.Size = new System.Drawing.Size(624, 488);
             this.statsGroupBox.ResumeLayout(false);
             this.statsGroupBox.PerformLayout();
             this.groupBox2.ResumeLayout(false);

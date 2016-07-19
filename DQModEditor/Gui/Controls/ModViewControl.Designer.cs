@@ -30,6 +30,8 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ModViewControl));
             this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.infoTabPage = new System.Windows.Forms.TabPage();
+            this.modInfoViewControl = new DQModEditor.Gui.Controls.ModInfoViewControl();
             this.enemiesTabPage = new System.Windows.Forms.TabPage();
             this.enemyListViewControl = new DQModEditor.Gui.Controls.Enemies.EnemyListViewControl();
             this.saveButton = new System.Windows.Forms.ToolStripButton();
@@ -37,18 +39,38 @@
             this.openButton = new System.Windows.Forms.ToolStripButton();
             this.closeButton = new System.Windows.Forms.ToolStripButton();
             this.tabControl1.SuspendLayout();
+            this.infoTabPage.SuspendLayout();
             this.enemiesTabPage.SuspendLayout();
             this.toolStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
             // 
+            this.tabControl1.Controls.Add(this.infoTabPage);
             this.tabControl1.Controls.Add(this.enemiesTabPage);
             this.tabControl1.Location = new System.Drawing.Point(0, 32);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(784, 528);
             this.tabControl1.TabIndex = 0;
+            // 
+            // infoTabPage
+            // 
+            this.infoTabPage.Controls.Add(this.modInfoViewControl);
+            this.infoTabPage.Location = new System.Drawing.Point(4, 22);
+            this.infoTabPage.Name = "infoTabPage";
+            this.infoTabPage.Padding = new System.Windows.Forms.Padding(3);
+            this.infoTabPage.Size = new System.Drawing.Size(776, 502);
+            this.infoTabPage.TabIndex = 2;
+            this.infoTabPage.Text = "Info";
+            this.infoTabPage.UseVisualStyleBackColor = true;
+            // 
+            // modInfoViewControl1
+            // 
+            this.modInfoViewControl.Location = new System.Drawing.Point(8, 8);
+            this.modInfoViewControl.Name = "modInfoViewControl1";
+            this.modInfoViewControl.Size = new System.Drawing.Size(624, 496);
+            this.modInfoViewControl.TabIndex = 0;
             // 
             // enemiesTabPage
             // 
@@ -67,7 +89,7 @@
             this.enemyListViewControl.Enabled = false;
             this.enemyListViewControl.Location = new System.Drawing.Point(8, 8);
             this.enemyListViewControl.Name = "enemyListViewControl";
-            this.enemyListViewControl.Size = new System.Drawing.Size(768, 496);
+            this.enemyListViewControl.Size = new System.Drawing.Size(768, 488);
             this.enemyListViewControl.TabIndex = 0;
             // 
             // saveButton
@@ -118,6 +140,7 @@
             this.Name = "ModViewControl";
             this.Size = new System.Drawing.Size(784, 564);
             this.tabControl1.ResumeLayout(false);
+            this.infoTabPage.ResumeLayout(false);
             this.enemiesTabPage.ResumeLayout(false);
             this.toolStrip.ResumeLayout(false);
             this.toolStrip.PerformLayout();
@@ -135,5 +158,7 @@
         private Enemies.EnemyListViewControl enemyListViewControl;
         private System.Windows.Forms.ToolStripButton openButton;
         private System.Windows.Forms.ToolStripButton closeButton;
+        private System.Windows.Forms.TabPage infoTabPage;
+        private ModInfoViewControl modInfoViewControl;
     }
 }

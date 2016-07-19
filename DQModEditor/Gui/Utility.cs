@@ -16,8 +16,14 @@ namespace DQModEditor.Gui
     /// </summary>
     static internal class Utility
     {
+        static Utility()
+        {
+            Version version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
+            VersionString = $"v{version.Major}.{version.Minor}";
+        }
+
         internal static string ProgramName { get; } = "Defender's Quest Unofficial Mod Editor";
-        internal static string VersionString { get; } = "v0.2";
+        internal static string VersionString { get; }
 
         /// <summary>
         /// Clears the databindings for the children of the given control. Recurses through items inside group boxes, 

@@ -40,8 +40,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\SharedAssemblyInfo.cs">
+      <Link>Properties\SharedAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="Enemy.cs" />
-    <Compile Include="ExtendedBindingList.cs" />
     <Compile Include="Mod.cs" />
     <Compile Include="Point.cs" />
     <Compile Include="SpawnInfo.cs" />
