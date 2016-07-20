@@ -10,7 +10,8 @@ The latest release can be found [here](https://github.com/Autoquark/dq1-unoffici
 
 ## Current Features
 * Edit basic mod info (title, description etc.)
-* Edit (but not add or remove) some parts of enemy type definitions.
+* Edit some parts of enemy type definitions (but not add or remove enemy types).
+* Preserves content in the mod directory that it does not understand, including comments in XML files.
 
 Note that this tool is in an alpha state. There may be bugs - backup your mod before opening.
 
