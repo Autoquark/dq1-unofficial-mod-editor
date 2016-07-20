@@ -13,7 +13,7 @@ The latest release can be found [here](https://github.com/Autoquark/dq1-unoffici
 * Edit some parts of enemy type definitions (but not add or remove enemy types).
 * Preserves content in the mod directory that it does not understand, including comments in XML files.
 
-Note that this tool is in an alpha state. There may be bugs - backup your mod before opening.
+Note that this tool is in an alpha state. There may be bugs - back up your mod directory before editing.
 
 ## Plans
 The eventual goal of this project is to support editing all of the information contained within a mod. Once the official modding documentation for the recently released Deluxe Edition of Defender's Quest is released, I will probably be able to plan at least a little bit in advance. Right now I am implementing whatever I'm confident I can work out from examining the files.
