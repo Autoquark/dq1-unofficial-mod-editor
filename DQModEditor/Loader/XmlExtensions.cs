@@ -27,7 +27,7 @@ namespace DQModEditor.Loader
             element.SetAttributeValue(XName.Get(name), value);
         }
 
-        internal static IEnumerable<XElement> Descendents(this XElement element, string name)
+        internal static IEnumerable<XElement> Descendants(this XElement element, string name)
         {
             return element.Descendants(XName.Get(name));
         }
@@ -35,6 +35,17 @@ namespace DQModEditor.Loader
         internal static XElement Descendant(this XElement element, string name)
         {
             return element.Descendants(name).SingleOrDefault();
+        }
+
+        internal static XElement EnsureDescendant(this XElement element, string name)
+        {
+            XElement e = element.Descendant(name);
+            if (e == null)
+            {
+                e = new XElement(XName.Get(name));
+                element.Add(e);
+            }
+            return e;
         }
     }
 }

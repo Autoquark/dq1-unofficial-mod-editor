@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataModel
+namespace DQModEditor.DataModel
 {
     /// <summary>
     /// Represents a pair of X,Y coordinates.

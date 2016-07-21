@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace DQModEditor.Model
+namespace DQModEditor.DataModel
 {
     /// <summary>
     /// Represents information about how an enemy spawns another enemy on death.

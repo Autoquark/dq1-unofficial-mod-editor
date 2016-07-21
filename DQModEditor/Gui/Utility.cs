@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using DQModEditor.Loader;
-using DQModEditor.Model;
+using DQModEditor.DataModel;
 
 namespace DQModEditor.Gui
 {

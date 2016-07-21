@@ -11,9 +11,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
-using DataModel;
 
-namespace DQModEditor.Model
+namespace DQModEditor.DataModel
 {
     /// <summary>
     /// Represents an enemy type definition.

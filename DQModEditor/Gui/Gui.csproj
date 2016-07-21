@@ -109,6 +109,12 @@
     <Compile Include="Controls\Enemies\StatSetViewControl.Designer.cs">
       <DependentUpon>StatSetViewControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\PointViewControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PointViewControl.Designer.cs">
+      <DependentUpon>PointViewControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\StringListViewControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -151,6 +157,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\Enemies\StatSetViewControl.resx">
       <DependentUpon>StatSetViewControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PointViewControl.resx">
+      <DependentUpon>PointViewControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\StringListViewControl.resx">
       <DependentUpon>StringListViewControl.cs</DependentUpon>

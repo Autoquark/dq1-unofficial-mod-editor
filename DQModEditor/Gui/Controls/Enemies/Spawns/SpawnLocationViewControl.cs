@@ -7,8 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using DQModEditor.Model;
-using static DQModEditor.Model.SpawnInfo;
+using DQModEditor.DataModel;
+using static DQModEditor.DataModel.SpawnInfo;
 
 namespace DQModEditor.Gui.Controls.Enemies.Spawns
 {

@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using DQModEditor.Model;
+using DQModEditor.DataModel;
 using DQModEditor.Loader;
 using DQModEditor.Gui.Controls.Enemies;
 

@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using DQModEditor.Model;
+using DQModEditor.DataModel;
 
 namespace DQModEditor.Gui.Controls.Enemies
 {
@@ -47,6 +47,12 @@ namespace DQModEditor.Gui.Controls.Enemies
                 displayNameTextBox.DataBindings.Add(textPropertyName, DisplayedItem, nameof(DisplayedItem.DisplayName));
                 flavorNameTextBox.DataBindings.Add(textPropertyName, DisplayedItem, nameof(DisplayedItem.FlavorName));
                 flavorDescriptionTextBox.DataBindings.Add(textPropertyName, DisplayedItem, nameof(DisplayedItem.FlavorDescription));
+                // Appearance
+                selectionBoxOffsetViewControl.DataBindings.Add(nameof(selectionBoxOffsetViewControl.Value), DisplayedItem,
+                    nameof(DisplayedItem.SelectBoxOffset));
+                graphicsIdTextBox.DataBindings.Add(textPropertyName, DisplayedItem, nameof(DisplayedItem.GraphicId));
+                skinTextBox.DataBindings.Add(textPropertyName, DisplayedItem, nameof(DisplayedItem.GraphicSkinId));
+                deathSoundTextBox.DataBindings.Add(textPropertyName, DisplayedItem, nameof(DisplayedItem.DeathSound));
                 // Stats
                 baseStatsViewControl.DisplayedItem = DisplayedItem.BaseStats;
                 perLevelStatsViewControl.DisplayedItem = DisplayedItem.LevelUpIncrement;

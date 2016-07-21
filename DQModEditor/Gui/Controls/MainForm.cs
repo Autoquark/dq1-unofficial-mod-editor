@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using DQModEditor.Model;
+using DQModEditor.DataModel;
 
 namespace DQModEditor.Gui.Controls
 {
@@ -22,7 +22,7 @@ namespace DQModEditor.Gui.Controls
 
             openModControl = new OpenModControl();
             Controls.Add(openModControl);
-            openModControl.Location = new Point((Width - openModControl.Width) / 2, (Height - openModControl.Height) / 2);
+            openModControl.Location = new System.Drawing.Point((Width - openModControl.Width) / 2, (Height - openModControl.Height) / 2);
             openModControl.ModLoaded += OpenModControl_ModLoaded;
 
             Text = Utility.ProgramName + " (" + Utility.VersionString + ") ";

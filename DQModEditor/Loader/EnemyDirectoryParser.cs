@@ -6,9 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-using DataModel;
-using DQModEditor.Model;
-using static DQModEditor.Model.Enemy;
+using DQModEditor.DataModel;
+using static DQModEditor.DataModel.Enemy;
 
 namespace DQModEditor.Loader
 {
@@ -54,32 +53,32 @@ namespace DQModEditor.Loader
             }
         }
 
-        private XElement GetEnemyDefinition(XElement enemyRoot, string id)
-        {
-            return enemyRoot.Descendants("enemy").Where(x => x.AttributeValue("name") == id).Single();
-        }
+        private XElement GetEnemyDefinition(XElement enemyRoot, string id) 
+            => enemyRoot.Descendants("enemy").Where(x => x.AttributeValue("name") == id).Single();
 
-        private Enemy CreateEnemyFromXml(XElement enemyRoot)
+        private Enemy CreateEnemyFromXml(XElement root)
         {
             // Name & Description
-            Enemy enemy = new Enemy(enemyRoot.AttributeValue(_internalNameAttributeName));
-            enemy.DisplayName = enemyRoot.AttributeValue(_displayNameAttributeName);
-            XElement flavorElement = enemyRoot.Descendant(_flavorElementName);
+            Enemy enemy = new Enemy(root.AttributeValue(_internalNameAttributeName));
+            enemy.DisplayName = root.AttributeValue(_displayNameAttributeName);
+            XElement flavorElement = root.Descendant(_flavorElementName);
             enemy.FlavorName = flavorElement.AttributeValue(_flavorNameAttributeName);
             enemy.FlavorDescription = flavorElement.AttributeValue(_flavorDescriptionAttributeName);
 
             // Sound & Graphics
-            enemy.DeathSound = enemyRoot.Descendant("sounds")?.AttributeValue("death");
-            XElement graphicsElement = enemyRoot.Descendant("graphic");
-            enemy.GraphicId = graphicsElement.AttributeValue("id");
-            enemy.GraphicSkinId = graphicsElement.AttributeValueOrNull("skin");
+            enemy.DeathSound = root.Descendant(_soundsElementName)?.AttributeValue(_deathSoundAttributeName);
+            XElement graphicsElement = root.Descendant(_graphicElementName);
+            enemy.GraphicId = graphicsElement.AttributeValue(_graphicIdAttributeName);
+            enemy.GraphicSkinId = graphicsElement.AttributeValueOrNull(_graphicSkinAttributeName);
+            XElement offsetElement = root.Descendant(_selectBoxOffsetElementName);
+            if (offsetElement != null) enemy.SelectBoxOffset = CreatePointFromXml(offsetElement);
 
             // Stats
-            enemy.BaseStats.SetFrom(CreateStatSetFromXml(enemyRoot.Descendant(_statsElementName)));
-            enemy.LevelUpIncrement.SetFrom(CreateStatSetFromXml(enemyRoot.Descendant(_levelupElementName)));
+            enemy.BaseStats.SetFrom(CreateStatSetFromXml(root.Descendant(_statsElementName)));
+            enemy.LevelUpIncrement.SetFrom(CreateStatSetFromXml(root.Descendant(_levelupElementName)));
 
             // Immunities
-            XElement immunitiesRoot = enemyRoot.Descendant(_immunityListElementName);
+            XElement immunitiesRoot = root.Descendant(_immunityListElementName);
             if(immunitiesRoot != null)
             {
                 foreach (XElement immunityElement in immunitiesRoot.Descendants(_immunityElementName))
@@ -88,14 +87,10 @@ namespace DQModEditor.Loader
                 }
             }
 
-            // Select Box Offset
-            XElement offsetElement = enemyRoot.Descendant(_selectBoxOffsetElementName);
-            if (offsetElement != null) enemy.SelectBoxOffset = new Point(int.Parse(offsetElement.AttributeValue("x")),
-                 int.Parse(offsetElement.AttributeValue("y")));
             // Types
-            foreach (XElement e in enemyRoot.Descendants(_typeElementName)) enemy.AddType(e.AttributeValue(_typeAttributeName));
+            foreach (XElement e in root.Descendants(_typeElementName)) enemy.AddType(e.AttributeValue(_typeAttributeName));
             // Spawns
-            foreach (XElement spawnElement in enemyRoot.Descendants(_spawnsElementName))
+            foreach (XElement spawnElement in root.Descendants(_spawnsElementName))
             {
                 string spawnId = spawnElement.AttributeValue(_spawnIdAttributeName);
                 string effectId = spawnElement.AttributeValueOrNull(_spawnEffectIdAttributeName);
@@ -111,17 +106,20 @@ namespace DQModEditor.Loader
             return enemy;
         }
 
-        private StatSet CreateStatSetFromXml(XElement statsRoot)
+        private Point CreatePointFromXml(XElement root) => 
+            new Point(int.Parse(root.AttributeValue("x")), int.Parse(root.AttributeValue("y")));
+
+        private StatSet CreateStatSetFromXml(XElement root)
         {
             StatSet statSet = new StatSet();
             CultureInfo cultureInfo = CultureInfo.InvariantCulture;
-            statSet.Armor = decimal.Parse(statsRoot.AttributeValue(_armorAttributeName), cultureInfo);
-            statSet.Hp = int.Parse(statsRoot.AttributeValue(_hpAttributeName), cultureInfo);
-            statSet.Scrap = decimal.Parse(statsRoot.AttributeValue(_scrapAttributeName), cultureInfo);
-            statSet.Speed = decimal.Parse(statsRoot.AttributeValue(_speedAttributeName), cultureInfo);
-            statSet.Strength = decimal.Parse(statsRoot.AttributeValue(_strengthAttributeName), cultureInfo);
-            statSet.Psi = decimal.Parse(statsRoot.AttributeValue(_psiAttributeName), cultureInfo);
-            statSet.Xp = decimal.Parse(statsRoot.AttributeValue(_xpAttributeName), cultureInfo);
+            statSet.Armor = decimal.Parse(root.AttributeValue(_armorAttributeName), cultureInfo);
+            statSet.Hp = int.Parse(root.AttributeValue(_hpAttributeName), cultureInfo);
+            statSet.Scrap = decimal.Parse(root.AttributeValue(_scrapAttributeName), cultureInfo);
+            statSet.Speed = decimal.Parse(root.AttributeValue(_speedAttributeName), cultureInfo);
+            statSet.Strength = decimal.Parse(root.AttributeValue(_strengthAttributeName), cultureInfo);
+            statSet.Psi = decimal.Parse(root.AttributeValue(_psiAttributeName), cultureInfo);
+            statSet.Xp = decimal.Parse(root.AttributeValue(_xpAttributeName), cultureInfo);
             return statSet;
         }
 
@@ -131,33 +129,34 @@ namespace DQModEditor.Loader
         /// </summary>
         /// <param name="enemy"></param>
         /// <param name="xmlRoot"></param>
-        private void EditXmlFromEnemy(Enemy enemy, XElement enemyRoot)
+        private void EditXmlFromEnemy(Enemy enemy, XElement root)
         {
-            if (enemyRoot.AttributeValue("name") != enemy.InternalName) throw new ModLoadException();
+            if (root.AttributeValue("name") != enemy.InternalName) throw new ModLoadException();
 
             // Name & Description
-            enemyRoot.SetAttributeValue(_displayNameAttributeName, enemy.DisplayName);
-            XElement flavorElement = enemyRoot.Descendant(_flavorElementName);
+            root.SetAttributeValue(_displayNameAttributeName, enemy.DisplayName);
+            XElement flavorElement = root.Descendant(_flavorElementName);
             flavorElement.SetAttributeValue(_flavorNameAttributeName, enemy.FlavorName);
             flavorElement.SetAttributeValue(_flavorDescriptionAttributeName, enemy.FlavorDescription);
+
+            // Sound & Graphics
+            EditXmlFromPoint(enemy.SelectBoxOffset, root.EnsureDescendant(_selectBoxOffsetElementName));
+            root.EnsureDescendant(_soundsElementName).SetAttributeValue(_deathSoundAttributeName, enemy.DeathSound);
+            root.EnsureDescendant(_graphicElementName).SetAttributeValue(_graphicIdAttributeName, enemy.GraphicId);
+            root.Descendant(_graphicElementName).SetAttributeValue(_graphicSkinAttributeName, enemy.GraphicSkinId);
             // Stats
-            EditXmlFromStatSet(enemy.BaseStats, enemyRoot.Descendant(_statsElementName));
-            EditXmlFromStatSet(enemy.LevelUpIncrement, enemyRoot.Descendant(_levelupElementName));
+            EditXmlFromStatSet(enemy.BaseStats, root.Descendant(_statsElementName));
+            EditXmlFromStatSet(enemy.LevelUpIncrement, root.Descendant(_levelupElementName));
             // Types
-            foreach (XElement typeElement in enemyRoot.Descendants(_typeElementName).ToList()) typeElement.Remove();
+            foreach (XElement typeElement in root.Descendants(_typeElementName).ToList()) typeElement.Remove();
             foreach (string type in enemy.Types.Keys)
             {
                 XElement typeElement = new XElement(XName.Get(_typeElementName));
                 typeElement.SetAttributeValue(_typeAttributeName, type);
-                enemyRoot.Add(typeElement);
+                root.Add(typeElement);
             }
             // Immunities
-            XElement immunityListElement = enemyRoot.Descendant(_immunityListElementName);
-            if (immunityListElement == null)
-            {
-                immunityListElement = new XElement(XName.Get(_immunityListElementName));
-                enemyRoot.Add(immunityListElement);
-            }
+            XElement immunityListElement = root.EnsureDescendant(_immunityListElementName);
             foreach (XElement immunityElement in immunityListElement.Descendants(_immunityElementName).ToList()) immunityElement.Remove();
             foreach(string immunity in enemy.Immunities.Keys)
             {
@@ -166,7 +165,7 @@ namespace DQModEditor.Loader
                 immunityListElement.Add(immunityElement);
             }
             // Spawns
-            EditSpawnsFromSpawnInfoList(enemy.Spawns, enemyRoot);
+            EditSpawnsFromSpawnInfoList(enemy.Spawns, root);
         }
 
         private void EditSpawnsFromSpawnInfoList(IList<SpawnInfo> infoList, XElement enemyRoot)
@@ -193,6 +192,12 @@ namespace DQModEditor.Loader
             }
         }
 
+        private void EditXmlFromPoint(Point point, XElement root)
+        {
+            root.SetAttributeValue("x", point.X);
+            root.SetAttributeValue("y", point.Y);
+        }
+
         private void EditXmlFromStatSet(StatSet statSet, XElement statSetRoot)
         {
             statSetRoot.SetAttributeValue(_armorAttributeName, statSet.Armor);
@@ -211,6 +216,13 @@ namespace DQModEditor.Loader
         private readonly static string _flavorElementName = "flavor";
         private readonly static string _flavorNameAttributeName = "name";
         private readonly static string _flavorDescriptionAttributeName = "text";
+        // Sound & Graphics
+        private readonly static string _selectBoxOffsetElementName = "select_box_offset";
+        private readonly static string _graphicElementName = "graphic";
+        private readonly static string _graphicIdAttributeName = "id";
+        private readonly static string _graphicSkinAttributeName = "skin";
+        private readonly static string _soundsElementName = "sounds";
+        private readonly static string _deathSoundAttributeName = "death";
         // Stats
         private readonly static string _statsElementName = "stats";
         private readonly static string _levelupElementName = "levelup";
@@ -222,8 +234,6 @@ namespace DQModEditor.Loader
         private readonly static string _strengthAttributeName = "str";
         private readonly static string _psiAttributeName = "psi";
         private readonly static string _xpAttributeName = "xp";
-        // Select Box Offset
-        private readonly static string _selectBoxOffsetElementName = "select_box_offset";
         // Immunities
         private readonly static string _immunityListElementName = "immunities";
         private readonly static string _immunityElementName = "immune";

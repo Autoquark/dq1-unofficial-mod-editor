@@ -32,8 +32,8 @@
             this.addButton = new System.Windows.Forms.Button();
             this.deleteButton = new System.Windows.Forms.Button();
             this.clearButton = new System.Windows.Forms.Button();
-            this.enemySpawnViewControl = new DQModEditor.Gui.Controls.Enemies.Spawns.EnemySpawnViewControl();
             this.cloneButton = new System.Windows.Forms.Button();
+            this.enemySpawnViewControl = new DQModEditor.Gui.Controls.Enemies.Spawns.EnemySpawnViewControl();
             this.SuspendLayout();
             // 
             // spawnsListBox
@@ -41,12 +41,12 @@
             this.spawnsListBox.FormattingEnabled = true;
             this.spawnsListBox.Location = new System.Drawing.Point(0, 0);
             this.spawnsListBox.Name = "spawnsListBox";
-            this.spawnsListBox.Size = new System.Drawing.Size(112, 108);
+            this.spawnsListBox.Size = new System.Drawing.Size(112, 95);
             this.spawnsListBox.TabIndex = 0;
             // 
             // addButton
             // 
-            this.addButton.Location = new System.Drawing.Point(0, 112);
+            this.addButton.Location = new System.Drawing.Point(0, 96);
             this.addButton.Name = "addButton";
             this.addButton.Size = new System.Drawing.Size(56, 23);
             this.addButton.TabIndex = 2;
@@ -55,7 +55,7 @@
             // 
             // deleteButton
             // 
-            this.deleteButton.Location = new System.Drawing.Point(0, 136);
+            this.deleteButton.Location = new System.Drawing.Point(0, 120);
             this.deleteButton.Name = "deleteButton";
             this.deleteButton.Size = new System.Drawing.Size(56, 23);
             this.deleteButton.TabIndex = 3;
@@ -64,28 +64,30 @@
             // 
             // clearButton
             // 
-            this.clearButton.Location = new System.Drawing.Point(56, 136);
+            this.clearButton.Location = new System.Drawing.Point(56, 120);
             this.clearButton.Name = "clearButton";
             this.clearButton.Size = new System.Drawing.Size(56, 23);
             this.clearButton.TabIndex = 4;
             this.clearButton.Text = "Clear";
             this.clearButton.UseVisualStyleBackColor = true;
             // 
-            // enemySpawnViewControl
-            // 
-            this.enemySpawnViewControl.Location = new System.Drawing.Point(112, 0);
-            this.enemySpawnViewControl.Name = "enemySpawnViewControl";
-            this.enemySpawnViewControl.Size = new System.Drawing.Size(160, 152);
-            this.enemySpawnViewControl.TabIndex = 5;
-            // 
             // cloneButton
             // 
-            this.cloneButton.Location = new System.Drawing.Point(56, 112);
+            this.cloneButton.Location = new System.Drawing.Point(56, 96);
             this.cloneButton.Name = "cloneButton";
             this.cloneButton.Size = new System.Drawing.Size(56, 23);
             this.cloneButton.TabIndex = 6;
             this.cloneButton.Text = "Clone";
             this.cloneButton.UseVisualStyleBackColor = true;
+            // 
+            // enemySpawnViewControl
+            // 
+            this.enemySpawnViewControl.DisplayedItem = null;
+            this.enemySpawnViewControl.Enabled = false;
+            this.enemySpawnViewControl.Location = new System.Drawing.Point(112, 0);
+            this.enemySpawnViewControl.Name = "enemySpawnViewControl";
+            this.enemySpawnViewControl.Size = new System.Drawing.Size(160, 144);
+            this.enemySpawnViewControl.TabIndex = 5;
             // 
             // EnemySpawnListViewControl
             // 
@@ -98,7 +100,7 @@
             this.Controls.Add(this.addButton);
             this.Controls.Add(this.spawnsListBox);
             this.Name = "EnemySpawnListViewControl";
-            this.Size = new System.Drawing.Size(264, 160);
+            this.Size = new System.Drawing.Size(264, 144);
             this.ResumeLayout(false);
 
         }

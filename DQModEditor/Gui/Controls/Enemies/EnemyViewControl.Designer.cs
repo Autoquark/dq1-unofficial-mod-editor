@@ -33,6 +33,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.statsGroupBox = new System.Windows.Forms.GroupBox();
+            this.perLevelStatsViewControl = new DQModEditor.Gui.Controls.Enemies.StatSetViewControl();
+            this.baseStatsViewControl = new DQModEditor.Gui.Controls.Enemies.StatSetViewControl();
             this.label10 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
@@ -48,18 +50,26 @@
             this.label11 = new System.Windows.Forms.Label();
             this.flavorNameTextBox = new System.Windows.Forms.TextBox();
             this.spawnsGroupBox = new System.Windows.Forms.GroupBox();
+            this.enemySpawnListViewControl = new DQModEditor.Gui.Controls.Enemies.Spawns.EnemySpawnListViewControl();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.typesListView = new DQModEditor.Gui.Controls.StringListViewControl();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.immunitiesListView = new DQModEditor.Gui.Controls.StringListViewControl();
-            this.typesListView = new DQModEditor.Gui.Controls.StringListViewControl();
-            this.enemySpawnListViewControl = new DQModEditor.Gui.Controls.Enemies.Spawns.EnemySpawnListViewControl();
-            this.perLevelStatsViewControl = new DQModEditor.Gui.Controls.Enemies.StatSetViewControl();
-            this.baseStatsViewControl = new DQModEditor.Gui.Controls.Enemies.StatSetViewControl();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.deathSoundTextBox = new System.Windows.Forms.TextBox();
+            this.label17 = new System.Windows.Forms.Label();
+            this.skinTextBox = new System.Windows.Forms.TextBox();
+            this.label16 = new System.Windows.Forms.Label();
+            this.graphicsIdTextBox = new System.Windows.Forms.TextBox();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.selectionBoxOffsetViewControl = new DQModEditor.Gui.Controls.PointViewControl();
             this.statsGroupBox.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.spawnsGroupBox.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
+            this.groupBox4.SuspendLayout();
             this.SuspendLayout();
             // 
             // displayNameTextBox
@@ -116,6 +126,24 @@
             this.statsGroupBox.TabIndex = 7;
             this.statsGroupBox.TabStop = false;
             this.statsGroupBox.Text = "Stats";
+            // 
+            // perLevelStatsViewControl
+            // 
+            this.perLevelStatsViewControl.DisplayedItem = null;
+            this.perLevelStatsViewControl.Enabled = false;
+            this.perLevelStatsViewControl.Location = new System.Drawing.Point(144, 37);
+            this.perLevelStatsViewControl.Name = "perLevelStatsViewControl";
+            this.perLevelStatsViewControl.Size = new System.Drawing.Size(80, 168);
+            this.perLevelStatsViewControl.TabIndex = 27;
+            // 
+            // baseStatsViewControl
+            // 
+            this.baseStatsViewControl.DisplayedItem = null;
+            this.baseStatsViewControl.Enabled = false;
+            this.baseStatsViewControl.Location = new System.Drawing.Point(56, 37);
+            this.baseStatsViewControl.Name = "baseStatsViewControl";
+            this.baseStatsViewControl.Size = new System.Drawing.Size(80, 168);
+            this.baseStatsViewControl.TabIndex = 26;
             // 
             // label10
             // 
@@ -192,7 +220,7 @@
             this.groupBox2.Controls.Add(this.displayNameTextBox);
             this.groupBox2.Location = new System.Drawing.Point(0, 0);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(616, 88);
+            this.groupBox2.Size = new System.Drawing.Size(624, 88);
             this.groupBox2.TabIndex = 8;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Name && Description";
@@ -252,12 +280,21 @@
             // spawnsGroupBox
             // 
             this.spawnsGroupBox.Controls.Add(this.enemySpawnListViewControl);
-            this.spawnsGroupBox.Location = new System.Drawing.Point(240, 88);
+            this.spawnsGroupBox.Location = new System.Drawing.Point(272, 304);
             this.spawnsGroupBox.Name = "spawnsGroupBox";
-            this.spawnsGroupBox.Size = new System.Drawing.Size(280, 216);
+            this.spawnsGroupBox.Size = new System.Drawing.Size(280, 176);
             this.spawnsGroupBox.TabIndex = 9;
             this.spawnsGroupBox.TabStop = false;
             this.spawnsGroupBox.Text = "Spawns";
+            // 
+            // enemySpawnListViewControl
+            // 
+            this.enemySpawnListViewControl.DisplayedItem = null;
+            this.enemySpawnListViewControl.Enabled = false;
+            this.enemySpawnListViewControl.Location = new System.Drawing.Point(8, 24);
+            this.enemySpawnListViewControl.Name = "enemySpawnListViewControl";
+            this.enemySpawnListViewControl.Size = new System.Drawing.Size(264, 144);
+            this.enemySpawnListViewControl.TabIndex = 0;
             // 
             // groupBox1
             // 
@@ -268,6 +305,15 @@
             this.groupBox1.TabIndex = 10;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Types";
+            // 
+            // typesListView
+            // 
+            this.typesListView.DisplayedItem = null;
+            this.typesListView.Enabled = false;
+            this.typesListView.Location = new System.Drawing.Point(16, 24);
+            this.typesListView.Name = "typesListView";
+            this.typesListView.Size = new System.Drawing.Size(96, 144);
+            this.typesListView.TabIndex = 11;
             // 
             // groupBox3
             // 
@@ -288,47 +334,96 @@
             this.immunitiesListView.Size = new System.Drawing.Size(96, 144);
             this.immunitiesListView.TabIndex = 11;
             // 
-            // typesListView
+            // groupBox4
             // 
-            this.typesListView.DisplayedItem = null;
-            this.typesListView.Enabled = false;
-            this.typesListView.Location = new System.Drawing.Point(16, 24);
-            this.typesListView.Name = "typesListView";
-            this.typesListView.Size = new System.Drawing.Size(96, 144);
-            this.typesListView.TabIndex = 11;
+            this.groupBox4.Controls.Add(this.deathSoundTextBox);
+            this.groupBox4.Controls.Add(this.label17);
+            this.groupBox4.Controls.Add(this.skinTextBox);
+            this.groupBox4.Controls.Add(this.label16);
+            this.groupBox4.Controls.Add(this.graphicsIdTextBox);
+            this.groupBox4.Controls.Add(this.label15);
+            this.groupBox4.Controls.Add(this.label13);
+            this.groupBox4.Controls.Add(this.selectionBoxOffsetViewControl);
+            this.groupBox4.Location = new System.Drawing.Point(240, 88);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(312, 216);
+            this.groupBox4.TabIndex = 13;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Appearance";
             // 
-            // enemySpawnListViewControl
+            // deathSoundTextBox
             // 
-            this.enemySpawnListViewControl.DisplayedItem = null;
-            this.enemySpawnListViewControl.Enabled = false;
-            this.enemySpawnListViewControl.Location = new System.Drawing.Point(8, 24);
-            this.enemySpawnListViewControl.Name = "enemySpawnListViewControl";
-            this.enemySpawnListViewControl.Size = new System.Drawing.Size(264, 160);
-            this.enemySpawnListViewControl.TabIndex = 0;
+            this.deathSoundTextBox.Location = new System.Drawing.Point(112, 69);
+            this.deathSoundTextBox.Name = "deathSoundTextBox";
+            this.deathSoundTextBox.Size = new System.Drawing.Size(192, 20);
+            this.deathSoundTextBox.TabIndex = 17;
+            this.deathSoundTextBox.Text = "monstrosity";
             // 
-            // perLevelStatsViewControl
+            // label17
             // 
-            this.perLevelStatsViewControl.DisplayedItem = null;
-            this.perLevelStatsViewControl.Enabled = false;
-            this.perLevelStatsViewControl.Location = new System.Drawing.Point(144, 37);
-            this.perLevelStatsViewControl.Name = "perLevelStatsViewControl";
-            this.perLevelStatsViewControl.Size = new System.Drawing.Size(80, 168);
-            this.perLevelStatsViewControl.TabIndex = 27;
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(8, 72);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(85, 13);
+            this.label17.TabIndex = 16;
+            this.label17.Text = "Death Sound Id:";
             // 
-            // baseStatsViewControl
+            // skinTextBox
             // 
-            this.baseStatsViewControl.DisplayedItem = null;
-            this.baseStatsViewControl.Enabled = false;
-            this.baseStatsViewControl.Location = new System.Drawing.Point(56, 37);
-            this.baseStatsViewControl.Name = "baseStatsViewControl";
-            this.baseStatsViewControl.Size = new System.Drawing.Size(80, 168);
-            this.baseStatsViewControl.TabIndex = 26;
+            this.skinTextBox.Location = new System.Drawing.Point(224, 45);
+            this.skinTextBox.Name = "skinTextBox";
+            this.skinTextBox.Size = new System.Drawing.Size(80, 20);
+            this.skinTextBox.TabIndex = 15;
+            this.skinTextBox.Text = "monstrosity";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(192, 48);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(31, 13);
+            this.label16.TabIndex = 14;
+            this.label16.Text = "Skin:";
+            // 
+            // graphicsIdTextBox
+            // 
+            this.graphicsIdTextBox.Location = new System.Drawing.Point(112, 45);
+            this.graphicsIdTextBox.Name = "graphicsIdTextBox";
+            this.graphicsIdTextBox.Size = new System.Drawing.Size(80, 20);
+            this.graphicsIdTextBox.TabIndex = 9;
+            this.graphicsIdTextBox.Text = "monstrosity";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(8, 48);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(64, 13);
+            this.label15.TabIndex = 13;
+            this.label15.Text = "Graphics Id:";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(8, 24);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(103, 13);
+            this.label13.TabIndex = 9;
+            this.label13.Text = "Selection box offset:";
+            // 
+            // selectionBoxOffsetViewControl
+            // 
+            this.selectionBoxOffsetViewControl.Location = new System.Drawing.Point(112, 21);
+            this.selectionBoxOffsetViewControl.Name = "selectionBoxOffsetViewControl";
+            this.selectionBoxOffsetViewControl.Size = new System.Drawing.Size(128, 24);
+            this.selectionBoxOffsetViewControl.TabIndex = 12;
             // 
             // EnemyViewControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.groupBox3);
+            this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.spawnsGroupBox);
             this.Controls.Add(this.groupBox2);
@@ -342,6 +437,8 @@
             this.spawnsGroupBox.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -374,5 +471,14 @@
         private StringListViewControl typesListView;
         private System.Windows.Forms.GroupBox groupBox3;
         private StringListViewControl immunitiesListView;
+        private PointViewControl selectionBoxOffsetViewControl;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.TextBox skinTextBox;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.TextBox graphicsIdTextBox;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.TextBox deathSoundTextBox;
+        private System.Windows.Forms.Label label17;
     }
 }

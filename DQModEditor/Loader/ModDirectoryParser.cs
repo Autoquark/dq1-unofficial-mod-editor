@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
-using DQModEditor.Model;
+using DQModEditor.DataModel;
 
 namespace DQModEditor.Loader
 {

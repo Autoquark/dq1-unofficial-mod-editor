@@ -2,7 +2,7 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("DQME")]
+[assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Defender's Quest Unofficial Mod Editor")]
 [assembly: AssemblyCopyright("Copyright ©  2016")]
 [assembly: AssemblyTrademark("")]
