@@ -12,14 +12,14 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
 
-namespace DQModEditor.DataModel
+namespace DQModEditor.DataModel.Enemies
 {
     /// <summary>
-    /// Represents an enemy type definition.
+    /// Represents the definition for one variation of an enemy type: original, or New Game Plus.
     /// </summary>
-    public class Enemy : INotifyPropertyChanged
+    public class EnemyVariant : INotifyPropertyChanged
     {
-        public Enemy(string internalName)
+        public EnemyVariant(string internalName)
         {
             InternalName = internalName;
         }
@@ -107,9 +107,14 @@ namespace DQModEditor.DataModel
         public StatSet LevelUpIncrement { get; } = new StatSet();
 
         // Misc
+        /// <summary>
+        /// Gets a read-only sorted collection containing this enemy's types.
+        /// </summary>
         public IReadOnlyDictionary<string, string> Types => new ReadOnlyDictionary<string, string>(_Types);
         private SortedDictionary<string, string> _Types = new SortedDictionary<string, string>();
-
+        /// <summary>
+        /// Gets a read-only sorted collection containing the ids of the flavors that this enemy is immune to.
+        /// </summary>
         public IReadOnlyDictionary<string, string> Immunities => new ReadOnlyDictionary<string, string>(_Immunities);
         private SortedDictionary<string, string> _Immunities = new SortedDictionary<string, string>();
 
@@ -128,6 +133,10 @@ namespace DQModEditor.DataModel
         /// The enemies spawned by enemies of this type upon death.
         /// </summary>
         public BindingList<SpawnInfo> Spawns { get; } = new BindingList<SpawnInfo>();
+        /// <summary>
+        /// This enemy's resistances.
+        /// </summary>
+        public BindingList<Resistance> Resistances { get; } = new BindingList<Resistance>();
 
         public void AddType(string type)
         {
@@ -168,105 +177,6 @@ namespace DQModEditor.DataModel
         private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        public class StatSet : INotifyPropertyChanged
-        {
-            public event PropertyChangedEventHandler PropertyChanged;
-
-            public void SetFrom(StatSet statSet)
-            {
-                Armor = statSet.Armor;
-                Hp = statSet.Hp;
-                Scrap = statSet.Scrap;
-                Speed = statSet.Speed;
-                Strength = statSet.Strength;
-                Psi = statSet.Psi;
-                Xp = statSet.Xp;
-            }
-
-            public int Hp
-            {
-                get { return _Hp; }
-                set
-                {
-                    if (_Hp == value) return;
-                    _Hp = value;
-                    NotifyPropertyChanged();
-                }
-            }
-            private int _Hp;
-            public decimal Armor
-            {
-                get { return _Armor; }
-                set
-                {
-                    if (_Armor == value) return;
-                    _Armor = value;
-                    NotifyPropertyChanged();
-                }
-            }
-            private decimal _Armor;
-            public decimal Speed
-            {
-                get { return _Speed; }
-                set
-                {
-                    if (_Speed == value) return;
-                    _Speed = value;
-                    NotifyPropertyChanged();
-                }
-            }
-            private decimal _Speed;
-            public decimal Strength
-            {
-                get { return _Strength; }
-                set
-                {
-                    if (_Strength == value) return;
-                    _Strength = value;
-                    NotifyPropertyChanged();
-                }
-            }
-            private decimal _Strength;
-            public decimal Psi
-            {
-                get { return _Psi; }
-                set
-                {
-                    if (_Psi == value) return;
-                    _Psi = value;
-                    NotifyPropertyChanged();
-                }
-            }
-            private decimal _Psi;
-            public decimal Scrap
-            {
-                get { return _Scrap; }
-                set
-                {
-                    if (_Scrap == value) return;
-                    _Scrap = value;
-                    NotifyPropertyChanged();
-                }
-            }
-            private decimal _Scrap;
-            public decimal Xp
-            {
-                get { return _Xp; }
-                set
-                {
-                    if (_Xp == value) return;
-                    _Xp = value;
-                    NotifyPropertyChanged();
-                }
-            }
-            private decimal _Xp;
-
-            private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
-            {
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-            }
         }
     }
 }

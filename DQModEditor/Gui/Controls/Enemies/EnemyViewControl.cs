@@ -8,13 +8,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using DQModEditor.DataModel;
+using DQModEditor.DataModel.Enemies;
 
 namespace DQModEditor.Gui.Controls.Enemies
 {
     /// <summary>
     /// Control that displays an enemy definition from a mod.
     /// </summary>
-    internal partial class EnemyViewControl : ViewControl<Enemy>
+    internal partial class EnemyViewControl : ViewControl<EnemyVariant>
     {
         public EnemyViewControl()
         {
@@ -30,7 +31,7 @@ namespace DQModEditor.Gui.Controls.Enemies
             immunitiesListView.AddCommand += (s) => DisplayedItem.AddImmunity(s);
         }
 
-        private void ChangeDisplayedItem(ViewControl<Enemy> source, Enemy previous)
+        private void ChangeDisplayedItem(ViewControl<EnemyVariant> source, EnemyVariant previous)
         {
             if (previous != null)
             {
@@ -57,7 +58,9 @@ namespace DQModEditor.Gui.Controls.Enemies
                 baseStatsViewControl.DisplayedItem = DisplayedItem.BaseStats;
                 perLevelStatsViewControl.DisplayedItem = DisplayedItem.LevelUpIncrement;
                 // Spawns
-                enemySpawnListViewControl.DisplayedItem = DisplayedItem.Spawns;
+                spawnListViewControl.DisplayedItem = DisplayedItem.Spawns;
+                // Resistances
+                resistanceListViewControl.DisplayedItem = DisplayedItem.Resistances;
                 // Types
                 typesListView.DisplayedItem = DisplayedItem.Types;
                 DisplayedItem.TypesCollectionChanged += typesListView.UpdateData;

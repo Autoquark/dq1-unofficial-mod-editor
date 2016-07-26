@@ -1,6 +1,6 @@
 ﻿namespace DQModEditor.Gui.Controls.Enemies.Spawns
 {
-    partial class EnemySpawnViewControl
+    partial class SpawnViewControl
     {
         /// <summary> 
         /// Required designer variable.
@@ -97,7 +97,7 @@
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Name = "EnemySpawnViewControl";
-            this.Size = new System.Drawing.Size(160, 144);
+            this.Size = new System.Drawing.Size(152, 144);
             this.ResumeLayout(false);
             this.PerformLayout();
 

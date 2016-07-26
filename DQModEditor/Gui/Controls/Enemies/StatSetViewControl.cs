@@ -7,8 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static DQModEditor.DataModel.Enemy;
 using DQModEditor.DataModel;
+using DQModEditor.DataModel.Enemies;
 
 namespace DQModEditor.Gui.Controls.Enemies
 {

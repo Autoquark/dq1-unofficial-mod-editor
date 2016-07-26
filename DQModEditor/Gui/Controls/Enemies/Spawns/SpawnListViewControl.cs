@@ -11,9 +11,9 @@ using DQModEditor.DataModel;
 
 namespace DQModEditor.Gui.Controls.Enemies.Spawns
 {
-    internal partial class EnemySpawnListViewControl : ViewControl<IList<SpawnInfo>>
+    internal partial class SpawnListViewControl : ViewControl<IList<SpawnInfo>>
     {
-        public EnemySpawnListViewControl()
+        public SpawnListViewControl()
         {
             InitializeComponent();
 
@@ -31,12 +31,12 @@ namespace DQModEditor.Gui.Controls.Enemies.Spawns
                 //If the user modifiers a property of the selected spawn (e.g. x coordinate) and then moves focus onto another
                 //control within the EnemySpawnViewControl, the change to the EnemySpawnViewControl's displayed item causes the
                 //control they switched to to lose focus. This appears to fix that, though it feels somewhat hacky.
-                Control active = enemySpawnViewControl.ActiveControl;
-                enemySpawnViewControl.DisplayedItem = (SpawnInfo)spawnsListBox.SelectedItem;
+                Control active = spawnViewControl.ActiveControl;
+                spawnViewControl.DisplayedItem = (SpawnInfo)spawnsListBox.SelectedItem;
                 active?.Select();
             };
 
-            deleteButton.Click += (s, e) => { DisplayedItem.Remove(enemySpawnViewControl.DisplayedItem); };
+            deleteButton.Click += (s, e) => { DisplayedItem.Remove(spawnViewControl.DisplayedItem); };
             clearButton.Click += (s, e) => { DisplayedItem.Clear(); };
             addButton.Click += AddButton_Click;
             cloneButton.Click += CloneButton_Click;
@@ -45,13 +45,13 @@ namespace DQModEditor.Gui.Controls.Enemies.Spawns
                 if (DisplayedItem == null) return;
                 spawnsListBox.DataSource = DisplayedItem;
                 //Because ListBox.SelectedValueChanged does not seem to fire when we change to displaying an empty list
-                enemySpawnViewControl.DisplayedItem = (SpawnInfo)spawnsListBox.SelectedItem;
+                spawnViewControl.DisplayedItem = (SpawnInfo)spawnsListBox.SelectedItem;
             };
         }
 
         private void CloneButton_Click(object sender, EventArgs e)
         {
-            SpawnInfo cloned = new SpawnInfo(enemySpawnViewControl.DisplayedItem);
+            SpawnInfo cloned = new SpawnInfo(spawnViewControl.DisplayedItem);
             DisplayedItem.Insert(spawnsListBox.SelectedIndex, cloned);
         }
 

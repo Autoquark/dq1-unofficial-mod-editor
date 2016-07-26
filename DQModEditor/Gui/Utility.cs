@@ -23,18 +23,18 @@ namespace DQModEditor.Gui
         }
 
         internal static string ProgramName { get; } = "Defender's Quest Unofficial Mod Editor";
+        internal static string ProgramNameShort { get; } = "DQME";
         internal static string VersionString { get; }
 
         /// <summary>
-        /// Clears the databindings for the children of the given control. Recurses through items inside group boxes, 
-        /// but not other containers.
+        /// Clears the databindings for the children of the given control. Recurses through groupboxes and tabs.
         /// </summary>
         /// <param name="control"></param>
         internal static void ClearBindings(Control control)
         {
             foreach(Control c in control.Controls)
             {
-                if (c is GroupBox) ClearBindings(c);
+                if(c is GroupBox || c is TabControl || c is TabPage) ClearBindings(c);
                 c.DataBindings.Clear();
             }
         }

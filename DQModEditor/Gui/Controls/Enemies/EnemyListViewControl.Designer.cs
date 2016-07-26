@@ -56,7 +56,7 @@
             this.enemyViewControl.Enabled = false;
             this.enemyViewControl.Location = new System.Drawing.Point(136, 0);
             this.enemyViewControl.Name = "enemyViewControl";
-            this.enemyViewControl.Size = new System.Drawing.Size(624, 496);
+            this.enemyViewControl.Size = new System.Drawing.Size(624, 488);
             this.enemyViewControl.TabIndex = 4;
             // 
             // EnemyListViewControl

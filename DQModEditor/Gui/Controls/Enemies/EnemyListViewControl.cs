@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using DQModEditor.DataModel;
+using DQModEditor.DataModel.Enemies;
 
 namespace DQModEditor.Gui.Controls.Enemies
 {
@@ -20,9 +21,9 @@ namespace DQModEditor.Gui.Controls.Enemies
         {
             InitializeComponent();
 
-            enemiesListBox.DisplayMember = nameof(KeyValuePair<string, Enemy>.Key);
-            enemiesListBox.ValueMember = nameof(KeyValuePair<string, Enemy>.Value);
-            enemiesListBox.SelectedValueChanged += (o, e) => { enemyViewControl.DisplayedItem = (Enemy)enemiesListBox.SelectedValue; };
+            enemiesListBox.DisplayMember = nameof(KeyValuePair<string, EnemyVariant>.Key);
+            enemiesListBox.ValueMember = nameof(KeyValuePair<string, EnemyVariant>.Value);
+            enemiesListBox.SelectedValueChanged += (o, e) => { enemyViewControl.DisplayedItem = (EnemyVariant)enemiesListBox.SelectedValue; };
 
             DisplayedItemChanged += ChangeDisplayedItem;
         }
@@ -38,7 +39,7 @@ namespace DQModEditor.Gui.Controls.Enemies
             }
         }
 
-        private void DisplayedItem_EnemyAdded(Enemy enemy)
+        private void DisplayedItem_EnemyAdded(EnemyVariant enemy)
         {
             ((BindingSource)enemiesListBox.DataSource).DataSource = null;
             ((BindingSource)enemiesListBox.DataSource).DataSource = DisplayedItem.EnemiesByInternalName;

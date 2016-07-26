@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using DQModEditor.DataModel;
-using static DQModEditor.DataModel.Enemy;
+using DQModEditor.DataModel.Enemies;
 
 namespace DQModEditor.Loader
 {
@@ -37,7 +37,7 @@ namespace DQModEditor.Loader
                 if (mod.GetEnemyByIdOrNull(enemyXml.AttributeValue("name")) == null) enemyXml.Remove();
             }
             //Edit/add enemy definitions to the XML that are present in the mod
-            foreach (Enemy enemy in mod.EnemiesByInternalName.Values)
+            foreach (EnemyVariant enemy in mod.EnemiesByInternalName.Values)
             {
                 EditXmlFromEnemy(enemy, GetEnemyDefinition(enemyRoot, enemy.InternalName));
             }
@@ -56,10 +56,10 @@ namespace DQModEditor.Loader
         private XElement GetEnemyDefinition(XElement enemyRoot, string id) 
             => enemyRoot.Descendants("enemy").Where(x => x.AttributeValue("name") == id).Single();
 
-        private Enemy CreateEnemyFromXml(XElement root)
+        private EnemyVariant CreateEnemyFromXml(XElement root)
         {
             // Name & Description
-            Enemy enemy = new Enemy(root.AttributeValue(_internalNameAttributeName));
+            EnemyVariant enemy = new EnemyVariant(root.AttributeValue(_internalNameAttributeName));
             enemy.DisplayName = root.AttributeValue(_displayNameAttributeName);
             XElement flavorElement = root.Descendant(_flavorElementName);
             enemy.FlavorName = flavorElement.AttributeValue(_flavorNameAttributeName);
@@ -85,6 +85,18 @@ namespace DQModEditor.Loader
                 {
                     enemy.AddImmunity(immunityElement.AttributeValue(_immunityAttributeName));
                 }
+            }
+            
+            // Resistances
+            foreach(XElement resistanceElement in root.Descendants(_resistanceElementName))
+            {
+                Resistance resistance = new Resistance();
+                resistance.Flavor = resistanceElement.AttributeValue(_resistanceFlavorAttributeName);
+                resistance.Amount = decimal.Parse(resistanceElement.AttributeValue(_resistanceAmountAttributeName));
+                string kind = resistanceElement.AttributeValue(_resistanceKindAttributeName);
+                // Dictionary is only two items, reverse lookup efficiency is not an issue.
+                resistance.ResistanceKind = _resistanceKindToString.Where(x => x.Value == kind).Single().Key;
+                enemy.Resistances.Add(resistance);
             }
 
             // Types
@@ -129,7 +141,7 @@ namespace DQModEditor.Loader
         /// </summary>
         /// <param name="enemy"></param>
         /// <param name="xmlRoot"></param>
-        private void EditXmlFromEnemy(Enemy enemy, XElement root)
+        private void EditXmlFromEnemy(EnemyVariant enemy, XElement root)
         {
             if (root.AttributeValue("name") != enemy.InternalName) throw new ModLoadException();
 
@@ -157,12 +169,22 @@ namespace DQModEditor.Loader
             }
             // Immunities
             XElement immunityListElement = root.EnsureDescendant(_immunityListElementName);
-            foreach (XElement immunityElement in immunityListElement.Descendants(_immunityElementName).ToList()) immunityElement.Remove();
+            foreach (XElement e in immunityListElement.Descendants(_immunityElementName).ToList()) e.Remove();
             foreach(string immunity in enemy.Immunities.Keys)
             {
                 XElement immunityElement = new XElement(XName.Get(_immunityElementName));
                 immunityElement.SetAttributeValue(_immunityAttributeName, immunity);
                 immunityListElement.Add(immunityElement);
+            }
+            // Resistances
+            foreach (XElement e in root.Descendants(_resistanceElementName).ToList()) e.Remove();
+            foreach(Resistance resistance in enemy.Resistances)
+            {
+                XElement resistanceElement = new XElement(XName.Get(_resistanceElementName));
+                resistanceElement.SetAttributeValue(_resistanceFlavorAttributeName, resistance.Flavor);
+                resistanceElement.SetAttributeValue(_resistanceKindAttributeName, _resistanceKindToString[resistance.ResistanceKind]);
+                resistanceElement.SetAttributeValue(_resistanceAmountAttributeName, resistance.Amount);
+                root.Add(resistanceElement);
             }
             // Spawns
             EditSpawnsFromSpawnInfoList(enemy.Spawns, root);
@@ -238,6 +260,14 @@ namespace DQModEditor.Loader
         private readonly static string _immunityListElementName = "immunities";
         private readonly static string _immunityElementName = "immune";
         private readonly static string _immunityAttributeName = "value";
+        // Resistances
+        private readonly static string _resistanceElementName = "strong";
+        private readonly static string _resistanceFlavorAttributeName = "value";
+        private readonly static string _resistanceKindAttributeName = "effect";
+        private readonly static string _resistanceAmountAttributeName = "amount";
+        private readonly static IReadOnlyDictionary<Resistance.Kind, string> _resistanceKindToString
+            = new Dictionary<Resistance.Kind, string> { { Resistance.Kind.DamageMultiplier, "dmg_mult" },
+                { Resistance.Kind.Evade, "evade" } };
         // Type
         private readonly static string _typeElementName = "type";
         private readonly static string _typeAttributeName = "value";

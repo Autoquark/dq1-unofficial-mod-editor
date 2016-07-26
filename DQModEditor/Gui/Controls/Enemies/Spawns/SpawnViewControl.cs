@@ -11,9 +11,9 @@ using DQModEditor.DataModel;
 
 namespace DQModEditor.Gui.Controls.Enemies.Spawns
 {
-    internal partial class EnemySpawnViewControl : ViewControl<SpawnInfo>
+    internal partial class SpawnViewControl : ViewControl<SpawnInfo>
     {
-        public EnemySpawnViewControl()
+        public SpawnViewControl()
         {
             InitializeComponent();
 

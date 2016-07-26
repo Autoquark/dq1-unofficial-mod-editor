@@ -55,17 +55,29 @@
     <Compile Include="Controls\Enemies\EnemyListViewControl.Designer.cs">
       <DependentUpon>EnemyListViewControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Enemies\Spawns\EnemySpawnListViewControl.cs">
+    <Compile Include="Controls\Enemies\Resistances\ResistanceListViewControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\Enemies\Spawns\EnemySpawnListViewControl.Designer.cs">
-      <DependentUpon>EnemySpawnListViewControl.cs</DependentUpon>
+    <Compile Include="Controls\Enemies\Resistances\ResistanceListViewControl.Designer.cs">
+      <DependentUpon>ResistanceListViewControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Enemies\Spawns\EnemySpawnViewControl.cs">
+    <Compile Include="Controls\Enemies\Resistances\ResistanceViewControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\Enemies\Spawns\EnemySpawnViewControl.Designer.cs">
-      <DependentUpon>EnemySpawnViewControl.cs</DependentUpon>
+    <Compile Include="Controls\Enemies\Resistances\ResistanceViewControl.Designer.cs">
+      <DependentUpon>ResistanceViewControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Enemies\Spawns\SpawnListViewControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Enemies\Spawns\SpawnListViewControl.Designer.cs">
+      <DependentUpon>SpawnListViewControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Enemies\Spawns\SpawnViewControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Enemies\Spawns\SpawnViewControl.Designer.cs">
+      <DependentUpon>SpawnViewControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\Enemies\EnemyViewControl.cs">
       <SubType>UserControl</SubType>
@@ -115,6 +127,12 @@
     <Compile Include="Controls\PointViewControl.Designer.cs">
       <DependentUpon>PointViewControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\RadioButtonEnumViewControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\RadioButtonEnumViewControl.Designer.cs">
+      <DependentUpon>RadioButtonEnumViewControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\StringListViewControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -131,14 +149,21 @@
     <EmbeddedResource Include="Controls\Enemies\EnemyListViewControl.resx">
       <DependentUpon>EnemyListViewControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\Enemies\Spawns\EnemySpawnListViewControl.resx">
-      <DependentUpon>EnemySpawnListViewControl.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\Enemies\Resistances\ResistanceListViewControl.resx">
+      <DependentUpon>ResistanceListViewControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\Enemies\Spawns\EnemySpawnViewControl.resx">
-      <DependentUpon>EnemySpawnViewControl.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\Enemies\Resistances\ResistanceViewControl.resx">
+      <DependentUpon>ResistanceViewControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Enemies\Spawns\SpawnListViewControl.resx">
+      <DependentUpon>SpawnListViewControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Enemies\Spawns\SpawnViewControl.resx">
+      <DependentUpon>SpawnViewControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\Enemies\EnemyViewControl.resx">
       <DependentUpon>EnemyViewControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\Enemies\Spawns\SpawnLocationViewControl.resx">
       <DependentUpon>SpawnLocationViewControl.cs</DependentUpon>
@@ -160,6 +185,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\PointViewControl.resx">
       <DependentUpon>PointViewControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\RadioButtonEnumViewControl.resx">
+      <DependentUpon>RadioButtonEnumViewControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\StringListViewControl.resx">
       <DependentUpon>StringListViewControl.cs</DependentUpon>

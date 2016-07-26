@@ -1,6 +1,6 @@
 ﻿namespace DQModEditor.Gui.Controls.Enemies.Spawns
 {
-    partial class EnemySpawnListViewControl
+    partial class SpawnListViewControl
     {
         /// <summary> 
         /// Required designer variable.
@@ -33,7 +33,7 @@
             this.deleteButton = new System.Windows.Forms.Button();
             this.clearButton = new System.Windows.Forms.Button();
             this.cloneButton = new System.Windows.Forms.Button();
-            this.enemySpawnViewControl = new DQModEditor.Gui.Controls.Enemies.Spawns.EnemySpawnViewControl();
+            this.spawnViewControl = new DQModEditor.Gui.Controls.Enemies.Spawns.SpawnViewControl();
             this.SuspendLayout();
             // 
             // spawnsListBox
@@ -82,25 +82,25 @@
             // 
             // enemySpawnViewControl
             // 
-            this.enemySpawnViewControl.DisplayedItem = null;
-            this.enemySpawnViewControl.Enabled = false;
-            this.enemySpawnViewControl.Location = new System.Drawing.Point(112, 0);
-            this.enemySpawnViewControl.Name = "enemySpawnViewControl";
-            this.enemySpawnViewControl.Size = new System.Drawing.Size(160, 144);
-            this.enemySpawnViewControl.TabIndex = 5;
+            this.spawnViewControl.DisplayedItem = null;
+            this.spawnViewControl.Enabled = false;
+            this.spawnViewControl.Location = new System.Drawing.Point(120, 0);
+            this.spawnViewControl.Name = "enemySpawnViewControl";
+            this.spawnViewControl.Size = new System.Drawing.Size(152, 144);
+            this.spawnViewControl.TabIndex = 5;
             // 
             // EnemySpawnListViewControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.cloneButton);
-            this.Controls.Add(this.enemySpawnViewControl);
+            this.Controls.Add(this.spawnViewControl);
             this.Controls.Add(this.clearButton);
             this.Controls.Add(this.deleteButton);
             this.Controls.Add(this.addButton);
             this.Controls.Add(this.spawnsListBox);
             this.Name = "EnemySpawnListViewControl";
-            this.Size = new System.Drawing.Size(264, 144);
+            this.Size = new System.Drawing.Size(272, 144);
             this.ResumeLayout(false);
 
         }
@@ -111,7 +111,7 @@
         private System.Windows.Forms.Button addButton;
         private System.Windows.Forms.Button deleteButton;
         private System.Windows.Forms.Button clearButton;
-        private EnemySpawnViewControl enemySpawnViewControl;
+        private SpawnViewControl spawnViewControl;
         private System.Windows.Forms.Button cloneButton;
     }
 }
