@@ -31,6 +31,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.statsGroupBox = new System.Windows.Forms.GroupBox();
+            this.perLevelStatsViewControl = new DQModEditor.Gui.Controls.Enemies.StatSetViewControl();
+            this.baseStatsViewControl = new DQModEditor.Gui.Controls.Enemies.StatSetViewControl();
             this.label10 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
@@ -39,13 +41,18 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.newGamePlusCheckBox = new System.Windows.Forms.CheckBox();
             this.label14 = new System.Windows.Forms.Label();
             this.internalNameTextBox = new System.Windows.Forms.TextBox();
             this.spawnsGroupBox = new System.Windows.Forms.GroupBox();
+            this.spawnListViewControl = new DQModEditor.Gui.Controls.Enemies.Spawns.SpawnListViewControl();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.typesListView = new DQModEditor.Gui.Controls.StringListViewControl();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.immunitiesListView = new DQModEditor.Gui.Controls.StringListViewControl();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.label13 = new System.Windows.Forms.Label();
+            this.selectionBoxOffsetViewControl = new DQModEditor.Gui.Controls.PointViewControl();
             this.deathSoundTextBox = new System.Windows.Forms.TextBox();
             this.label17 = new System.Windows.Forms.Label();
             this.skinTextBox = new System.Windows.Forms.TextBox();
@@ -55,6 +62,7 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.resistanceListViewControl = new DQModEditor.Gui.Controls.Enemies.Resistances.ResistanceListViewControl();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.label12 = new System.Windows.Forms.Label();
@@ -65,13 +73,6 @@
             this.displayNameTextBox = new System.Windows.Forms.TextBox();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.resistanceListViewControl = new DQModEditor.Gui.Controls.Enemies.Resistances.ResistanceListViewControl();
-            this.typesListView = new DQModEditor.Gui.Controls.StringListViewControl();
-            this.immunitiesListView = new DQModEditor.Gui.Controls.StringListViewControl();
-            this.perLevelStatsViewControl = new DQModEditor.Gui.Controls.Enemies.StatSetViewControl();
-            this.baseStatsViewControl = new DQModEditor.Gui.Controls.Enemies.StatSetViewControl();
-            this.spawnListViewControl = new DQModEditor.Gui.Controls.Enemies.Spawns.SpawnListViewControl();
-            this.selectionBoxOffsetViewControl = new DQModEditor.Gui.Controls.PointViewControl();
             this.statsGroupBox.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.spawnsGroupBox.SuspendLayout();
@@ -118,12 +119,30 @@
             this.statsGroupBox.Controls.Add(this.label5);
             this.statsGroupBox.Controls.Add(this.label3);
             this.statsGroupBox.Controls.Add(this.label2);
-            this.statsGroupBox.Location = new System.Drawing.Point(312, 8);
+            this.statsGroupBox.Location = new System.Drawing.Point(312, 64);
             this.statsGroupBox.Name = "statsGroupBox";
-            this.statsGroupBox.Size = new System.Drawing.Size(296, 232);
+            this.statsGroupBox.Size = new System.Drawing.Size(296, 208);
             this.statsGroupBox.TabIndex = 7;
             this.statsGroupBox.TabStop = false;
             this.statsGroupBox.Text = "Stats";
+            // 
+            // perLevelStatsViewControl
+            // 
+            this.perLevelStatsViewControl.DisplayedItem = null;
+            this.perLevelStatsViewControl.Enabled = false;
+            this.perLevelStatsViewControl.Location = new System.Drawing.Point(168, 37);
+            this.perLevelStatsViewControl.Name = "perLevelStatsViewControl";
+            this.perLevelStatsViewControl.Size = new System.Drawing.Size(80, 168);
+            this.perLevelStatsViewControl.TabIndex = 27;
+            // 
+            // baseStatsViewControl
+            // 
+            this.baseStatsViewControl.DisplayedItem = null;
+            this.baseStatsViewControl.Enabled = false;
+            this.baseStatsViewControl.Location = new System.Drawing.Point(72, 37);
+            this.baseStatsViewControl.Name = "baseStatsViewControl";
+            this.baseStatsViewControl.Size = new System.Drawing.Size(80, 168);
+            this.baseStatsViewControl.TabIndex = 26;
             // 
             // label10
             // 
@@ -190,30 +209,41 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.newGamePlusCheckBox);
             this.groupBox2.Controls.Add(this.label14);
             this.groupBox2.Controls.Add(this.internalNameTextBox);
             this.groupBox2.Location = new System.Drawing.Point(8, 8);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(296, 56);
+            this.groupBox2.Size = new System.Drawing.Size(600, 56);
             this.groupBox2.TabIndex = 8;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Internal Id";
+            this.groupBox2.Text = "Identity";
+            // 
+            // newGamePlusCheckBox
+            // 
+            this.newGamePlusCheckBox.AutoSize = true;
+            this.newGamePlusCheckBox.Location = new System.Drawing.Point(320, 24);
+            this.newGamePlusCheckBox.Name = "newGamePlusCheckBox";
+            this.newGamePlusCheckBox.Size = new System.Drawing.Size(102, 17);
+            this.newGamePlusCheckBox.TabIndex = 9;
+            this.newGamePlusCheckBox.Text = "New Game Plus";
+            this.newGamePlusCheckBox.UseVisualStyleBackColor = true;
             // 
             // label14
             // 
             this.label14.AutoSize = true;
             this.label14.Location = new System.Drawing.Point(16, 24);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(57, 13);
+            this.label14.Size = new System.Drawing.Size(19, 13);
             this.label14.TabIndex = 8;
-            this.label14.Text = "Internal Id:";
+            this.label14.Text = "Id:";
             // 
             // internalNameTextBox
             // 
-            this.internalNameTextBox.Location = new System.Drawing.Point(80, 21);
+            this.internalNameTextBox.Location = new System.Drawing.Point(40, 21);
             this.internalNameTextBox.Name = "internalNameTextBox";
             this.internalNameTextBox.ReadOnly = true;
-            this.internalNameTextBox.Size = new System.Drawing.Size(200, 20);
+            this.internalNameTextBox.Size = new System.Drawing.Size(240, 20);
             this.internalNameTextBox.TabIndex = 7;
             this.internalNameTextBox.Text = "(display name)";
             // 
@@ -227,25 +257,52 @@
             this.spawnsGroupBox.TabStop = false;
             this.spawnsGroupBox.Text = "Spawns";
             // 
+            // spawnListViewControl
+            // 
+            this.spawnListViewControl.DisplayedItem = null;
+            this.spawnListViewControl.Enabled = false;
+            this.spawnListViewControl.Location = new System.Drawing.Point(16, 24);
+            this.spawnListViewControl.Name = "spawnListViewControl";
+            this.spawnListViewControl.Size = new System.Drawing.Size(272, 144);
+            this.spawnListViewControl.TabIndex = 0;
+            // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.typesListView);
-            this.groupBox1.Location = new System.Drawing.Point(8, 240);
+            this.groupBox1.Location = new System.Drawing.Point(8, 272);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(128, 176);
             this.groupBox1.TabIndex = 10;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Types";
             // 
+            // typesListView
+            // 
+            this.typesListView.DisplayedItem = null;
+            this.typesListView.Enabled = false;
+            this.typesListView.Location = new System.Drawing.Point(16, 24);
+            this.typesListView.Name = "typesListView";
+            this.typesListView.Size = new System.Drawing.Size(96, 144);
+            this.typesListView.TabIndex = 11;
+            // 
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.immunitiesListView);
-            this.groupBox3.Location = new System.Drawing.Point(144, 240);
+            this.groupBox3.Location = new System.Drawing.Point(144, 272);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(128, 176);
             this.groupBox3.TabIndex = 11;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Immunities";
+            // 
+            // immunitiesListView
+            // 
+            this.immunitiesListView.DisplayedItem = null;
+            this.immunitiesListView.Enabled = false;
+            this.immunitiesListView.Location = new System.Drawing.Point(16, 24);
+            this.immunitiesListView.Name = "immunitiesListView";
+            this.immunitiesListView.Size = new System.Drawing.Size(96, 144);
+            this.immunitiesListView.TabIndex = 11;
             // 
             // groupBox4
             // 
@@ -266,6 +323,13 @@
             this.label13.Size = new System.Drawing.Size(103, 13);
             this.label13.TabIndex = 9;
             this.label13.Text = "Selection box offset:";
+            // 
+            // selectionBoxOffsetViewControl
+            // 
+            this.selectionBoxOffsetViewControl.Location = new System.Drawing.Point(120, 21);
+            this.selectionBoxOffsetViewControl.Name = "selectionBoxOffsetViewControl";
+            this.selectionBoxOffsetViewControl.Size = new System.Drawing.Size(128, 24);
+            this.selectionBoxOffsetViewControl.TabIndex = 12;
             // 
             // deathSoundTextBox
             // 
@@ -347,12 +411,21 @@
             // groupBox8
             // 
             this.groupBox8.Controls.Add(this.resistanceListViewControl);
-            this.groupBox8.Location = new System.Drawing.Point(280, 240);
+            this.groupBox8.Location = new System.Drawing.Point(280, 272);
             this.groupBox8.Name = "groupBox8";
             this.groupBox8.Size = new System.Drawing.Size(328, 176);
             this.groupBox8.TabIndex = 13;
             this.groupBox8.TabStop = false;
             this.groupBox8.Text = "Resistances";
+            // 
+            // resistanceListViewControl
+            // 
+            this.resistanceListViewControl.DisplayedItem = null;
+            this.resistanceListViewControl.Enabled = false;
+            this.resistanceListViewControl.Location = new System.Drawing.Point(16, 24);
+            this.resistanceListViewControl.Name = "resistanceListViewControl";
+            this.resistanceListViewControl.Size = new System.Drawing.Size(304, 144);
+            this.resistanceListViewControl.TabIndex = 12;
             // 
             // tabPage2
             // 
@@ -458,67 +531,6 @@
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Graphics";
             // 
-            // resistanceListViewControl
-            // 
-            this.resistanceListViewControl.DisplayedItem = null;
-            this.resistanceListViewControl.Enabled = false;
-            this.resistanceListViewControl.Location = new System.Drawing.Point(16, 24);
-            this.resistanceListViewControl.Name = "resistanceListViewControl";
-            this.resistanceListViewControl.Size = new System.Drawing.Size(304, 144);
-            this.resistanceListViewControl.TabIndex = 12;
-            // 
-            // typesListView
-            // 
-            this.typesListView.DisplayedItem = null;
-            this.typesListView.Enabled = false;
-            this.typesListView.Location = new System.Drawing.Point(16, 24);
-            this.typesListView.Name = "typesListView";
-            this.typesListView.Size = new System.Drawing.Size(96, 144);
-            this.typesListView.TabIndex = 11;
-            // 
-            // immunitiesListView
-            // 
-            this.immunitiesListView.DisplayedItem = null;
-            this.immunitiesListView.Enabled = false;
-            this.immunitiesListView.Location = new System.Drawing.Point(16, 24);
-            this.immunitiesListView.Name = "immunitiesListView";
-            this.immunitiesListView.Size = new System.Drawing.Size(96, 144);
-            this.immunitiesListView.TabIndex = 11;
-            // 
-            // perLevelStatsViewControl
-            // 
-            this.perLevelStatsViewControl.DisplayedItem = null;
-            this.perLevelStatsViewControl.Enabled = false;
-            this.perLevelStatsViewControl.Location = new System.Drawing.Point(168, 37);
-            this.perLevelStatsViewControl.Name = "perLevelStatsViewControl";
-            this.perLevelStatsViewControl.Size = new System.Drawing.Size(80, 168);
-            this.perLevelStatsViewControl.TabIndex = 27;
-            // 
-            // baseStatsViewControl
-            // 
-            this.baseStatsViewControl.DisplayedItem = null;
-            this.baseStatsViewControl.Enabled = false;
-            this.baseStatsViewControl.Location = new System.Drawing.Point(72, 37);
-            this.baseStatsViewControl.Name = "baseStatsViewControl";
-            this.baseStatsViewControl.Size = new System.Drawing.Size(80, 168);
-            this.baseStatsViewControl.TabIndex = 26;
-            // 
-            // spawnListViewControl
-            // 
-            this.spawnListViewControl.DisplayedItem = null;
-            this.spawnListViewControl.Enabled = false;
-            this.spawnListViewControl.Location = new System.Drawing.Point(16, 24);
-            this.spawnListViewControl.Name = "spawnListViewControl";
-            this.spawnListViewControl.Size = new System.Drawing.Size(272, 144);
-            this.spawnListViewControl.TabIndex = 0;
-            // 
-            // selectionBoxOffsetViewControl
-            // 
-            this.selectionBoxOffsetViewControl.Location = new System.Drawing.Point(120, 21);
-            this.selectionBoxOffsetViewControl.Name = "selectionBoxOffsetViewControl";
-            this.selectionBoxOffsetViewControl.Size = new System.Drawing.Size(128, 24);
-            this.selectionBoxOffsetViewControl.TabIndex = 12;
-            // 
             // EnemyViewControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -594,5 +606,6 @@
         private System.Windows.Forms.TextBox displayNameTextBox;
         private System.Windows.Forms.GroupBox groupBox8;
         private Resistances.ResistanceListViewControl resistanceListViewControl;
+        private System.Windows.Forms.CheckBox newGamePlusCheckBox;
     }
 }

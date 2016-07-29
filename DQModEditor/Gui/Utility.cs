@@ -39,7 +39,7 @@ namespace DQModEditor.Gui
             }
         }
 
-        internal static ModLoadInformation ShowLoadModDialog()
+        internal static ModLoader ShowLoadModDialog()
         {
             FolderBrowserDialog dialog = new FolderBrowserDialog();
             dialog.SelectedPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
@@ -47,8 +47,7 @@ namespace DQModEditor.Gui
             dialog.Description = "Select mod folder";
             if (dialog.ShowDialog() != DialogResult.OK) return null;
 
-            ModDirectoryParser parser = new ModDirectoryParser(dialog.SelectedPath);
-            return new ModLoadInformation(parser.Load(), dialog.SelectedPath);
+            return new ModLoader(dialog.SelectedPath);
         }
 
         /// <summary>

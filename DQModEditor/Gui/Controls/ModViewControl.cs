@@ -16,7 +16,7 @@ namespace DQModEditor.Gui.Controls
     /// <summary>
     /// Control that displays a mod.
     /// </summary>
-    internal partial class ModViewControl : ViewControl<ModLoadInformation>
+    internal partial class ModViewControl : ViewControl<ModLoader>
     {
         public ModViewControl()
         {
@@ -25,7 +25,7 @@ namespace DQModEditor.Gui.Controls
             saveButton.Click += SaveButton_Click;
             openButton.Click += (s, e) =>
             {
-                ModLoadInformation info = Utility.ShowLoadModDialog();
+                ModLoader info = Utility.ShowLoadModDialog();
                 if (info == null) return;
                 DisplayedItem = info;
             };
@@ -36,8 +36,8 @@ namespace DQModEditor.Gui.Controls
             DisplayedItemChanged += (s, p) =>
             {
                 if (DisplayedItem == null) return;
-                enemyListViewControl.DisplayedItem = DisplayedItem.Mod;
-                modInfoViewControl.DisplayedItem = DisplayedItem.Mod;
+                enemyListViewControl.DisplayedItem = DisplayedItem.LoadedMod;
+                modInfoViewControl.DisplayedItem = DisplayedItem.LoadedMod;
             };
         }
 
@@ -48,8 +48,7 @@ namespace DQModEditor.Gui.Controls
             //focus manually causes events to fire on other controls which we can hook in order to manually force the data binding to update the model object.
             toolStrip.Focus();
 
-            ModDirectoryParser parser = new ModDirectoryParser(DisplayedItem.DirectoryPath);
-            parser.Save(DisplayedItem.Mod);
+            DisplayedItem.StableSave();
         }
     }
 }

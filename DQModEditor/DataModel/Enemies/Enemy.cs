@@ -15,13 +15,13 @@ using System.Xml.Linq;
 namespace DQModEditor.DataModel.Enemies
 {
     /// <summary>
-    /// Represents the definition for one variation of an enemy type: original, or New Game Plus.
+    /// Represents the definition for one enemy type. The original and NG+ versions of an enemy are represented by separate Enemy objects.
     /// </summary>
-    public class EnemyVariant : INotifyPropertyChanged
+    public class Enemy : INotifyPropertyChanged
     {
-        public EnemyVariant(string internalName)
+        public Enemy(string internalName)
         {
-            InternalName = internalName;
+            Id = internalName;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -29,7 +29,7 @@ namespace DQModEditor.DataModel.Enemies
         public event Action ImmunitiesCollectionChanged;
 
         //Name & Description
-        public string InternalName { get; }
+        public string Id { get; }
         public string DisplayName
         {
             get { return _DisplayName; }
@@ -66,7 +66,7 @@ namespace DQModEditor.DataModel.Enemies
         }
         private string _FlavorDescription = "";
 
-        // Sound & Graphics
+        // Sound
         public string DeathSound
         {
             get { return _DeathSound; }
@@ -79,6 +79,7 @@ namespace DQModEditor.DataModel.Enemies
             }
         }
         private string _DeathSound = "";
+        // Graphics
         public string GraphicId {
             get { return _GraphicId; }
             set
@@ -101,12 +102,37 @@ namespace DQModEditor.DataModel.Enemies
             }
         }
         private string _GraphicSkinId = "";
+        public Point SelectBoxOffset
+        {
+            get { return _SelectBoxOffset; }
+            set
+            {
+                if (_SelectBoxOffset == value) return;
+                _SelectBoxOffset = value;
+                NotifyPropertyChanged();
+            }
+        }
+        private Point _SelectBoxOffset;
 
         //Stats
         public StatSet BaseStats { get; } = new StatSet();
         public StatSet LevelUpIncrement { get; } = new StatSet();
 
         // Misc
+        /// <summary>
+        /// Gets or sets a value indicating whether this is an NG+ or normal enemy.
+        /// </summary>
+        public bool IsNewGamePlus {
+            get { return _IsNewGamePlus; }
+            set
+            {
+                if (_IsNewGamePlus == value) return;
+                _IsNewGamePlus = value;
+                NotifyPropertyChanged();
+            }
+        }
+        private bool _IsNewGamePlus = false;
+
         /// <summary>
         /// Gets a read-only sorted collection containing this enemy's types.
         /// </summary>
@@ -117,17 +143,6 @@ namespace DQModEditor.DataModel.Enemies
         /// </summary>
         public IReadOnlyDictionary<string, string> Immunities => new ReadOnlyDictionary<string, string>(_Immunities);
         private SortedDictionary<string, string> _Immunities = new SortedDictionary<string, string>();
-
-        public Point SelectBoxOffset {
-            get { return _SelectBoxOffset; }
-            set
-            {
-                if (_SelectBoxOffset == value) return;
-                _SelectBoxOffset = value;
-                NotifyPropertyChanged();
-            }
-        }
-        private Point _SelectBoxOffset;
 
         /// <summary>
         /// The enemies spawned by enemies of this type upon death.

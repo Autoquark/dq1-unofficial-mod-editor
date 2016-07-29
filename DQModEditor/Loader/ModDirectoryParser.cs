@@ -13,58 +13,81 @@ using DQModEditor.DataModel;
 namespace DQModEditor.Loader
 {
     /// <summary>
-    /// Saves/loads Mods to/from a directory.
+    /// Manages saving and loading a mod to/from a directory on disk.
     /// </summary>
-    public class ModDirectoryParser : DirectoryParserBase
+    public class ModLoader : DirectoryParserBase
     {
-        public ModDirectoryParser(string modPath) : base(modPath)
+        /// <summary>
+        /// Initializes a new ModLoader that manages the given mod folder.
+        /// </summary>
+        /// <param name="modPath"></param>
+        public ModLoader(string modPath) : base(modPath)
         {
             if (!Directory.Exists(modPath)) throw new ModLoadException("The given path does not exist or is not a directory");
 
             _enemyParser = new EnemyDirectoryParser(modPath);
             _infoFilePath = Path.Combine(ModDirectoryPath, "settings.xml");
-        }
 
-        /// <summary>
-        /// Parses the contents of the mod directory into a Mod object
-        /// </summary>
-        /// <returns></returns>
-        public Mod Load()
-        {
-            // Load mod info
             XElement infoRoot = XElement.Load(_infoFilePath);
-
             string modId = infoRoot.Descendant(_modIdElementName).AttributeValue(_modIdAttributeName);
             string gameName = infoRoot.Descendant(_gameElementName).AttributeValue(_gameNameAttributeName);
-            Mod mod = new Mod(modId, gameName);
+            LoadedMod = new Mod(modId, gameName);
 
-            mod.Title = infoRoot.Descendant(_modTitleElementName).AttributeValue(_modTitleAttributeName);
-            mod.Description = infoRoot.Descendant(_modDescriptionElementName).AttributeValue(_modDescriptionAttributeName);
-            mod.GameVersion = infoRoot.Descendant(_gameElementName).AttributeValue(_gameVersionAttributeName);
-
-            // Load enemies
-            _enemyParser.LoadEnemyInfo(mod);
-
-            return mod;
+            Load();
         }
 
         /// <summary>
-        /// Saves the Mod object to the mod directory. Any additional data in the directory is preserved.
+        /// Gets the currently loaded mod data.
         /// </summary>
-        /// <param name="mod"></param>
-        public void Save(Mod mod)
+        public Mod LoadedMod { get; }
+
+        /// <summary>
+        /// Edits the Mod object from the contents of the mod directory, discarding any changes made to the object in memory.
+        /// </summary>
+        /// <returns></returns>
+        public void Load()
+        {
+            ResetTracker();
+
+            // Load mod info
+            XElement infoRoot = XElement.Load(_infoFilePath);
+            LoadedMod.Title = infoRoot.Descendant(_modTitleElementName).AttributeValue(_modTitleAttributeName);
+            LoadedMod.Description = infoRoot.Descendant(_modDescriptionElementName).AttributeValue(_modDescriptionAttributeName);
+            LoadedMod.GameVersion = infoRoot.Descendant(_gameElementName).AttributeValue(_gameVersionAttributeName);
+
+            // Load enemies
+            _enemyParser.LoadEnemyInfo(LoadedMod);
+        }
+
+        /// <summary>
+        /// Saves changes made to the Mod object to the mod directory. 
+        /// </summary>
+        /// <remarks>
+        /// Changes are merged into existing files so that any additional files in the mod directory or additional XML content in XML
+        /// files is preserved.
+        /// </remarks>
+        /// <param name="_mod"></param>
+        public void StableSave()
         {
             // Save mod info
             XElement infoRoot = XElement.Load(_infoFilePath);
-            infoRoot.Descendant(_modIdElementName).SetAttributeValue(_modIdAttributeName, mod.Id);
-            infoRoot.Descendant(_modTitleElementName).SetAttributeValue(_modTitleAttributeName, mod.Title);
-            infoRoot.Descendant(_modDescriptionElementName).SetAttributeValue(_modDescriptionAttributeName, mod.Description);
-            infoRoot.Descendant(_gameElementName).SetAttributeValue(_gameNameAttributeName, mod.GameName);
-            infoRoot.Descendant(_gameElementName).SetAttributeValue(_gameVersionAttributeName, mod.GameVersion);
+            infoRoot.Descendant(_modIdElementName).SetAttributeValue(_modIdAttributeName, LoadedMod.Id);
+            infoRoot.Descendant(_modTitleElementName).SetAttributeValue(_modTitleAttributeName, LoadedMod.Title);
+            infoRoot.Descendant(_modDescriptionElementName).SetAttributeValue(_modDescriptionAttributeName, LoadedMod.Description);
+            infoRoot.Descendant(_gameElementName).SetAttributeValue(_gameNameAttributeName, LoadedMod.GameName);
+            infoRoot.Descendant(_gameElementName).SetAttributeValue(_gameVersionAttributeName, LoadedMod.GameVersion);
             infoRoot.Save(_infoFilePath);
 
             // Save enemies
-            _enemyParser.SaveEnemyInfo(mod);
+            _enemyParser.StableSave(LoadedMod, _tracker);
+
+            ResetTracker();
+        }
+
+        private void ResetTracker()
+        {
+            _tracker?.Dispose();
+            _tracker = new StableSaveTracker(LoadedMod);
         }
 
         private readonly string _modIdElementName = "mod";
@@ -79,5 +102,6 @@ namespace DQModEditor.Loader
 
         private readonly EnemyDirectoryParser _enemyParser;
         private readonly string _infoFilePath;
+        private StableSaveTracker _tracker;
     }
 }

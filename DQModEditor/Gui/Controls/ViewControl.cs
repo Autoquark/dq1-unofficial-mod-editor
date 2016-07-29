@@ -9,7 +9,7 @@ using System.Windows.Forms;
 namespace DQModEditor.Gui.Controls
 {
     /// <summary>
-    /// Base class for user controls that display and object of a given type T.
+    /// Base class for user controls that display an object of a given type T.
     /// </summary>
     /// <remarks>
     /// Should be abstract, but having a user control type inherit directly from an abstract class breaks the forms designer.

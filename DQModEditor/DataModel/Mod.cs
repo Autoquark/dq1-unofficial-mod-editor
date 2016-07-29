@@ -66,27 +66,19 @@ namespace DQModEditor.DataModel
         }
         private string _Description = "";
 
-
-        public delegate void EnemyAddedHandler(EnemyVariant enemy);
+        public delegate void EnemyAddedHandler(Enemy enemy);
         public event EnemyAddedHandler EnemyCollectionChanged;
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public EnemyVariant GetEnemyByIdOrNull(string id)
+        public void AddEnemy(Enemy enemy)
         {
-            EnemyVariant e;
-            _enemiesByInternalName.TryGetValue(id, out e);
-            return e;
-        }
-
-        public void AddEnemy(EnemyVariant enemy)
-        {
-            _enemiesByInternalName.Add(enemy.InternalName, enemy);
+            _enemiesByInternalName.Add(enemy.Id, enemy);
             EnemyCollectionChanged?.Invoke(enemy);
         }
 
-        public IReadOnlyDictionary<string, EnemyVariant> EnemiesByInternalName 
-            => new ReadOnlyDictionary<string, EnemyVariant>(_enemiesByInternalName);
-        private SortedDictionary<string, EnemyVariant> _enemiesByInternalName = new SortedDictionary<string, EnemyVariant>();
+        public IReadOnlyDictionary<string, Enemy> EnemiesByInternalName 
+            => new ReadOnlyDictionary<string, Enemy>(_enemiesByInternalName);
+        private SortedDictionary<string, Enemy> _enemiesByInternalName = new SortedDictionary<string, Enemy>();
 
         private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
         {

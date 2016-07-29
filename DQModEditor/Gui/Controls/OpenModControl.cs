@@ -18,7 +18,7 @@ namespace DQModEditor.Gui.Controls
     /// </summary>
     internal partial class OpenModControl : UserControl
     {
-        internal event Action<ModLoadInformation> ModLoaded;
+        internal event Action<ModLoader> ModLoaded;
 
         internal OpenModControl()
         {
@@ -26,7 +26,7 @@ namespace DQModEditor.Gui.Controls
 
             loadModButton.Click += (s, e) =>
             {
-                ModLoadInformation info = Utility.ShowLoadModDialog();
+                ModLoader info = Utility.ShowLoadModDialog();
                 if (info == null) return;
                 ModLoaded?.Invoke(info);
             };

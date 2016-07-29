@@ -15,7 +15,7 @@ namespace DQModEditor.Gui.Controls.Enemies
     /// <summary>
     /// Control that displays an enemy definition from a mod.
     /// </summary>
-    internal partial class EnemyViewControl : ViewControl<EnemyVariant>
+    internal partial class EnemyViewControl : ViewControl<Enemy>
     {
         public EnemyViewControl()
         {
@@ -31,7 +31,7 @@ namespace DQModEditor.Gui.Controls.Enemies
             immunitiesListView.AddCommand += (s) => DisplayedItem.AddImmunity(s);
         }
 
-        private void ChangeDisplayedItem(ViewControl<EnemyVariant> source, EnemyVariant previous)
+        private void ChangeDisplayedItem(ViewControl<Enemy> source, Enemy previous)
         {
             if (previous != null)
             {
@@ -42,9 +42,11 @@ namespace DQModEditor.Gui.Controls.Enemies
 
             if (DisplayedItem != null)
             {
-                // Text & Description
                 string textPropertyName = nameof(displayNameTextBox.Text);
-                internalNameTextBox.DataBindings.Add(textPropertyName, DisplayedItem, nameof(DisplayedItem.InternalName));
+                // Identity
+                internalNameTextBox.DataBindings.Add(textPropertyName, DisplayedItem, nameof(DisplayedItem.Id));
+                newGamePlusCheckBox.DataBindings.Add(nameof(newGamePlusCheckBox.Checked), DisplayedItem, nameof(DisplayedItem.IsNewGamePlus));
+                // Text & Description
                 displayNameTextBox.DataBindings.Add(textPropertyName, DisplayedItem, nameof(DisplayedItem.DisplayName));
                 flavorNameTextBox.DataBindings.Add(textPropertyName, DisplayedItem, nameof(DisplayedItem.FlavorName));
                 flavorDescriptionTextBox.DataBindings.Add(textPropertyName, DisplayedItem, nameof(DisplayedItem.FlavorDescription));

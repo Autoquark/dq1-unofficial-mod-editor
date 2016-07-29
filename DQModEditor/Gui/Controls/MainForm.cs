@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using DQModEditor.DataModel;
+using DQModEditor.Loader;
 
 namespace DQModEditor.Gui.Controls
 {
@@ -29,9 +30,9 @@ namespace DQModEditor.Gui.Controls
             modViewControl.DisplayedItemChanged += ModViewControl_DisplayedItemChanged;
         }
 
-        private void ModViewControl_DisplayedItemChanged(ViewControl<ModLoadInformation> source, ModLoadInformation previous)
+        private void ModViewControl_DisplayedItemChanged(ViewControl<ModLoader> source, ModLoader previous)
         {
-            Text = Utility.ProgramNameShort + " (" + Utility.VersionString + ") " + (modViewControl.DisplayedItem?.DirectoryPath ?? "");
+            Text = Utility.ProgramNameShort + " (" + Utility.VersionString + ") " + (modViewControl.DisplayedItem?.ModDirectoryPath ?? "");
             if (modViewControl.DisplayedItem == null)
             {
                 openModControl.Visible = true;
@@ -39,11 +40,11 @@ namespace DQModEditor.Gui.Controls
             }
         }
 
-        private void OpenModControl_ModLoaded(ModLoadInformation info)
+        private void OpenModControl_ModLoaded(ModLoader loader)
         {
             openModControl.Visible = false;
             modViewControl.Visible = true;
-            modViewControl.DisplayedItem = info;
+            modViewControl.DisplayedItem = loader;
         }
 
         private readonly OpenModControl openModControl;

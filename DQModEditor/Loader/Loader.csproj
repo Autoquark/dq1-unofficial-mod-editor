@@ -48,6 +48,7 @@
     <Compile Include="ModDirectoryParser.cs" />
     <Compile Include="ModLoadException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StableSaveTracker.cs" />
     <Compile Include="XmlExtensions.cs" />
   </ItemGroup>
   <ItemGroup>

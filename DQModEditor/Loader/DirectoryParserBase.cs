@@ -19,6 +19,6 @@ namespace DQModEditor.Loader
             ModDirectoryPath = modDirectoryPath;
         }
 
-        protected string ModDirectoryPath { get; }
+        public string ModDirectoryPath { get; }
     }
 }

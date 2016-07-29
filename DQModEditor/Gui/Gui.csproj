@@ -139,7 +139,6 @@
     <Compile Include="Controls\StringListViewControl.Designer.cs">
       <DependentUpon>StringListViewControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="ModLoadInformation.cs" />
     <Compile Include="Utility.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

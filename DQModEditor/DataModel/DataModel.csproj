@@ -43,7 +43,7 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Enemies\EnemyVariant.cs" />
+    <Compile Include="Enemies\Enemy.cs" />
     <Compile Include="Enemies\Resistance.cs" />
     <Compile Include="Enemies\StatSet.cs" />
     <Compile Include="Mod.cs" />
