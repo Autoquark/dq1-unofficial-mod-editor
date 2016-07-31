@@ -77,6 +77,8 @@ namespace DQModEditor.Gui.Controls.Enemies
                 graphicsIdTextBox.DataBindings.Add(textPropertyName, DisplayedItem, nameof(DisplayedItem.GraphicId));
                 skinTextBox.DataBindings.Add(textPropertyName, DisplayedItem, nameof(DisplayedItem.GraphicSkinId));
                 deathSoundTextBox.DataBindings.Add(textPropertyName, DisplayedItem, nameof(DisplayedItem.DeathSound));
+                effectOffsetsListViewControl.DataBindings.Add(nameof(effectOffsetsListViewControl.DisplayedItem), DisplayedItem, 
+                    nameof(DisplayedItem.EffectOffsets));
                 // Stats
                 baseStatsViewControl.DisplayedItem = DisplayedItem.BaseStats;
                 perLevelStatsViewControl.DisplayedItem = DisplayedItem.LevelUpIncrement;

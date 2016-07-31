@@ -27,8 +27,8 @@ namespace DQModEditor.Gui.Controls.Enemies.Spawns
             get { return new SpawnLocation(_validX, _validY); }
             set
             {
-                xPosSpinner.Value = value.X;
-                yPosSpinner.Value = value.Y;
+                xPosSpinner.Value = _validX = value.X;
+                yPosSpinner.Value = _validY = value.Y;
             }
         }
         private decimal _validX;

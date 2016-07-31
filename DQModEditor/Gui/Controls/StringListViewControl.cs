@@ -50,13 +50,8 @@ namespace DQModEditor.Gui.Controls
             (listBox.DataSource as BindingSource)?.Dispose();
 
             // Because when the collection is empty, the list box seems to call ToString() on the collection instance and display that as an item.
-            if (DisplayedItem != null && DisplayedItem.Count != 0)
-            {
-                listBox.DataSource = new BindingSource(DisplayedItem, null);
-                // Because setting the DataSource when the dictionary is empty seems to reset DisplayMember to "", we set 
-                // DisplayMember on every change.
-                listBox.DisplayMember = nameof(KeyValuePair<string, string>.Key);
-            } else listBox.DataSource = null;
+            if (DisplayedItem != null && DisplayedItem.Count != 0) listBox.DataSource = new BindingSource(DisplayedItem, null);
+            else listBox.DataSource = null;
         }
     }
 }

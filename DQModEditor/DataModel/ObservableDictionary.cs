@@ -57,7 +57,7 @@ namespace DQModEditor.DataModel
 
         public bool Remove(TKey key)
         {
-            if (_dictionary.ContainsKey(key)) return false;
+            if (!_dictionary.ContainsKey(key)) return false;
             KeyValuePair<TKey, TValue> old = new KeyValuePair<TKey, TValue>(key, this[key]);
             _dictionary.Remove(key);
             CollectionChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, old));

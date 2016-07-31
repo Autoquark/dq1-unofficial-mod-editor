@@ -25,8 +25,8 @@ namespace DQModEditor.Gui.Controls
             get { return new DataModel.Point(_validX, _validY); }
             set
             {
-                xPosSpinner.Value = value.X;
-                yPosSpinner.Value = value.Y;
+                xPosSpinner.Value = _validX = value.X;
+                yPosSpinner.Value = _validY = value.Y;
             }
         }
         private int _validX;

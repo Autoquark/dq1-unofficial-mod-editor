@@ -114,8 +114,7 @@ namespace DQModEditor.DataModel.Enemies
             }
         }
         private Point _SelectBoxOffset;
-        public IReadOnlyDictionary<string, Point> EffectOffsets => _EffectOffsets;
-        private SortedDictionary<string, Point> _EffectOffsets = new SortedDictionary<string, Point>();
+        public ObservableDictionary<string, Point> EffectOffsets { get; } = new ObservableDictionary<string, Point>(new Dictionary<string, Point>());
 
         //Stats
         public StatSet BaseStats { get; } = new StatSet();

@@ -41,6 +41,7 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.viewCorrespondingButton = new System.Windows.Forms.Button();
             this.newGamePlusCheckBox = new System.Windows.Forms.CheckBox();
             this.label14 = new System.Windows.Forms.Label();
             this.internalNameTextBox = new System.Windows.Forms.TextBox();
@@ -51,6 +52,7 @@
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.immunitiesListView = new DQModEditor.Gui.Controls.StringListViewControl();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.effectOffsetsListViewControl = new DQModEditor.Gui.Controls.Enemies.Graphics.EffectOffsetsListViewControl();
             this.label13 = new System.Windows.Forms.Label();
             this.selectionBoxOffsetViewControl = new DQModEditor.Gui.Controls.PointViewControl();
             this.deathSoundTextBox = new System.Windows.Forms.TextBox();
@@ -73,7 +75,6 @@
             this.displayNameTextBox = new System.Windows.Forms.TextBox();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.viewCorrespondingButton = new System.Windows.Forms.Button();
             this.statsGroupBox.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.spawnsGroupBox.SuspendLayout();
@@ -129,6 +130,7 @@
             // 
             // perLevelStatsViewControl
             // 
+            this.perLevelStatsViewControl.Context = null;
             this.perLevelStatsViewControl.DisplayedItem = null;
             this.perLevelStatsViewControl.Enabled = false;
             this.perLevelStatsViewControl.Location = new System.Drawing.Point(168, 37);
@@ -138,6 +140,7 @@
             // 
             // baseStatsViewControl
             // 
+            this.baseStatsViewControl.Context = null;
             this.baseStatsViewControl.DisplayedItem = null;
             this.baseStatsViewControl.Enabled = false;
             this.baseStatsViewControl.Location = new System.Drawing.Point(72, 37);
@@ -221,6 +224,15 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Identity";
             // 
+            // viewCorrespondingButton
+            // 
+            this.viewCorrespondingButton.Location = new System.Drawing.Point(448, 20);
+            this.viewCorrespondingButton.Name = "viewCorrespondingButton";
+            this.viewCorrespondingButton.Size = new System.Drawing.Size(112, 23);
+            this.viewCorrespondingButton.TabIndex = 10;
+            this.viewCorrespondingButton.Text = "View Corresponding";
+            this.viewCorrespondingButton.UseVisualStyleBackColor = true;
+            // 
             // newGamePlusCheckBox
             // 
             this.newGamePlusCheckBox.AutoSize = true;
@@ -261,6 +273,7 @@
             // 
             // spawnListViewControl
             // 
+            this.spawnListViewControl.Context = null;
             this.spawnListViewControl.DisplayedItem = null;
             this.spawnListViewControl.Enabled = false;
             this.spawnListViewControl.Location = new System.Drawing.Point(16, 24);
@@ -280,6 +293,7 @@
             // 
             // typesListView
             // 
+            this.typesListView.Context = null;
             this.typesListView.DisplayedItem = null;
             this.typesListView.Enabled = false;
             this.typesListView.Location = new System.Drawing.Point(16, 24);
@@ -299,6 +313,7 @@
             // 
             // immunitiesListView
             // 
+            this.immunitiesListView.Context = null;
             this.immunitiesListView.DisplayedItem = null;
             this.immunitiesListView.Enabled = false;
             this.immunitiesListView.Location = new System.Drawing.Point(16, 24);
@@ -308,6 +323,7 @@
             // 
             // groupBox4
             // 
+            this.groupBox4.Controls.Add(this.effectOffsetsListViewControl);
             this.groupBox4.Controls.Add(this.label13);
             this.groupBox4.Controls.Add(this.selectionBoxOffsetViewControl);
             this.groupBox4.Location = new System.Drawing.Point(320, 10);
@@ -316,6 +332,16 @@
             this.groupBox4.TabIndex = 13;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Offsets";
+            // 
+            // effectOffsetsListViewControl
+            // 
+            this.effectOffsetsListViewControl.Context = null;
+            this.effectOffsetsListViewControl.DisplayedItem = null;
+            this.effectOffsetsListViewControl.Enabled = false;
+            this.effectOffsetsListViewControl.Location = new System.Drawing.Point(24, 48);
+            this.effectOffsetsListViewControl.Name = "effectOffsetsListViewControl";
+            this.effectOffsetsListViewControl.Size = new System.Drawing.Size(256, 144);
+            this.effectOffsetsListViewControl.TabIndex = 13;
             // 
             // label13
             // 
@@ -422,6 +448,7 @@
             // 
             // resistanceListViewControl
             // 
+            this.resistanceListViewControl.Context = null;
             this.resistanceListViewControl.DisplayedItem = null;
             this.resistanceListViewControl.Enabled = false;
             this.resistanceListViewControl.Location = new System.Drawing.Point(16, 24);
@@ -533,15 +560,6 @@
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Graphics";
             // 
-            // viewCorrespondingButton
-            // 
-            this.viewCorrespondingButton.Location = new System.Drawing.Point(448, 20);
-            this.viewCorrespondingButton.Name = "viewCorrespondingButton";
-            this.viewCorrespondingButton.Size = new System.Drawing.Size(112, 23);
-            this.viewCorrespondingButton.TabIndex = 10;
-            this.viewCorrespondingButton.Text = "View Corresponding";
-            this.viewCorrespondingButton.UseVisualStyleBackColor = true;
-            // 
             // EnemyViewControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -619,5 +637,6 @@
         private Resistances.ResistanceListViewControl resistanceListViewControl;
         private System.Windows.Forms.CheckBox newGamePlusCheckBox;
         private System.Windows.Forms.Button viewCorrespondingButton;
+        private Graphics.EffectOffsetsListViewControl effectOffsetsListViewControl;
     }
 }

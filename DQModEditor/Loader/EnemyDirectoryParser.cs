@@ -113,6 +113,12 @@ namespace DQModEditor.Loader
             enemy.GraphicSkinId = graphicsElement.AttributeValueOrNull(_graphicSkinAttributeName);
             XElement offsetElement = root.Descendant(_selectBoxOffsetElementName);
             if (offsetElement != null) enemy.SelectBoxOffset = CreatePointFromXml(offsetElement);
+            XElement effectOffsetsElement = root.Descendant(_effectOffsetListElementName);
+            if(effectOffsetsElement != null)
+            {
+                foreach(XElement e in effectOffsetsElement.Descendants(_effectOffsetElementName))
+                    enemy.EffectOffsets.Add(e.AttributeValue(_effectOffsetsIdAttributeName), CreatePointFromXml(e));
+            }
 
             // Stats
             enemy.BaseStats.SetFrom(CreateStatSetFromXml(root.Descendant(_statsElementName)));
@@ -197,6 +203,16 @@ namespace DQModEditor.Loader
             root.EnsureDescendant(_soundsElementName).SetAttributeValue(_deathSoundAttributeName, enemy.DeathSound);
             root.EnsureDescendant(_graphicElementName).SetAttributeValue(_graphicIdAttributeName, enemy.GraphicId);
             root.Descendant(_graphicElementName).SetAttributeValue(_graphicSkinAttributeName, enemy.GraphicSkinId);
+
+            XElement offsetListElement = root.EnsureDescendant(_effectOffsetListElementName);
+            foreach (XElement offsetElement in offsetListElement.Descendants(_effectOffsetElementName).ToList()) offsetElement.Remove();
+            foreach (KeyValuePair<string, Point> offset in enemy.EffectOffsets)
+            {
+                XElement offsetElement = new XElement(XName.Get(_effectOffsetElementName));
+                offsetElement.SetAttributeValue(_effectOffsetsIdAttributeName, offset.Key);
+                EditXmlFromPoint(offset.Value, offsetElement);
+                offsetListElement.Add(offsetElement);
+            }
             // Stats
             EditXmlFromStatSet(enemy.BaseStats, root.Descendant(_statsElementName));
             EditXmlFromStatSet(enemy.LevelUpIncrement, root.Descendant(_levelupElementName));
@@ -287,6 +303,9 @@ namespace DQModEditor.Loader
         private readonly static string _graphicSkinAttributeName = "skin";
         private readonly static string _soundsElementName = "sounds";
         private readonly static string _deathSoundAttributeName = "death";
+        private readonly static string _effectOffsetListElementName = "effect_offset";
+        private readonly static string _effectOffsetElementName = "effect";
+        private readonly static string _effectOffsetsIdAttributeName = "id";
         // Stats
         private readonly static string _statsElementName = "stats";
         private readonly static string _levelupElementName = "levelup";
