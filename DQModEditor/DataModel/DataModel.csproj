@@ -47,6 +47,8 @@
     <Compile Include="Enemies\Resistance.cs" />
     <Compile Include="Enemies\StatSet.cs" />
     <Compile Include="Mod.cs" />
+    <Compile Include="ObservableDictionary.cs" />
+    <Compile Include="ObservableSet.cs" />
     <Compile Include="Point.cs" />
     <Compile Include="SpawnInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

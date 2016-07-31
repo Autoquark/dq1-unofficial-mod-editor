@@ -37,7 +37,7 @@ namespace DQModEditor.Gui.Controls.Enemies
 
             if (DisplayedItem != null)
             {
-                enemiesListBox.DataSource = new BindingSource(DisplayedItem.EnemiesByInternalName, null);
+                enemiesListBox.DataSource = new BindingSource(DisplayedItem.EnemiesById, null);
                 DisplayedItem.EnemyCollectionChanged += DisplayedItem_EnemyAdded;
             }
         }
@@ -45,7 +45,7 @@ namespace DQModEditor.Gui.Controls.Enemies
         private void DisplayedItem_EnemyAdded(Enemy enemy)
         {
             ((BindingSource)enemiesListBox.DataSource).DataSource = null;
-            ((BindingSource)enemiesListBox.DataSource).DataSource = DisplayedItem.EnemiesByInternalName;
+            ((BindingSource)enemiesListBox.DataSource).DataSource = DisplayedItem.EnemiesById;
         }
     }
 }

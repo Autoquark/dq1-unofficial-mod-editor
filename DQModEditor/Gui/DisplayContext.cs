@@ -19,10 +19,10 @@ namespace DQModEditor.Gui
             CurrentMod = mod;
 
             EnemyIdAutoCompleteCollection = new AutoCompleteStringCollection();
-            EnemyIdAutoCompleteCollection.AddRange(mod.EnemiesByInternalName.Keys.ToArray());
-            mod.EnemyCollectionChanged += e =>
+            EnemyIdAutoCompleteCollection.AddRange(mod.EnemiesById.Keys.ToArray());
+            mod.EnemyCollectionChanged += (e) =>
             {
-                if (mod.EnemiesByInternalName.ContainsKey(e.Id)) EnemyIdAutoCompleteCollection.Add(e.Id);
+                if (mod.EnemiesById.ContainsKey(e.Id)) EnemyIdAutoCompleteCollection.Add(e.Id);
                 else EnemyIdAutoCompleteCollection.Remove(e.Id);
             };
         }

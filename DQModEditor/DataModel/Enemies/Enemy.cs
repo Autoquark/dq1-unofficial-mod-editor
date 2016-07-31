@@ -15,7 +15,7 @@ using System.Xml.Linq;
 namespace DQModEditor.DataModel.Enemies
 {
     /// <summary>
-    /// Represents the definition for one enemy type. The original and NG+ versions of an enemy are represented by separate Enemy objects.
+    /// Represents the definition for one enemy. The original and NG+ versions of an enemy are represented by separate Enemy objects.
     /// </summary>
     public class Enemy : INotifyPropertyChanged
     {
@@ -27,8 +27,7 @@ namespace DQModEditor.DataModel.Enemies
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-        public event Action TypesCollectionChanged;
-        public event Action ImmunitiesCollectionChanged;
+        public event Action EffectOffsetsCollectionChanged;
 
         //Name & Description
         public string Id { get; }
@@ -115,6 +114,8 @@ namespace DQModEditor.DataModel.Enemies
             }
         }
         private Point _SelectBoxOffset;
+        public IReadOnlyDictionary<string, Point> EffectOffsets => _EffectOffsets;
+        private SortedDictionary<string, Point> _EffectOffsets = new SortedDictionary<string, Point>();
 
         //Stats
         public StatSet BaseStats { get; } = new StatSet();
@@ -136,22 +137,20 @@ namespace DQModEditor.DataModel.Enemies
         private bool _IsNewGamePlus = false;
 
         /// <summary>
-        /// Gets a read-only sorted collection containing this enemy's types.
+        /// Gets the collection of types that this enemy is a member of.
         /// </summary>
-        public IReadOnlyDictionary<string, string> Types => new ReadOnlyDictionary<string, string>(_Types);
-        private SortedDictionary<string, string> _Types = new SortedDictionary<string, string>();
+        public ObservableSet<string> Types { get; } = new ObservableSet<string>(new SortedSet<string>());
         /// <summary>
-        /// Gets a read-only sorted collection containing the ids of the flavors that this enemy is immune to.
+        /// Gets the collection of flavors that this enemy is immune to.
         /// </summary>
-        public IReadOnlyDictionary<string, string> Immunities => new ReadOnlyDictionary<string, string>(_Immunities);
-        private SortedDictionary<string, string> _Immunities = new SortedDictionary<string, string>();
+        public ObservableSet<string> Immunities { get; } = new ObservableSet<string>(new SortedSet<string>());
 
         /// <summary>
-        /// The enemies spawned by enemies of this type upon death.
+        /// Gets the collection of objects describing the enemies spawned by this enemy upon death.
         /// </summary>
         public BindingList<SpawnInfo> Spawns { get; } = new BindingList<SpawnInfo>();
         /// <summary>
-        /// This enemy's resistances.
+        /// Gets the collection of this enemy's resistances.
         /// </summary>
         public BindingList<Resistance> Resistances { get; } = new BindingList<Resistance>();
 
@@ -160,42 +159,6 @@ namespace DQModEditor.DataModel.Enemies
             if (IsNewGamePlus && !Id.EndsWith(NewGamePlusIdSuffix)) return null;
             if (IsNewGamePlus) return Id.Substring(0, Id.Length - NewGamePlusIdSuffix.Length).ToString();
             return Id + NewGamePlusIdSuffix;
-        }
-
-        public void AddType(string type)
-        {
-            if (!_Types.ContainsKey(type)) _Types.Add(type, type);
-            TypesCollectionChanged?.Invoke();
-        }
-
-        public void RemoveType(string type)
-        {
-            _Types.Remove(type);
-            TypesCollectionChanged?.Invoke();
-        }
-
-        public void ClearTypes()
-        {
-            _Types.Clear();
-            TypesCollectionChanged?.Invoke();
-        }
-
-        public void AddImmunity(string immunity)
-        {
-            if (!_Immunities.ContainsKey(immunity)) _Immunities.Add(immunity, immunity);
-            ImmunitiesCollectionChanged?.Invoke();
-        }
-
-        public void RemoveImmunity(string immunity)
-        {
-            _Immunities.Remove(immunity);
-            ImmunitiesCollectionChanged?.Invoke();
-        }
-
-        public void ClearImmunities()
-        {
-            _Immunities.Clear();
-            ImmunitiesCollectionChanged?.Invoke();
         }
 
         private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")

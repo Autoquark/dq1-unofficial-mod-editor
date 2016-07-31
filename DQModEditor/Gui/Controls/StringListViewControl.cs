@@ -7,22 +7,28 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using DQModEditor.DataModel;
 
 namespace DQModEditor.Gui.Controls
 {
-    internal partial class StringListViewControl : ViewControl<IReadOnlyDictionary<string, string>>
+    internal partial class StringListViewControl : ViewControl<ObservableSet<string>>
     {
         public StringListViewControl()
         {
             InitializeComponent();
 
-            DisplayedItemChanged += (s, e) => UpdateData();
-            
-            listBox.ValueMember = nameof(KeyValuePair<string, string>.Key);
+            DisplayedItemChanged += (s, previous) =>
+            {
+                if (previous != null) previous.CollectionChanged -= (s2, e) => UpdateData();
+
+                UpdateData();
+                if(DisplayedItem != null) DisplayedItem.CollectionChanged += (s2, e) => UpdateData();
+            };
 
             addButton.Click += (s, e) =>
             {
-                AddCommand?.Invoke(addTextBox.Text);
+                if (addTextBox.Text.Length == 0) return;
+                DisplayedItem.Add(addTextBox.Text);
                 addTextBox.Clear();
             };
             addTextBox.KeyDown += (s, e) =>
@@ -31,28 +37,20 @@ namespace DQModEditor.Gui.Controls
             };
             deleteButton.Click += (s, e) =>
             {
-                if (listBox.SelectedItem != null) DeleteCommand?.Invoke((string)listBox.SelectedValue);
+                if (listBox.SelectedItem != null) DisplayedItem.Remove((string)listBox.SelectedItem);
             };
-            clearButton.Click += (s, e) => ClearCommand?.Invoke();
+            clearButton.Click += (s, e) => DisplayedItem.Clear();
         }
-
-        public delegate void DeleteClickedHandler(string selected);
-        public event DeleteClickedHandler DeleteCommand;
-
-        public delegate void ClearClickedHandler();
-        public event ClearClickedHandler ClearCommand;
-
-        public delegate void AddClickedHandler(string value);
-        public event AddClickedHandler AddCommand;
 
         /// <summary>
         /// Updates the displayed items from the DisplayedItem.
         /// </summary>
-        public void UpdateData()
+        private void UpdateData()
         {
             (listBox.DataSource as BindingSource)?.Dispose();
 
-            if (DisplayedItem != null && DisplayedItem.Count > 0)
+            // Because when the collection is empty, the list box seems to call ToString() on the collection instance and display that as an item.
+            if (DisplayedItem != null && DisplayedItem.Count != 0)
             {
                 listBox.DataSource = new BindingSource(DisplayedItem, null);
                 // Because setting the DataSource when the dictionary is empty seems to reset DisplayMember to "", we set 

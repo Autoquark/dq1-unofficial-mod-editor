@@ -64,11 +64,11 @@ namespace DQModEditor.Loader
             }
 
             // Save normal enemies
-            EditXmlFromEnemies(mod.EnemiesByInternalName.Values.Where(x => !x.IsNewGamePlus).ToDictionary(x => x.Id), enemyRoot);
+            EditXmlFromEnemies(mod.EnemiesById.Values.Where(x => !x.IsNewGamePlus).ToDictionary(x => x.Id), enemyRoot);
             enemyRoot.Save(_enemyXmlPath);
 
             // Save NG+ enemies
-            EditXmlFromEnemies(mod.EnemiesByInternalName.Values.Where(x => x.IsNewGamePlus).ToDictionary(x => x.Id), enemyPlusRoot);
+            EditXmlFromEnemies(mod.EnemiesById.Values.Where(x => x.IsNewGamePlus).ToDictionary(x => x.Id), enemyPlusRoot);
             enemyPlusRoot.Save(_enemyPlusXmlPath);
         }
 
@@ -124,7 +124,7 @@ namespace DQModEditor.Loader
             {
                 foreach (XElement immunityElement in immunitiesRoot.Descendants(_immunityElementName))
                 {
-                    enemy.AddImmunity(immunityElement.AttributeValue(_immunityAttributeName));
+                    enemy.Immunities.Add(immunityElement.AttributeValue(_immunityAttributeName));
                 }
             }
             
@@ -141,7 +141,7 @@ namespace DQModEditor.Loader
             }
 
             // Types
-            foreach (XElement e in root.Descendants(_typeElementName)) enemy.AddType(e.AttributeValue(_typeAttributeName));
+            foreach (XElement e in root.Descendants(_typeElementName)) enemy.Types.Add(e.AttributeValue(_typeAttributeName));
             // Spawns
             foreach (XElement spawnElement in root.Descendants(_spawnsElementName))
             {
@@ -202,7 +202,7 @@ namespace DQModEditor.Loader
             EditXmlFromStatSet(enemy.LevelUpIncrement, root.Descendant(_levelupElementName));
             // Types
             foreach (XElement typeElement in root.Descendants(_typeElementName).ToList()) typeElement.Remove();
-            foreach (string type in enemy.Types.Keys)
+            foreach (string type in enemy.Types)
             {
                 XElement typeElement = new XElement(XName.Get(_typeElementName));
                 typeElement.SetAttributeValue(_typeAttributeName, type);
@@ -211,7 +211,7 @@ namespace DQModEditor.Loader
             // Immunities
             XElement immunityListElement = root.EnsureDescendant(_immunityListElementName);
             foreach (XElement e in immunityListElement.Descendants(_immunityElementName).ToList()) e.Remove();
-            foreach(string immunity in enemy.Immunities.Keys)
+            foreach(string immunity in enemy.Immunities)
             {
                 XElement immunityElement = new XElement(XName.Get(_immunityElementName));
                 immunityElement.SetAttributeValue(_immunityAttributeName, immunity);

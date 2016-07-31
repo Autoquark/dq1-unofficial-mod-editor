@@ -81,11 +81,11 @@ namespace DQModEditor.DataModel
             string s = enemy.GetCorrespondingOtherModeId();
             if (s == null) return null;
             Enemy e;
-            EnemiesByInternalName.TryGetValue(s, out e);
+            EnemiesById.TryGetValue(s, out e);
             return e;
         }
 
-        public IReadOnlyDictionary<string, Enemy> EnemiesByInternalName 
+        public IReadOnlyDictionary<string, Enemy> EnemiesById 
             => new ReadOnlyDictionary<string, Enemy>(_enemiesByInternalName);
         private SortedDictionary<string, Enemy> _enemiesByInternalName = new SortedDictionary<string, Enemy>();
 

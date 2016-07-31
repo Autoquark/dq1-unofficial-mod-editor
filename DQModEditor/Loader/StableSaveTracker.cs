@@ -22,12 +22,12 @@ namespace DQModEditor.Loader
             mod.EnemyCollectionChanged += Mod_EnemyCollectionChanged;
             _mod = mod;
 
-            foreach (Enemy enemy in mod.EnemiesByInternalName.Values) enemy.PropertyChanged += Enemy_PropertyChanged;
+            foreach (Enemy enemy in mod.EnemiesById.Values) enemy.PropertyChanged += Enemy_PropertyChanged;
         }
 
         private void Mod_EnemyCollectionChanged(Enemy enemy)
         {
-            if (_mod.EnemiesByInternalName.ContainsKey(enemy.Id)) enemy.PropertyChanged += Enemy_PropertyChanged;
+            if (_mod.EnemiesById.ContainsKey(enemy.Id)) enemy.PropertyChanged += Enemy_PropertyChanged;
             else enemy.PropertyChanged -= Enemy_PropertyChanged;
         }
 
@@ -59,7 +59,7 @@ namespace DQModEditor.Loader
             if (disposing)
             {
                 _mod.EnemyCollectionChanged -= Mod_EnemyCollectionChanged;
-                foreach (Enemy e in _mod.EnemiesByInternalName.Values) e.PropertyChanged -= Enemy_PropertyChanged;
+                foreach (Enemy e in _mod.EnemiesById.Values) e.PropertyChanged -= Enemy_PropertyChanged;
             }
             _isDisposed = true;
         }

@@ -21,13 +21,6 @@ namespace DQModEditor.Gui.Controls.Enemies
         {
             InitializeComponent();
 
-            typesListView.DeleteCommand += (s) => DisplayedItem.RemoveType(s);
-            typesListView.ClearCommand += () => DisplayedItem.ClearTypes();
-            typesListView.AddCommand += (s) => DisplayedItem.AddType(s);
-            immunitiesListView.DeleteCommand += (s) => DisplayedItem.RemoveImmunity(s);
-            immunitiesListView.ClearCommand += () => DisplayedItem.ClearImmunities();
-            immunitiesListView.AddCommand += (s) => DisplayedItem.AddImmunity(s);
-
             viewCorrespondingButton.Click += ViewCorrespondingButton_Click;
 
             DisplayedItemChanged += ChangeDisplayedItem;
@@ -63,8 +56,6 @@ namespace DQModEditor.Gui.Controls.Enemies
             if (previous != null)
             {
                 Utility.ClearBindings(this);
-                previous.TypesCollectionChanged -= typesListView.UpdateData;
-                previous.ImmunitiesCollectionChanged -= immunitiesListView.UpdateData;
                 previous.PropertyChanged -= (s, e) => UpdateViewCorrespondingEnabled();
             }
 
@@ -95,10 +86,8 @@ namespace DQModEditor.Gui.Controls.Enemies
                 resistanceListViewControl.DisplayedItem = DisplayedItem.Resistances;
                 // Types
                 typesListView.DisplayedItem = DisplayedItem.Types;
-                DisplayedItem.TypesCollectionChanged += typesListView.UpdateData;
                 // Immunities
-                immunitiesListView.DisplayedItem = DisplayedItem.Immunities;
-                DisplayedItem.ImmunitiesCollectionChanged += immunitiesListView.UpdateData;
+               immunitiesListView.DisplayedItem = DisplayedItem.Immunities;
 
                 // View Corresponding
                 UpdateViewCorrespondingEnabled();

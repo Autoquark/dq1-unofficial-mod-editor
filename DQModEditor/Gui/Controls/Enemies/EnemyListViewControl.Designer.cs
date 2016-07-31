@@ -52,6 +52,7 @@
             // 
             // enemyViewControl
             // 
+            this.enemyViewControl.Context = null;
             this.enemyViewControl.DisplayedItem = null;
             this.enemyViewControl.Enabled = false;
             this.enemyViewControl.Location = new System.Drawing.Point(136, 0);
