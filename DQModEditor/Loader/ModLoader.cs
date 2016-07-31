@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
@@ -15,7 +16,7 @@ namespace DQModEditor.Loader
     /// <summary>
     /// Manages saving and loading a mod to/from a directory on disk.
     /// </summary>
-    public class ModLoader : DirectoryParserBase
+    public class ModLoader : DirectoryParserBase, INotifyPropertyChanged
     {
         /// <summary>
         /// Initializes a new ModLoader that manages the given mod folder.
@@ -103,5 +104,7 @@ namespace DQModEditor.Loader
         private readonly EnemyDirectoryParser _enemyParser;
         private readonly string _infoFilePath;
         private StableSaveTracker _tracker;
+
+        public event PropertyChangedEventHandler PropertyChanged;
     }
 }

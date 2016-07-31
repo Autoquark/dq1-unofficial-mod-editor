@@ -76,6 +76,15 @@ namespace DQModEditor.DataModel
             EnemyCollectionChanged?.Invoke(enemy);
         }
 
+        public Enemy GetCorrespondingEnemy(Enemy enemy)
+        {
+            string s = enemy.GetCorrespondingOtherModeId();
+            if (s == null) return null;
+            Enemy e;
+            EnemiesByInternalName.TryGetValue(s, out e);
+            return e;
+        }
+
         public IReadOnlyDictionary<string, Enemy> EnemiesByInternalName 
             => new ReadOnlyDictionary<string, Enemy>(_enemiesByInternalName);
         private SortedDictionary<string, Enemy> _enemiesByInternalName = new SortedDictionary<string, Enemy>();

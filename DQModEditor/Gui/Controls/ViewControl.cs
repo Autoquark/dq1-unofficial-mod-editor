@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -45,6 +46,19 @@ namespace DQModEditor.Gui.Controls
         }
         private T _DisplayedItem;
 
+        public DisplayContext Context
+        {
+            get { return _Context; }
+            set
+            {
+                if (_Context == value) return;
+                DisplayContext previous = _Context;
+                _Context = value;
+                ContextChanged?.Invoke(this, previous);
+            }
+        }
+        private DisplayContext _Context;
+
         /// <summary>
         /// Occurs the value of DisplayedItem changes.
         /// </summary>
@@ -52,5 +66,8 @@ namespace DQModEditor.Gui.Controls
         /// <param name="previous">The previous value of DisplayedItem</param>
         public delegate void DisplayedItemChangedHandler(ViewControl<T> source, T previous);
         public event DisplayedItemChangedHandler DisplayedItemChanged;
+
+        public delegate void ContextChangedHandler(ViewControl<T> source, DisplayContext previous);
+        public event ContextChangedHandler ContextChanged;
     }
 }

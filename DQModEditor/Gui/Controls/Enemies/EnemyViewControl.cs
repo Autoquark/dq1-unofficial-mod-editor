@@ -21,14 +21,39 @@ namespace DQModEditor.Gui.Controls.Enemies
         {
             InitializeComponent();
 
-            DisplayedItemChanged += ChangeDisplayedItem;
-
             typesListView.DeleteCommand += (s) => DisplayedItem.RemoveType(s);
             typesListView.ClearCommand += () => DisplayedItem.ClearTypes();
             typesListView.AddCommand += (s) => DisplayedItem.AddType(s);
             immunitiesListView.DeleteCommand += (s) => DisplayedItem.RemoveImmunity(s);
             immunitiesListView.ClearCommand += () => DisplayedItem.ClearImmunities();
             immunitiesListView.AddCommand += (s) => DisplayedItem.AddImmunity(s);
+
+            viewCorrespondingButton.Click += ViewCorrespondingButton_Click;
+
+            DisplayedItemChanged += ChangeDisplayedItem;
+            ContextChanged += EnemyViewControl_ContextChanged;
+        }
+
+        private void EnemyViewControl_ContextChanged(ViewControl<Enemy> source, DisplayContext previous)
+        {
+            if (previous != null) Context.CurrentMod.EnemyCollectionChanged -= CurrentMod_EnemyCollectionChanged;
+
+            if (Context == null) viewCorrespondingButton.Enabled = false;
+            else
+            {
+                Context.CurrentMod.EnemyCollectionChanged += CurrentMod_EnemyCollectionChanged;
+                UpdateViewCorrespondingEnabled();
+            }
+        }
+
+        private void CurrentMod_EnemyCollectionChanged(Enemy enemy)
+        {
+            UpdateViewCorrespondingEnabled();
+        }
+
+        private void ViewCorrespondingButton_Click(object sender, EventArgs e)
+        {
+            DisplayedItem = Context.CurrentMod.GetCorrespondingEnemy(DisplayedItem);
         }
 
         private void ChangeDisplayedItem(ViewControl<Enemy> source, Enemy previous)
@@ -38,6 +63,7 @@ namespace DQModEditor.Gui.Controls.Enemies
                 Utility.ClearBindings(this);
                 previous.TypesCollectionChanged -= typesListView.UpdateData;
                 previous.ImmunitiesCollectionChanged -= immunitiesListView.UpdateData;
+                previous.PropertyChanged -= (s, e) => UpdateViewCorrespondingEnabled();
             }
 
             if (DisplayedItem != null)
@@ -45,7 +71,9 @@ namespace DQModEditor.Gui.Controls.Enemies
                 string textPropertyName = nameof(displayNameTextBox.Text);
                 // Identity
                 internalNameTextBox.DataBindings.Add(textPropertyName, DisplayedItem, nameof(DisplayedItem.Id));
-                newGamePlusCheckBox.DataBindings.Add(nameof(newGamePlusCheckBox.Checked), DisplayedItem, nameof(DisplayedItem.IsNewGamePlus));
+                // change the update mode, or the change does not take effect until the checkbox loses focus after clicking it
+                newGamePlusCheckBox.DataBindings.Add(nameof(newGamePlusCheckBox.Checked), DisplayedItem, 
+                    nameof(DisplayedItem.IsNewGamePlus), false, DataSourceUpdateMode.OnPropertyChanged);
                 // Text & Description
                 displayNameTextBox.DataBindings.Add(textPropertyName, DisplayedItem, nameof(DisplayedItem.DisplayName));
                 flavorNameTextBox.DataBindings.Add(textPropertyName, DisplayedItem, nameof(DisplayedItem.FlavorName));
@@ -69,7 +97,26 @@ namespace DQModEditor.Gui.Controls.Enemies
                 // Immunities
                 immunitiesListView.DisplayedItem = DisplayedItem.Immunities;
                 DisplayedItem.ImmunitiesCollectionChanged += immunitiesListView.UpdateData;
+
+                // View Corresponding
+                UpdateViewCorrespondingEnabled();
+                DisplayedItem.PropertyChanged += (s, e) => UpdateViewCorrespondingEnabled();
             }
+        }
+
+        private void UpdateViewCorrespondingEnabled()
+        {
+            if(Context == null)
+            {
+                viewCorrespondingButton.Enabled = false;
+                return;
+            }
+            if(Context.CurrentMod.GetCorrespondingEnemy(DisplayedItem) == null)
+            {
+                viewCorrespondingButton.Enabled = false;
+                return;
+            }
+            viewCorrespondingButton.Enabled = true;
         }
     }
 }

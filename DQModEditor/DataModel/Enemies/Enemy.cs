@@ -19,6 +19,8 @@ namespace DQModEditor.DataModel.Enemies
     /// </summary>
     public class Enemy : INotifyPropertyChanged
     {
+        public static string NewGamePlusIdSuffix => "_plus";
+
         public Enemy(string internalName)
         {
             Id = internalName;
@@ -152,6 +154,13 @@ namespace DQModEditor.DataModel.Enemies
         /// This enemy's resistances.
         /// </summary>
         public BindingList<Resistance> Resistances { get; } = new BindingList<Resistance>();
+
+        public string GetCorrespondingOtherModeId()
+        {
+            if (IsNewGamePlus && !Id.EndsWith(NewGamePlusIdSuffix)) return null;
+            if (IsNewGamePlus) return Id.Substring(0, Id.Length - NewGamePlusIdSuffix.Length).ToString();
+            return Id + NewGamePlusIdSuffix;
+        }
 
         public void AddType(string type)
         {

@@ -45,7 +45,7 @@
     </Compile>
     <Compile Include="DirectoryParserBase.cs" />
     <Compile Include="EnemyDirectoryParser.cs" />
-    <Compile Include="ModDirectoryParser.cs" />
+    <Compile Include="ModLoader.cs" />
     <Compile Include="ModLoadException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StableSaveTracker.cs" />

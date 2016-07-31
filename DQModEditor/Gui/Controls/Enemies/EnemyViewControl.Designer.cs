@@ -73,6 +73,7 @@
             this.displayNameTextBox = new System.Windows.Forms.TextBox();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.viewCorrespondingButton = new System.Windows.Forms.Button();
             this.statsGroupBox.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.spawnsGroupBox.SuspendLayout();
@@ -209,6 +210,7 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.viewCorrespondingButton);
             this.groupBox2.Controls.Add(this.newGamePlusCheckBox);
             this.groupBox2.Controls.Add(this.label14);
             this.groupBox2.Controls.Add(this.internalNameTextBox);
@@ -531,6 +533,15 @@
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Graphics";
             // 
+            // viewCorrespondingButton
+            // 
+            this.viewCorrespondingButton.Location = new System.Drawing.Point(448, 20);
+            this.viewCorrespondingButton.Name = "viewCorrespondingButton";
+            this.viewCorrespondingButton.Size = new System.Drawing.Size(112, 23);
+            this.viewCorrespondingButton.TabIndex = 10;
+            this.viewCorrespondingButton.Text = "View Corresponding";
+            this.viewCorrespondingButton.UseVisualStyleBackColor = true;
+            // 
             // EnemyViewControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -607,5 +618,6 @@
         private System.Windows.Forms.GroupBox groupBox8;
         private Resistances.ResistanceListViewControl resistanceListViewControl;
         private System.Windows.Forms.CheckBox newGamePlusCheckBox;
+        private System.Windows.Forms.Button viewCorrespondingButton;
     }
 }
