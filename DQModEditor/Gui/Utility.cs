@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using DQModEditor.Loader;
 using DQModEditor.DataModel;
+using DQModEditor.Gui.Controls;
 
 namespace DQModEditor.Gui
 {
@@ -25,6 +26,16 @@ namespace DQModEditor.Gui
         internal static string ProgramName { get; } = "Defender's Quest Unofficial Mod Editor";
         internal static string ProgramNameShort { get; } = "DQME";
         internal static string VersionString { get; }
+
+        /// <summary>
+        /// Creates a data binding on second that binds the control's display context to that of the first control.
+        /// </summary>
+        internal static void BindDisplayContext<T1, T2>(ViewControl<T1> first, ViewControl<T2> second) where T1 : class 
+            where T2 : class
+        {
+            // Without formattingEnabled = true, this errors. Not sure why
+            second.DataBindings.Add(nameof(second.Context), first, nameof(first.Context), true);
+        }
 
         /// <summary>
         /// Clears the databindings for the children of the given control. Recurses through groupboxes and tabs.

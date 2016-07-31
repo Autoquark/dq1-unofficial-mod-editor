@@ -47,6 +47,8 @@ namespace DQModEditor.Gui.Controls.Enemies.Spawns
                 //Because ListBox.SelectedValueChanged does not seem to fire when we change to displaying an empty list
                 spawnViewControl.DisplayedItem = (SpawnInfo)spawnsListBox.SelectedItem;
             };
+
+            Utility.BindDisplayContext(this, spawnViewControl);
         }
 
         private void CloneButton_Click(object sender, EventArgs e)

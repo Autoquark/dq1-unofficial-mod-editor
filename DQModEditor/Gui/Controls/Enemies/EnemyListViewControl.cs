@@ -25,8 +25,7 @@ namespace DQModEditor.Gui.Controls.Enemies
             enemiesListBox.ValueMember = nameof(KeyValuePair<string, Enemy>.Value);
             enemiesListBox.SelectedValueChanged += (o, e) => { enemyViewControl.DisplayedItem = (Enemy)enemiesListBox.SelectedValue; };
 
-            enemyViewControl.DataBindings.Add(nameof(enemyViewControl.Context), this, nameof(Context), true,
-                DataSourceUpdateMode.OnPropertyChanged);
+            Utility.BindDisplayContext(this, enemyViewControl);
             enemyViewControl.DisplayedItemChanged += (s, e) => enemiesListBox.SelectedValue = enemyViewControl.DisplayedItem;
 
             DisplayedItemChanged += ChangeDisplayedItem;

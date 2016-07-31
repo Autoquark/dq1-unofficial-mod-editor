@@ -31,13 +31,13 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ModViewControl));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.infoTabPage = new System.Windows.Forms.TabPage();
-            this.modInfoViewControl = new DQModEditor.Gui.Controls.ModInfoViewControl();
             this.enemiesTabPage = new System.Windows.Forms.TabPage();
-            this.enemyListViewControl = new DQModEditor.Gui.Controls.Enemies.EnemyListViewControl();
             this.saveButton = new System.Windows.Forms.ToolStripButton();
             this.toolStrip = new System.Windows.Forms.ToolStrip();
             this.openButton = new System.Windows.Forms.ToolStripButton();
             this.closeButton = new System.Windows.Forms.ToolStripButton();
+            this.modInfoViewControl = new DQModEditor.Gui.Controls.ModInfoViewControl();
+            this.enemyListViewControl = new DQModEditor.Gui.Controls.Enemies.EnemyListViewControl();
             this.tabControl1.SuspendLayout();
             this.infoTabPage.SuspendLayout();
             this.enemiesTabPage.SuspendLayout();
@@ -65,13 +65,6 @@
             this.infoTabPage.Text = "Info";
             this.infoTabPage.UseVisualStyleBackColor = true;
             // 
-            // modInfoViewControl1
-            // 
-            this.modInfoViewControl.Location = new System.Drawing.Point(8, 8);
-            this.modInfoViewControl.Name = "modInfoViewControl1";
-            this.modInfoViewControl.Size = new System.Drawing.Size(624, 496);
-            this.modInfoViewControl.TabIndex = 0;
-            // 
             // enemiesTabPage
             // 
             this.enemiesTabPage.Controls.Add(this.enemyListViewControl);
@@ -83,15 +76,6 @@
             this.enemiesTabPage.Text = "Enemies";
             this.enemiesTabPage.UseVisualStyleBackColor = true;
             // 
-            // enemyListViewControl
-            // 
-            this.enemyListViewControl.DisplayedItem = null;
-            this.enemyListViewControl.Enabled = false;
-            this.enemyListViewControl.Location = new System.Drawing.Point(8, 8);
-            this.enemyListViewControl.Name = "enemyListViewControl";
-            this.enemyListViewControl.Size = new System.Drawing.Size(768, 488);
-            this.enemyListViewControl.TabIndex = 0;
-            // 
             // saveButton
             // 
             this.saveButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
@@ -99,6 +83,7 @@
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(35, 22);
             this.saveButton.Text = "Save";
+            this.saveButton.ToolTipText = "Merge changes back into the mod directory";
             // 
             // toolStrip
             // 
@@ -120,6 +105,7 @@
             this.openButton.Name = "openButton";
             this.openButton.Size = new System.Drawing.Size(40, 22);
             this.openButton.Text = "Open";
+            this.openButton.ToolTipText = "Load a different mod, discarding any changes to the current one";
             // 
             // closeButton
             // 
@@ -130,6 +116,27 @@
             this.closeButton.Name = "closeButton";
             this.closeButton.Size = new System.Drawing.Size(40, 22);
             this.closeButton.Text = "Close";
+            this.closeButton.ToolTipText = "Close the current mod";
+            // 
+            // modInfoViewControl
+            // 
+            this.modInfoViewControl.Context = null;
+            this.modInfoViewControl.DisplayedItem = null;
+            this.modInfoViewControl.Enabled = false;
+            this.modInfoViewControl.Location = new System.Drawing.Point(8, 8);
+            this.modInfoViewControl.Name = "modInfoViewControl";
+            this.modInfoViewControl.Size = new System.Drawing.Size(624, 496);
+            this.modInfoViewControl.TabIndex = 0;
+            // 
+            // enemyListViewControl
+            // 
+            this.enemyListViewControl.Context = null;
+            this.enemyListViewControl.DisplayedItem = null;
+            this.enemyListViewControl.Enabled = false;
+            this.enemyListViewControl.Location = new System.Drawing.Point(8, 8);
+            this.enemyListViewControl.Name = "enemyListViewControl";
+            this.enemyListViewControl.Size = new System.Drawing.Size(768, 488);
+            this.enemyListViewControl.TabIndex = 0;
             // 
             // ModViewControl
             // 

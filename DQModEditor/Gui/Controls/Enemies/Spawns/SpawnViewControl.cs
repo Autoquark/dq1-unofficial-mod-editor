@@ -17,6 +17,11 @@ namespace DQModEditor.Gui.Controls.Enemies.Spawns
         {
             InitializeComponent();
 
+            Binding binding = new Binding(nameof(spawnIdTextBox.AutoCompleteCustomSource), this, nameof(Context), true);
+            binding.DataSourceUpdateMode = DataSourceUpdateMode.Never;
+            binding.Format += (s, e) => e.Value = Context?.EnemyIdAutoCompleteCollection;
+            spawnIdTextBox.DataBindings.Add(binding);
+
             DisplayedItemChanged += ChangeDisplayedItem;
         }
 

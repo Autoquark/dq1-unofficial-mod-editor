@@ -32,6 +32,8 @@ namespace DQModEditor.Gui.Controls.Enemies
 
             DisplayedItemChanged += ChangeDisplayedItem;
             ContextChanged += EnemyViewControl_ContextChanged;
+
+            Utility.BindDisplayContext(this, spawnListViewControl);
         }
 
         private void EnemyViewControl_ContextChanged(ViewControl<Enemy> source, DisplayContext previous)

@@ -41,10 +41,8 @@ namespace DQModEditor.Gui.Controls
                 Context = new DisplayContext(DisplayedItem.LoadedMod);
             };
 
-            modInfoViewControl.DataBindings.Add(nameof(modInfoViewControl.Context), this, nameof(Context), true,
-                DataSourceUpdateMode.OnPropertyChanged);
-            enemyListViewControl.DataBindings.Add(nameof(modInfoViewControl.Context), this, nameof(Context), true,
-                DataSourceUpdateMode.OnPropertyChanged);
+            Utility.BindDisplayContext(this, modInfoViewControl);
+            Utility.BindDisplayContext(this, enemyListViewControl);
         }
 
         private void SaveButton_Click(object sender, EventArgs e)

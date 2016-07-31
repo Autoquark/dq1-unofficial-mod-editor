@@ -56,6 +56,8 @@
             // 
             // spawnIdTextBox
             // 
+            this.spawnIdTextBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.spawnIdTextBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.spawnIdTextBox.Location = new System.Drawing.Point(8, 64);
             this.spawnIdTextBox.Name = "spawnIdTextBox";
             this.spawnIdTextBox.Size = new System.Drawing.Size(144, 20);
@@ -86,7 +88,7 @@
             this.spawnLocationViewControl.Size = new System.Drawing.Size(152, 24);
             this.spawnLocationViewControl.TabIndex = 9;
             // 
-            // EnemySpawnViewControl
+            // SpawnViewControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -96,7 +98,7 @@
             this.Controls.Add(this.spawnIdTextBox);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
-            this.Name = "EnemySpawnViewControl";
+            this.Name = "SpawnViewControl";
             this.Size = new System.Drawing.Size(152, 144);
             this.ResumeLayout(false);
             this.PerformLayout();
