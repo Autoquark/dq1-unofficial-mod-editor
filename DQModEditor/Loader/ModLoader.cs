@@ -10,13 +10,15 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
 using DQModEditor.DataModel;
+using DQModEditor.DataModel.Enemies;
+using DQModEditor.DataModel.Graphics;
 
 namespace DQModEditor.Loader
 {
     /// <summary>
     /// Manages saving and loading a mod to/from a directory on disk.
     /// </summary>
-    public class ModLoader : DirectoryParserBase, INotifyPropertyChanged
+    public class ModLoader : DirectoryParserBase
     {
         /// <summary>
         /// Initializes a new ModLoader that manages the given mod folder.
@@ -26,7 +28,8 @@ namespace DQModEditor.Loader
         {
             if (!Directory.Exists(modPath)) throw new ModLoadException("The given path does not exist or is not a directory");
 
-            _enemyParser = new EnemyDirectoryParser(modPath);
+            _enemyLoader = new EnemyDataLoader(modPath);
+            _enemyGraphicsLoader = new EnemyGraphicsDataLoader(modPath);
             _infoFilePath = Path.Combine(ModDirectoryPath, "settings.xml");
 
             XElement infoRoot = XElement.Load(_infoFilePath);
@@ -48,8 +51,6 @@ namespace DQModEditor.Loader
         /// <returns></returns>
         public void Load()
         {
-            ResetTracker();
-
             // Load mod info
             XElement infoRoot = XElement.Load(_infoFilePath);
             LoadedMod.Title = infoRoot.Descendant(_modTitleElementName).AttributeValue(_modTitleAttributeName);
@@ -57,7 +58,9 @@ namespace DQModEditor.Loader
             LoadedMod.GameVersion = infoRoot.Descendant(_gameElementName).AttributeValue(_gameVersionAttributeName);
 
             // Load enemies
-            _enemyParser.LoadEnemyInfo(LoadedMod);
+            _enemyLoader.LoadEnemyInfo(LoadedMod);
+            // Load enemy graphics
+            _enemyGraphicsLoader.LoadEnemyGraphicsInfo(LoadedMod);
         }
 
         /// <summary>
@@ -80,15 +83,7 @@ namespace DQModEditor.Loader
             infoRoot.Save(_infoFilePath);
 
             // Save enemies
-            _enemyParser.StableSave(LoadedMod, _tracker);
-
-            ResetTracker();
-        }
-
-        private void ResetTracker()
-        {
-            _tracker?.Dispose();
-            _tracker = new StableSaveTracker(LoadedMod);
+            _enemyLoader.StableSave(LoadedMod);
         }
 
         private readonly string _modIdElementName = "mod";
@@ -101,10 +96,8 @@ namespace DQModEditor.Loader
         private readonly string _gameNameAttributeName = "name";
         private readonly string _gameVersionAttributeName = "version";
 
-        private readonly EnemyDirectoryParser _enemyParser;
+        private readonly EnemyDataLoader _enemyLoader;
+        private readonly EnemyGraphicsDataLoader _enemyGraphicsLoader;
         private readonly string _infoFilePath;
-        private StableSaveTracker _tracker;
-
-        public event PropertyChangedEventHandler PropertyChanged;
     }
 }

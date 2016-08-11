@@ -15,7 +15,7 @@ namespace DQModEditor.Gui.Controls
     /// <remarks>
     /// Should be abstract, but having a user control type inherit directly from an abstract class breaks the forms designer.
     /// </remarks>
-    internal class ViewControl<T> : UserControl where T : class
+    internal class ViewControl<T> : UserControl, INotifyPropertyChanged where T : class
     {
         protected ViewControl()
         {
@@ -42,6 +42,7 @@ namespace DQModEditor.Gui.Controls
                 Enabled = !(_DisplayedItem == null);
 
                 DisplayedItemChanged?.Invoke(this, previous);
+                NotifyPropertyChanged();
             }
         }
         private T _DisplayedItem;
@@ -55,6 +56,7 @@ namespace DQModEditor.Gui.Controls
                 DisplayContext previous = _Context;
                 _Context = value;
                 ContextChanged?.Invoke(this, previous);
+                NotifyPropertyChanged();
             }
         }
         private DisplayContext _Context;
@@ -69,5 +71,12 @@ namespace DQModEditor.Gui.Controls
 
         public delegate void ContextChangedHandler(ViewControl<T> source, DisplayContext previous);
         public event ContextChangedHandler ContextChanged;
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }

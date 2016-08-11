@@ -23,18 +23,16 @@ namespace DQModEditor.Gui.Controls.Enemies
 
         private void ChangeDisplayedItem(ViewControl<StatSet> source, StatSet previous)
         {
-            if (previous != null) Utility.ClearBindings(this);
-
             if (DisplayedItem != null)
             {
                 string valuePropertyName = nameof(hpSpinner.Value);
-                hpSpinner.DataBindings.Add(valuePropertyName, DisplayedItem, nameof(DisplayedItem.Hp));
-                psiSpinner.DataBindings.Add(valuePropertyName, DisplayedItem, nameof(DisplayedItem.Psi));
-                scrapSpinner.DataBindings.Add(valuePropertyName, DisplayedItem, nameof(DisplayedItem.Scrap));
-                speedSpinner.DataBindings.Add(valuePropertyName, DisplayedItem, nameof(DisplayedItem.Speed));
-                strengthSpinner.DataBindings.Add(valuePropertyName, DisplayedItem, nameof(DisplayedItem.Strength));
-                armorSpinner.DataBindings.Add(valuePropertyName, DisplayedItem, nameof(DisplayedItem.Armor));
-                xpSpinner.DataBindings.Add(valuePropertyName, DisplayedItem, nameof(DisplayedItem.Xp));
+                hpSpinner.SetBinding(valuePropertyName, DisplayedItem, nameof(DisplayedItem.Hp));
+                psiSpinner.SetBinding(valuePropertyName, DisplayedItem, nameof(DisplayedItem.Psi));
+                scrapSpinner.SetBinding(valuePropertyName, DisplayedItem, nameof(DisplayedItem.Scrap));
+                speedSpinner.SetBinding(valuePropertyName, DisplayedItem, nameof(DisplayedItem.Speed));
+                strengthSpinner.SetBinding(valuePropertyName, DisplayedItem, nameof(DisplayedItem.Strength));
+                armorSpinner.SetBinding(valuePropertyName, DisplayedItem, nameof(DisplayedItem.Armor));
+                xpSpinner.SetBinding(valuePropertyName, DisplayedItem, nameof(DisplayedItem.Xp));
             }
         }
     }

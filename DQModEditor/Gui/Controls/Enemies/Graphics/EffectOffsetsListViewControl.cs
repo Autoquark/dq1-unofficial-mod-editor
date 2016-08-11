@@ -8,10 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using DQModEditor.DataModel;
+using DQModEditor.DataModel.Collections;
 
 namespace DQModEditor.Gui.Controls.Enemies.Graphics
 {
-    internal partial class EffectOffsetsListViewControl : ViewControl<ObservableDictionary<string, DataModel.Point>>
+    internal partial class EffectOffsetsListViewControl : ViewControl<ObservableDictionary<string, Point>>
     {
         public EffectOffsetsListViewControl()
         {
@@ -20,7 +21,7 @@ namespace DQModEditor.Gui.Controls.Enemies.Graphics
             listBox.Format += (s, e) =>
             {
                 if (e.Value == null) return;
-                KeyValuePair<string, DataModel.Point> item = (KeyValuePair<string, DataModel.Point>)e.Value;
+                KeyValuePair<string, Point> item = (KeyValuePair<string, Point>)e.Value;
                 e.Value = $"{item.Key}: ({item.Value.X}, {item.Value.Y})";
             };
             listBox.SelectedValueChanged += (s, e) =>
@@ -31,18 +32,18 @@ namespace DQModEditor.Gui.Controls.Enemies.Graphics
                     return;
                 }
                 pointViewControl.Enabled = true;
-                pointViewControl.Value = ((KeyValuePair<string, DataModel.Point>)listBox.SelectedValue).Value;
+                pointViewControl.Value = ((KeyValuePair<string, Point>)listBox.SelectedValue).Value;
             };
             pointViewControl.Validated += (s, e) =>
             {
                 if (listBox.SelectedItem == null) return;
-                KeyValuePair<string, DataModel.Point> selected = (KeyValuePair<string, DataModel.Point>)listBox.SelectedItem;
+                KeyValuePair<string, Point> selected = (KeyValuePair<string, Point>)listBox.SelectedItem;
                 DisplayedItem[selected.Key] = pointViewControl.Value;
             };
             addButton.Click += (s, e) =>
             {
                 if (addTextBox.Text.Length == 0) return;
-                DisplayedItem.Add(addTextBox.Text, new DataModel.Point());
+                DisplayedItem.Add(addTextBox.Text, new Point());
                 addTextBox.Clear();
             };
             addTextBox.KeyDown += (s, e) =>
@@ -51,15 +52,15 @@ namespace DQModEditor.Gui.Controls.Enemies.Graphics
             };
             deleteButton.Click += (s, e) =>
             {
-                if (listBox.SelectedItem != null) DisplayedItem.Remove((KeyValuePair<string, DataModel.Point>)listBox.SelectedItem);
+                if (listBox.SelectedItem != null) DisplayedItem.Remove((KeyValuePair<string, Point>)listBox.SelectedItem);
             };
             clearButton.Click += (s, e) => DisplayedItem.Clear();
 
             DisplayedItemChanged += EffectOffsetsListViewControl_DisplayedItemChanged;
         }
 
-        private void EffectOffsetsListViewControl_DisplayedItemChanged(ViewControl<ObservableDictionary<string, DataModel.Point>> source, 
-            ObservableDictionary<string, DataModel.Point> previous)
+        private void EffectOffsetsListViewControl_DisplayedItemChanged(ViewControl<ObservableDictionary<string, Point>> source, 
+            ObservableDictionary<string, Point> previous)
         {
             if (previous != null) previous.CollectionChanged -= (s, e) => UpdateData();
 

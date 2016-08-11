@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.statsGroupBox = new System.Windows.Forms.GroupBox();
@@ -41,6 +42,7 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label18 = new System.Windows.Forms.Label();
             this.viewCorrespondingButton = new System.Windows.Forms.Button();
             this.newGamePlusCheckBox = new System.Windows.Forms.CheckBox();
             this.label14 = new System.Windows.Forms.Label();
@@ -75,6 +77,7 @@
             this.displayNameTextBox = new System.Windows.Forms.TextBox();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.enemyColorListViewControl = new DQModEditor.Gui.Controls.Enemies.Graphics.EnemyColorListViewControl();
             this.statsGroupBox.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.spawnsGroupBox.SuspendLayout();
@@ -213,6 +216,7 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.label18);
             this.groupBox2.Controls.Add(this.viewCorrespondingButton);
             this.groupBox2.Controls.Add(this.newGamePlusCheckBox);
             this.groupBox2.Controls.Add(this.label14);
@@ -223,6 +227,15 @@
             this.groupBox2.TabIndex = 8;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Identity";
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(336, 24);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(83, 13);
+            this.label18.TabIndex = 11;
+            this.label18.Text = "New Game Plus";
             // 
             // viewCorrespondingButton
             // 
@@ -236,12 +249,12 @@
             // newGamePlusCheckBox
             // 
             this.newGamePlusCheckBox.AutoSize = true;
+            this.newGamePlusCheckBox.Enabled = false;
             this.newGamePlusCheckBox.Location = new System.Drawing.Point(320, 24);
             this.newGamePlusCheckBox.Name = "newGamePlusCheckBox";
-            this.newGamePlusCheckBox.Size = new System.Drawing.Size(102, 17);
+            this.newGamePlusCheckBox.Size = new System.Drawing.Size(15, 14);
             this.newGamePlusCheckBox.TabIndex = 9;
-            this.newGamePlusCheckBox.Text = "New Game Plus";
-            this.newGamePlusCheckBox.UseVisualStyleBackColor = true;
+            this.newGamePlusCheckBox.UseVisualStyleBackColor = false;
             // 
             // label14
             // 
@@ -358,6 +371,7 @@
             this.selectionBoxOffsetViewControl.Name = "selectionBoxOffsetViewControl";
             this.selectionBoxOffsetViewControl.Size = new System.Drawing.Size(128, 24);
             this.selectionBoxOffsetViewControl.TabIndex = 12;
+            this.selectionBoxOffsetViewControl.Value = new System.Drawing.Point(0, 0);
             // 
             // deathSoundTextBox
             // 
@@ -549,16 +563,27 @@
             // 
             // groupBox5
             // 
+            this.groupBox5.Controls.Add(this.enemyColorListViewControl);
             this.groupBox5.Controls.Add(this.label15);
             this.groupBox5.Controls.Add(this.graphicsIdTextBox);
             this.groupBox5.Controls.Add(this.skinTextBox);
             this.groupBox5.Controls.Add(this.label16);
             this.groupBox5.Location = new System.Drawing.Point(8, 232);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(304, 56);
+            this.groupBox5.Size = new System.Drawing.Size(304, 216);
             this.groupBox5.TabIndex = 14;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Graphics";
+            // 
+            // enemyColorListViewControl
+            // 
+            this.enemyColorListViewControl.Context = null;
+            this.enemyColorListViewControl.DisplayedItem = null;
+            this.enemyColorListViewControl.Enabled = false;
+            this.enemyColorListViewControl.Location = new System.Drawing.Point(16, 48);
+            this.enemyColorListViewControl.Name = "enemyColorListViewControl";
+            this.enemyColorListViewControl.Size = new System.Drawing.Size(144, 152);
+            this.enemyColorListViewControl.TabIndex = 16;
             // 
             // EnemyViewControl
             // 
@@ -638,5 +663,7 @@
         private System.Windows.Forms.CheckBox newGamePlusCheckBox;
         private System.Windows.Forms.Button viewCorrespondingButton;
         private Graphics.EffectOffsetsListViewControl effectOffsetsListViewControl;
+        private Graphics.EnemyColorListViewControl enemyColorListViewControl;
+        private System.Windows.Forms.Label label18;
     }
 }

@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
+using DQModEditor.DataModel.Collections;
 
 namespace DQModEditor.DataModel.Enemies
 {
@@ -24,10 +25,12 @@ namespace DQModEditor.DataModel.Enemies
         public Enemy(string internalName)
         {
             Id = internalName;
+            IsNewGamePlus = Id.EndsWith(NewGamePlusIdSuffix);
+            NewGamePlusCorrespondingId = IsNewGamePlus ? (Id.Substring(0, Id.Length - NewGamePlusIdSuffix.Length))
+                : (Id + NewGamePlusIdSuffix);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-        public event Action EffectOffsetsCollectionChanged;
 
         //Name & Description
         public string Id { get; }
@@ -114,7 +117,8 @@ namespace DQModEditor.DataModel.Enemies
             }
         }
         private Point _SelectBoxOffset;
-        public ObservableDictionary<string, Point> EffectOffsets { get; } = new ObservableDictionary<string, Point>(new Dictionary<string, Point>());
+        public ObservableDictionary<string, Point> EffectOffsets { get; } = new ObservableDictionary<string, Point>();
+        public BindingList<Color> Colors { get; } = new BindingList<Color>();
 
         //Stats
         public StatSet BaseStats { get; } = new StatSet();
@@ -122,18 +126,10 @@ namespace DQModEditor.DataModel.Enemies
 
         // Misc
         /// <summary>
-        /// Gets or sets a value indicating whether this is an NG+ or normal enemy.
+        /// Gets a value indicating whether this is an NG+ or normal enemy.
         /// </summary>
-        public bool IsNewGamePlus {
-            get { return _IsNewGamePlus; }
-            set
-            {
-                if (_IsNewGamePlus == value) return;
-                _IsNewGamePlus = value;
-                NotifyPropertyChanged();
-            }
-        }
-        private bool _IsNewGamePlus = false;
+        public bool IsNewGamePlus { get; }
+        public string NewGamePlusCorrespondingId { get; }
 
         /// <summary>
         /// Gets the collection of types that this enemy is a member of.
@@ -152,13 +148,6 @@ namespace DQModEditor.DataModel.Enemies
         /// Gets the collection of this enemy's resistances.
         /// </summary>
         public BindingList<Resistance> Resistances { get; } = new BindingList<Resistance>();
-
-        public string GetCorrespondingOtherModeId()
-        {
-            if (IsNewGamePlus && !Id.EndsWith(NewGamePlusIdSuffix)) return null;
-            if (IsNewGamePlus) return Id.Substring(0, Id.Length - NewGamePlusIdSuffix.Length).ToString();
-            return Id + NewGamePlusIdSuffix;
-        }
 
         private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
         {

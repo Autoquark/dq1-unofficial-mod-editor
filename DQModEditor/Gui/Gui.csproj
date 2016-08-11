@@ -61,6 +61,18 @@
     <Compile Include="Controls\Enemies\Graphics\EffectOffsetsListViewControl.Designer.cs">
       <DependentUpon>EffectOffsetsListViewControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Enemies\Graphics\EnemyColorListViewControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Enemies\Graphics\EnemyColorListViewControl.Designer.cs">
+      <DependentUpon>EnemyColorListViewControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Enemies\Graphics\EnemyLayerColorViewControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Enemies\Graphics\EnemyLayerColorViewControl.Designer.cs">
+      <DependentUpon>EnemyLayerColorViewControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Enemies\Resistances\ResistanceListViewControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -157,6 +169,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\Enemies\Graphics\EffectOffsetsListViewControl.resx">
       <DependentUpon>EffectOffsetsListViewControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Enemies\Graphics\EnemyColorListViewControl.resx">
+      <DependentUpon>EnemyColorListViewControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Enemies\Graphics\EnemyLayerColorViewControl.resx">
+      <DependentUpon>EnemyLayerColorViewControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\Enemies\Resistances\ResistanceListViewControl.resx">
       <DependentUpon>ResistanceListViewControl.cs</DependentUpon>

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using DQModEditor.DataModel;
 using DQModEditor.DataModel.Enemies;
+using System.Collections.Specialized;
 
 namespace DQModEditor.Gui.Controls.Enemies
 {
@@ -21,28 +22,32 @@ namespace DQModEditor.Gui.Controls.Enemies
         {
             InitializeComponent();
 
-            enemiesListBox.DisplayMember = nameof(KeyValuePair<string, Enemy>.Key);
-            enemiesListBox.ValueMember = nameof(KeyValuePair<string, Enemy>.Value);
-            enemiesListBox.SelectedValueChanged += (o, e) => enemyViewControl.DisplayedItem = (Enemy)enemiesListBox.SelectedValue;
+            enemiesListBox.DisplayMember = nameof(Enemy.Id);
+            enemiesListBox.SelectedIndexChanged += (o, e) => enemyViewControl.DisplayedItem = (Enemy)enemiesListBox.SelectedItem;
 
-            Utility.BindDisplayContext(this, enemyViewControl);
-            enemyViewControl.DisplayedItemChanged += (s, e) => enemiesListBox.SelectedValue = enemyViewControl.DisplayedItem;
+            enemyViewControl.DisplayedItemChanged += (s, e) =>
+            {
+                if (enemyViewControl.DisplayedItem == null) enemiesListBox.ClearSelected();
+                else enemiesListBox.SelectedItem = enemyViewControl.DisplayedItem;
+            };
 
             DisplayedItemChanged += ChangeDisplayedItem;
+
+            Utility.BindDisplayContext(this, enemyViewControl);
         }
 
         private void ChangeDisplayedItem(ViewControl<Mod> source, Mod previous)
         {
-            if(previous != null) DisplayedItem.EnemyCollectionChanged -= DisplayedItem_EnemyAdded;
+            if(previous != null) DisplayedItem.EnemiesById.CollectionChanged -= DisplayedItem_CollectionChanged;
 
             if (DisplayedItem != null)
             {
                 enemiesListBox.DataSource = new BindingSource(DisplayedItem.EnemiesById, null);
-                DisplayedItem.EnemyCollectionChanged += DisplayedItem_EnemyAdded;
+                DisplayedItem.EnemiesById.CollectionChanged += DisplayedItem_CollectionChanged;
             }
         }
 
-        private void DisplayedItem_EnemyAdded(Enemy enemy)
+        private void DisplayedItem_CollectionChanged(object sender, NotifyCollectionChangedEventArgs args)
         {
             ((BindingSource)enemiesListBox.DataSource).DataSource = null;
             ((BindingSource)enemiesListBox.DataSource).DataSource = DisplayedItem.EnemiesById;

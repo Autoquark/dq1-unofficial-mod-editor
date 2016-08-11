@@ -20,9 +20,9 @@ namespace DQModEditor.Gui.Controls
             yPosSpinner.Validated += (s, e) => _validY = (int)yPosSpinner.Value;
         }
 
-        public DataModel.Point Value
+        public Point Value
         {
-            get { return new DataModel.Point(_validX, _validY); }
+            get { return new Point(_validX, _validY); }
             set
             {
                 xPosSpinner.Value = _validX = value.X;

@@ -6,10 +6,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DQModEditor.DataModel
+namespace DQModEditor.DataModel.Collections
 {
     public class ObservableSet<T> : ISet<T>, INotifyCollectionChanged
     {
+        public ObservableSet() : this(new HashSet<T>()) { }
+
         public ObservableSet(ISet<T> set)
         {
             _set = set;

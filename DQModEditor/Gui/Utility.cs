@@ -34,20 +34,24 @@ namespace DQModEditor.Gui
             where T2 : class
         {
             // Without formattingEnabled = true, this errors. Not sure why
-            second.DataBindings.Add(nameof(second.Context), first, nameof(first.Context), true);
+            second.DataBindings.Add(nameof(second.Context), first, nameof(first.Context), true, DataSourceUpdateMode.Never);
         }
 
         /// <summary>
-        /// Clears the databindings for the children of the given control. Recurses through groupboxes and tabs.
+        /// Binds the given property of the control to the given member of the given datasource, first removing any existing binding
+        /// to that property of the control.
         /// </summary>
-        /// <param name="control"></param>
-        internal static void ClearBindings(Control control)
+        internal static void SetBinding(this Control control, string property, object dataSource, string dataMember)
         {
-            foreach(Control c in control.Controls)
-            {
-                if(c is GroupBox || c is TabControl || c is TabPage) ClearBindings(c);
-                c.DataBindings.Clear();
-            }
+            SetBinding(control, new Binding(property, dataSource, dataMember));
+        }
+
+        internal static void SetBinding(this Control control, Binding binding)
+        {
+            ControlBindingsCollection c = control.DataBindings;
+            Binding existing = c.Cast<Binding>().Where(x => x.PropertyName == binding.PropertyName).SingleOrDefault();
+            if(existing != null) c.Remove(existing);
+            c.Add(binding);
         }
 
         internal static ModLoader ShowLoadModDialog()

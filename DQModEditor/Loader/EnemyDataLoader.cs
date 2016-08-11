@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -14,9 +15,9 @@ namespace DQModEditor.Loader
     /// <summary>
     /// Saves/loads information relating to enemy types to/from a mod directory
     /// </summary>
-    internal class EnemyDirectoryParser : DirectoryParserBase
+    internal class EnemyDataLoader : DirectoryParserBase
     {
-        public EnemyDirectoryParser(string modPath) : base(modPath)
+        public EnemyDataLoader(string modPath) : base(modPath)
         {
             _enemyXmlPath = Path.Combine(ModDirectoryPath, "xml", "enemy.xml");
             _enemyPlusXmlPath = Path.Combine(ModDirectoryPath, "xml", "enemy_plus.xml");
@@ -27,7 +28,15 @@ namespace DQModEditor.Loader
             // Load normal enemies
             if (File.Exists(_enemyXmlPath))
             {
-                foreach (XElement e in GetEnemyDefinitions(XElement.Load(_enemyXmlPath))) mod.AddEnemy(CreateEnemyFromXml(e));
+                foreach (XElement e in GetEnemyDefinitions(XElement.Load(_enemyXmlPath)))
+                {
+                    Enemy enemy = CreateEnemyFromXml(e);
+                    if (enemy.IsNewGamePlus) throw new ModLoadException($"Enemy {enemy.Id} has an id with the "
+                        + $"{Enemy.NewGamePlusIdSuffix} suffix but is declared in enemy.xml. New Game plus enemies should use the "
+                        + $"{Enemy.NewGamePlusIdSuffix} suffix and be declared in enemy_plus.xml. Normal enemies should not use the"
+                        + $"suffix and be declard in enemy.xml");
+                    mod.EnemiesById.Add(enemy);
+                }
             }
 
             // Load NG+ enemies
@@ -36,40 +45,26 @@ namespace DQModEditor.Loader
                 foreach (XElement e in GetEnemyDefinitions(XElement.Load(_enemyPlusXmlPath)))
                 {
                     Enemy enemy = CreateEnemyFromXml(e);
-                    enemy.IsNewGamePlus = true;
-                    mod.AddEnemy(enemy);
+                    if (!enemy.IsNewGamePlus) throw new ModLoadException($"Enemy {enemy.Id} has an id without the "
+                        + $"{Enemy.NewGamePlusIdSuffix} suffix but is declared in enemy_plus.xml. New Game plus enemies should use the "
+                        + $"{Enemy.NewGamePlusIdSuffix} suffix and be declared in enemy_plus.xml. Normal enemies should not use the"
+                        + $"suffix and be declard in enemy.xml");
+                    mod.EnemiesById.Add(enemy);
                 }
             }
         }
 
-        public void StableSave(Mod mod, StableSaveTracker tracker)
+        public void StableSave(Mod mod)
         {
-            XElement enemyRoot = XElement.Load(_enemyXmlPath);
-            XElement enemyPlusRoot = XElement.Load(_enemyPlusXmlPath);
-            // Move XML for enemies that were changed from NG+ to normal or vice-versa
-            foreach (Enemy enemy in tracker.EnemiesIsNewGamePlusChanged)
-            {
-                if(enemy.IsNewGamePlus)
-                {
-                    XElement element = GetEnemyDefinition(enemyRoot, enemy.Id);
-                    element.Remove();
-                    enemyPlusRoot.Add(element);
-                }
-                else
-                {
-                    XElement element = GetEnemyDefinition(enemyPlusRoot, enemy.Id);
-                    element.Remove();
-                    enemyRoot.Add(element);
-                }
-            }
-
             // Save normal enemies
-            EditXmlFromEnemies(mod.EnemiesById.Values.Where(x => !x.IsNewGamePlus).ToDictionary(x => x.Id), enemyRoot);
-            enemyRoot.Save(_enemyXmlPath);
+            XElement root = XElement.Load(_enemyXmlPath);
+            EditXmlFromEnemies(mod.EnemiesById.Values.Where(x => !x.IsNewGamePlus).ToDictionary(x => x.Id), root);
+            root.Save(_enemyXmlPath);
 
             // Save NG+ enemies
-            EditXmlFromEnemies(mod.EnemiesById.Values.Where(x => x.IsNewGamePlus).ToDictionary(x => x.Id), enemyPlusRoot);
-            enemyPlusRoot.Save(_enemyPlusXmlPath);
+            root = XElement.Load(_enemyPlusXmlPath);
+            EditXmlFromEnemies(mod.EnemiesById.Values.Where(x => x.IsNewGamePlus).ToDictionary(x => x.Id), root);
+            root.Save(_enemyPlusXmlPath);
         }
 
         private void EditXmlFromEnemies(IReadOnlyDictionary<string, Enemy> enemies, XElement root)
@@ -118,6 +113,12 @@ namespace DQModEditor.Loader
             {
                 foreach(XElement e in effectOffsetsElement.Descendants(_effectOffsetElementName))
                     enemy.EffectOffsets.Add(e.AttributeValue(_effectOffsetsIdAttributeName), CreatePointFromXml(e));
+            }
+            foreach(string colorString in root.Descendants(_colorElementName).Select(x => x.AttributeValue(_colorAttributeName)))
+            {
+                Color c = ParseColor(colorString);
+                if (c == Color.Empty) throw new ModLoadException($"Invalid color string in definition of enemy {enemy.Id}");
+                enemy.Colors.Add(c);
             }
 
             // Stats
@@ -205,7 +206,7 @@ namespace DQModEditor.Loader
             root.Descendant(_graphicElementName).SetAttributeValue(_graphicSkinAttributeName, enemy.GraphicSkinId);
 
             XElement offsetListElement = root.EnsureDescendant(_effectOffsetListElementName);
-            foreach (XElement offsetElement in offsetListElement.Descendants(_effectOffsetElementName).ToList()) offsetElement.Remove();
+            foreach (XElement e in offsetListElement.Descendants(_effectOffsetElementName).ToList()) e.Remove();
             foreach (KeyValuePair<string, Point> offset in enemy.EffectOffsets)
             {
                 XElement offsetElement = new XElement(XName.Get(_effectOffsetElementName));
@@ -213,6 +214,14 @@ namespace DQModEditor.Loader
                 EditXmlFromPoint(offset.Value, offsetElement);
                 offsetListElement.Add(offsetElement);
             }
+            foreach (XElement e in root.Descendants(_colorElementName).ToList()) e.Remove();
+            foreach(Color color in enemy.Colors)
+            {
+                XElement colorElement = new XElement(XName.Get(_colorElementName));
+                colorElement.SetAttributeValue(_colorAttributeName, FormatColor(color));
+                root.Add(colorElement);
+            }
+
             // Stats
             EditXmlFromStatSet(enemy.BaseStats, root.Descendant(_statsElementName));
             EditXmlFromStatSet(enemy.LevelUpIncrement, root.Descendant(_levelupElementName));
@@ -288,6 +297,20 @@ namespace DQModEditor.Loader
             statSetRoot.SetAttributeValue(_xpAttributeName, statSet.Xp);
         }
 
+        private Color ParseColor(string text)
+        {
+            try
+            {
+                return Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(text, 16)));
+            }
+            catch(FormatException) { return Color.Empty; }
+        }
+
+        private string FormatColor(Color color)
+        {
+            return $"0x{color.R.ToString("X2")}{color.G.ToString("X2")}{color.B.ToString("X2")}";
+        }
+
         private readonly string _enemyXmlPath;
         private readonly string _enemyPlusXmlPath;
         // Name & Description
@@ -306,6 +329,8 @@ namespace DQModEditor.Loader
         private readonly static string _effectOffsetListElementName = "effect_offset";
         private readonly static string _effectOffsetElementName = "effect";
         private readonly static string _effectOffsetsIdAttributeName = "id";
+        private readonly static string _colorElementName = "color";
+        private readonly static string _colorAttributeName = "value";
         // Stats
         private readonly static string _statsElementName = "stats";
         private readonly static string _levelupElementName = "levelup";

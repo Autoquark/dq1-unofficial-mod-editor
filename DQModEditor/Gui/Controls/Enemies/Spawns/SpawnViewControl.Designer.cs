@@ -33,7 +33,7 @@
             this.spawnIdTextBox = new System.Windows.Forms.TextBox();
             this.effectIdTextBox = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.spawnLocationViewControl = new DQModEditor.Gui.Controls.Enemies.Spawns.SpawnLocationViewControl();
+            this.locationViewControl = new DQModEditor.Gui.Controls.Enemies.Spawns.SpawnLocationViewControl();
             this.SuspendLayout();
             // 
             // label3
@@ -83,16 +83,16 @@
             // 
             // spawnLocationViewControl
             // 
-            this.spawnLocationViewControl.Location = new System.Drawing.Point(8, 16);
-            this.spawnLocationViewControl.Name = "spawnLocationViewControl";
-            this.spawnLocationViewControl.Size = new System.Drawing.Size(152, 24);
-            this.spawnLocationViewControl.TabIndex = 9;
+            this.locationViewControl.Location = new System.Drawing.Point(8, 16);
+            this.locationViewControl.Name = "spawnLocationViewControl";
+            this.locationViewControl.Size = new System.Drawing.Size(152, 24);
+            this.locationViewControl.TabIndex = 9;
             // 
             // SpawnViewControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.spawnLocationViewControl);
+            this.Controls.Add(this.locationViewControl);
             this.Controls.Add(this.effectIdTextBox);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.spawnIdTextBox);
@@ -111,6 +111,6 @@
         private System.Windows.Forms.TextBox spawnIdTextBox;
         private System.Windows.Forms.TextBox effectIdTextBox;
         private System.Windows.Forms.Label label5;
-        private SpawnLocationViewControl spawnLocationViewControl;
+        private SpawnLocationViewControl locationViewControl;
     }
 }

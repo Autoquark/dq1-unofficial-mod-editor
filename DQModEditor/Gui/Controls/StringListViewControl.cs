@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using DQModEditor.DataModel;
+using DQModEditor.DataModel.Collections;
 
 namespace DQModEditor.Gui.Controls
 {

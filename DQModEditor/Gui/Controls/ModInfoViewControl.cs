@@ -22,16 +22,14 @@ namespace DQModEditor.Gui.Controls
 
         private void ChangeDisplayedItem(ViewControl<Mod> source, Mod previous)
         {
-            if(previous != null) Utility.ClearBindings(this);
-
             if (DisplayedItem != null)
             {
                 string textPropertyName = nameof(TextBox.Text);
-                modIdTextBox.DataBindings.Add(textPropertyName, DisplayedItem, nameof(DisplayedItem.Id));
-                gameNameTextBox.DataBindings.Add(textPropertyName, DisplayedItem, nameof(DisplayedItem.GameName));
-                versionTextBox.DataBindings.Add(textPropertyName, DisplayedItem, nameof(DisplayedItem.GameVersion));
-                modTitleTextBox.DataBindings.Add(textPropertyName, DisplayedItem, nameof(DisplayedItem.Title));
-                descriptionTextBox.DataBindings.Add(textPropertyName, DisplayedItem, nameof(DisplayedItem.Description));
+                modIdTextBox.SetBinding(textPropertyName, DisplayedItem, nameof(DisplayedItem.Id));
+                gameNameTextBox.SetBinding(textPropertyName, DisplayedItem, nameof(DisplayedItem.GameName));
+                versionTextBox.SetBinding(textPropertyName, DisplayedItem, nameof(DisplayedItem.GameVersion));
+                modTitleTextBox.SetBinding(textPropertyName, DisplayedItem, nameof(DisplayedItem.Title));
+                descriptionTextBox.SetBinding(textPropertyName, DisplayedItem, nameof(DisplayedItem.Description));
             }
         }
     }

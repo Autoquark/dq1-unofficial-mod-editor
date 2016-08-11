@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using DQModEditor.DataModel;
 using DQModEditor.DataModel.Enemies;
+using System.Collections.Specialized;
 
 namespace DQModEditor.Gui.Controls.Enemies
 {
@@ -27,21 +28,22 @@ namespace DQModEditor.Gui.Controls.Enemies
             ContextChanged += EnemyViewControl_ContextChanged;
 
             Utility.BindDisplayContext(this, spawnListViewControl);
+            Utility.BindDisplayContext(this, enemyColorListViewControl);
         }
 
         private void EnemyViewControl_ContextChanged(ViewControl<Enemy> source, DisplayContext previous)
         {
-            if (previous != null) Context.CurrentMod.EnemyCollectionChanged -= CurrentMod_EnemyCollectionChanged;
+            if (previous != null) Context.CurrentMod.EnemiesById.CollectionChanged -= CurrentMod_EnemyCollectionChanged;
 
             if (Context == null) viewCorrespondingButton.Enabled = false;
             else
             {
-                Context.CurrentMod.EnemyCollectionChanged += CurrentMod_EnemyCollectionChanged;
+                Context.CurrentMod.EnemiesById.CollectionChanged += CurrentMod_EnemyCollectionChanged;
                 UpdateViewCorrespondingEnabled();
             }
         }
 
-        private void CurrentMod_EnemyCollectionChanged(Enemy enemy)
+        private void CurrentMod_EnemyCollectionChanged(object sender, NotifyCollectionChangedEventArgs args)
         {
             UpdateViewCorrespondingEnabled();
         }
@@ -55,7 +57,7 @@ namespace DQModEditor.Gui.Controls.Enemies
         {
             if (previous != null)
             {
-                Utility.ClearBindings(this);
+                //Utility.ClearChildBindings(this);
                 previous.PropertyChanged -= (s, e) => UpdateViewCorrespondingEnabled();
             }
 
@@ -63,22 +65,23 @@ namespace DQModEditor.Gui.Controls.Enemies
             {
                 string textPropertyName = nameof(displayNameTextBox.Text);
                 // Identity
-                internalNameTextBox.DataBindings.Add(textPropertyName, DisplayedItem, nameof(DisplayedItem.Id));
-                // change the update mode, or the change does not take effect until the checkbox loses focus after clicking it
-                newGamePlusCheckBox.DataBindings.Add(nameof(newGamePlusCheckBox.Checked), DisplayedItem, 
-                    nameof(DisplayedItem.IsNewGamePlus), false, DataSourceUpdateMode.OnPropertyChanged);
+                internalNameTextBox.SetBinding(textPropertyName, DisplayedItem, nameof(DisplayedItem.Id));
+                //change the update mode, or the change does not take effect until the checkbox loses focus after clicking it
+                newGamePlusCheckBox.SetBinding(new Binding(nameof(newGamePlusCheckBox.Checked), DisplayedItem,
+                    nameof(DisplayedItem.IsNewGamePlus), false, DataSourceUpdateMode.OnPropertyChanged));
                 // Text & Description
-                displayNameTextBox.DataBindings.Add(textPropertyName, DisplayedItem, nameof(DisplayedItem.DisplayName));
-                flavorNameTextBox.DataBindings.Add(textPropertyName, DisplayedItem, nameof(DisplayedItem.FlavorName));
-                flavorDescriptionTextBox.DataBindings.Add(textPropertyName, DisplayedItem, nameof(DisplayedItem.FlavorDescription));
+                displayNameTextBox.SetBinding(textPropertyName, DisplayedItem, nameof(DisplayedItem.DisplayName));
+                flavorNameTextBox.SetBinding(textPropertyName, DisplayedItem, nameof(DisplayedItem.FlavorName));
+                flavorDescriptionTextBox.SetBinding(textPropertyName, DisplayedItem, nameof(DisplayedItem.FlavorDescription));
                 // Appearance
-                selectionBoxOffsetViewControl.DataBindings.Add(nameof(selectionBoxOffsetViewControl.Value), DisplayedItem,
+                selectionBoxOffsetViewControl.SetBinding(nameof(selectionBoxOffsetViewControl.Value), DisplayedItem, 
                     nameof(DisplayedItem.SelectBoxOffset));
-                graphicsIdTextBox.DataBindings.Add(textPropertyName, DisplayedItem, nameof(DisplayedItem.GraphicId));
-                skinTextBox.DataBindings.Add(textPropertyName, DisplayedItem, nameof(DisplayedItem.GraphicSkinId));
-                deathSoundTextBox.DataBindings.Add(textPropertyName, DisplayedItem, nameof(DisplayedItem.DeathSound));
-                effectOffsetsListViewControl.DataBindings.Add(nameof(effectOffsetsListViewControl.DisplayedItem), DisplayedItem, 
+                graphicsIdTextBox.SetBinding(textPropertyName, DisplayedItem, nameof(DisplayedItem.GraphicId));
+                skinTextBox.SetBinding(textPropertyName, DisplayedItem, nameof(DisplayedItem.GraphicSkinId));
+                deathSoundTextBox.SetBinding(textPropertyName, DisplayedItem, nameof(DisplayedItem.DeathSound));
+                effectOffsetsListViewControl.SetBinding(nameof(effectOffsetsListViewControl.DisplayedItem), DisplayedItem,
                     nameof(DisplayedItem.EffectOffsets));
+                enemyColorListViewControl.DisplayedItem = DisplayedItem;
                 // Stats
                 baseStatsViewControl.DisplayedItem = DisplayedItem.BaseStats;
                 perLevelStatsViewControl.DisplayedItem = DisplayedItem.LevelUpIncrement;
@@ -89,7 +92,7 @@ namespace DQModEditor.Gui.Controls.Enemies
                 // Types
                 typesListView.DisplayedItem = DisplayedItem.Types;
                 // Immunities
-               immunitiesListView.DisplayedItem = DisplayedItem.Immunities;
+                immunitiesListView.DisplayedItem = DisplayedItem.Immunities;
 
                 // View Corresponding
                 UpdateViewCorrespondingEnabled();
@@ -99,6 +102,11 @@ namespace DQModEditor.Gui.Controls.Enemies
 
         private void UpdateViewCorrespondingEnabled()
         {
+            if(DisplayedItem == null)
+            {
+                viewCorrespondingButton.Enabled = false;
+                return;
+            }
             if(Context == null)
             {
                 viewCorrespondingButton.Enabled = false;

@@ -10,7 +10,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
+using DQModEditor.DataModel.Collections;
 using DQModEditor.DataModel.Enemies;
+using DQModEditor.DataModel.Graphics;
 
 namespace DQModEditor.DataModel
 {
@@ -66,28 +68,21 @@ namespace DQModEditor.DataModel
         }
         private string _Description = "";
 
-        public delegate void EnemyAddedHandler(Enemy enemy);
-        public event EnemyAddedHandler EnemyCollectionChanged;
         public event PropertyChangedEventHandler PropertyChanged;
-
-        public void AddEnemy(Enemy enemy)
-        {
-            _enemiesByInternalName.Add(enemy.Id, enemy);
-            EnemyCollectionChanged?.Invoke(enemy);
-        }
 
         public Enemy GetCorrespondingEnemy(Enemy enemy)
         {
-            string s = enemy.GetCorrespondingOtherModeId();
-            if (s == null) return null;
+            if (!EnemiesById.Contains(enemy)) return null;
             Enemy e;
-            EnemiesById.TryGetValue(s, out e);
+            EnemiesById.TryGetValue(enemy.NewGamePlusCorrespondingId, out e);
             return e;
         }
 
-        public IReadOnlyDictionary<string, Enemy> EnemiesById 
-            => new ReadOnlyDictionary<string, Enemy>(_enemiesByInternalName);
-        private SortedDictionary<string, Enemy> _enemiesByInternalName = new SortedDictionary<string, Enemy>();
+        public ObservableKeyedCollection<string, Enemy> EnemiesById { get; } 
+            = ObservableKeyedCollection<string, Enemy>.CreateSorted(x => x.Id);
+
+        public ObservableKeyedCollection<string, GraphicSet> EnemyGraphicsById { get; }
+            = ObservableKeyedCollection<string, GraphicSet>.CreateSorted(x => x.Id);
 
         private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
         {

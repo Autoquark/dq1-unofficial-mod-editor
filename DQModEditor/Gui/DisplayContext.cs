@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,10 +21,11 @@ namespace DQModEditor.Gui
 
             EnemyIdAutoCompleteCollection = new AutoCompleteStringCollection();
             EnemyIdAutoCompleteCollection.AddRange(mod.EnemiesById.Keys.ToArray());
-            mod.EnemyCollectionChanged += (e) =>
+            mod.EnemiesById.CollectionChanged += (s, e) =>
             {
-                if (mod.EnemiesById.ContainsKey(e.Id)) EnemyIdAutoCompleteCollection.Add(e.Id);
-                else EnemyIdAutoCompleteCollection.Remove(e.Id);
+                if (e.Action == NotifyCollectionChangedAction.Reset) EnemyIdAutoCompleteCollection.Clear();
+                foreach (object o in e.OldItems) EnemyIdAutoCompleteCollection.Remove((string)o);
+                foreach (object o in e.NewItems) EnemyIdAutoCompleteCollection.Add((string)o);
             };
         }
 

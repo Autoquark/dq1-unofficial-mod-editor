@@ -28,17 +28,15 @@ namespace DQModEditor.Gui.Controls.Enemies.Resistances
 
         private void ChangeDisplayedItem(ViewControl<Resistance> source, Resistance previous)
         {
-            if(previous != null) Utility.ClearBindings(this);
-
             if(DisplayedItem != null)
             {
-                _enumViewControl.DataBindings.Add(nameof(_enumViewControl.SelectedValue), DisplayedItem, nameof(DisplayedItem.ResistanceKind));
-                flavorTextBox.DataBindings.Add(nameof(flavorTextBox.Text), DisplayedItem, nameof(DisplayedItem.Flavor));
+                _enumViewControl.SetBinding(nameof(_enumViewControl.SelectedValue), DisplayedItem, nameof(DisplayedItem.ResistanceKind));
+                flavorTextBox.SetBinding(nameof(flavorTextBox.Text), DisplayedItem, nameof(DisplayedItem.Flavor));
 
                 Binding binding = new Binding(nameof(amountSpinner.Value), DisplayedItem, nameof(DisplayedItem.Amount));
                 binding.Format += (s, e) => { e.Value = (decimal)e.Value * 100; };
                 binding.Parse += (s, e) => { e.Value = amountSpinner.Value / 100; };
-                amountSpinner.DataBindings.Add(binding);
+                amountSpinner.SetBinding(binding);
             }
         }
 

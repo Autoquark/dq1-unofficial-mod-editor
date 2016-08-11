@@ -6,10 +6,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DQModEditor.DataModel
+namespace DQModEditor.DataModel.Collections
 {
     public class ObservableDictionary<TKey, TValue> : IDictionary<TKey, TValue>, INotifyCollectionChanged
     {
+        internal ObservableDictionary() : this(new Dictionary<TKey, TValue>()) { }
+
         internal ObservableDictionary(IDictionary<TKey, TValue> dictionary)
         {
             _dictionary = dictionary;
