@@ -23,7 +23,18 @@ namespace DQModEditor.Gui.Controls.Enemies.Graphics
             DisplayedItemChanged += EnemyColorListViewControl_DisplayedItemChanged;
             ContextChanged += (s, e) => UpdateLayerLabels();
 
-            SizeChanged += (s, e) => listPanel.Height = Height - listPanel.Top;
+            SizeChanged += (s, e) =>
+            {
+                listPanel.Height = Height - listPanel.Top - addButton.Height;
+                addButton.Top = listPanel.Bottom;
+                removeButton.Top = listPanel.Bottom;
+            };
+
+            addButton.Click += (s, e) => DisplayedItem.Colors.Add(Color.Black);
+            removeButton.Click += (s, e) =>
+            {
+                if (DisplayedItem.Colors.Count != 0) DisplayedItem.Colors.RemoveAt(DisplayedItem.Colors.Count - 1);
+            };
         }
 
         private void EnemyColorListViewControl_DisplayedItemChanged(ViewControl<Enemy> source, Enemy previous)

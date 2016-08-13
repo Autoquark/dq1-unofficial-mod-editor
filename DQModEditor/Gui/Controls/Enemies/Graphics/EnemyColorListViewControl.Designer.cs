@@ -31,6 +31,8 @@
             this.nameColumnLabel = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.listPanel = new System.Windows.Forms.Panel();
+            this.addButton = new System.Windows.Forms.Button();
+            this.removeButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // nameColumnLabel
@@ -57,18 +59,38 @@
             this.listPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.listPanel.Location = new System.Drawing.Point(0, 16);
             this.listPanel.Name = "listPanel";
-            this.listPanel.Size = new System.Drawing.Size(136, 120);
+            this.listPanel.Size = new System.Drawing.Size(144, 120);
             this.listPanel.TabIndex = 3;
+            // 
+            // addButton
+            // 
+            this.addButton.Location = new System.Drawing.Point(0, 136);
+            this.addButton.Name = "addButton";
+            this.addButton.Size = new System.Drawing.Size(72, 23);
+            this.addButton.TabIndex = 4;
+            this.addButton.Text = "Add";
+            this.addButton.UseVisualStyleBackColor = true;
+            // 
+            // removeButton
+            // 
+            this.removeButton.Location = new System.Drawing.Point(72, 136);
+            this.removeButton.Name = "removeButton";
+            this.removeButton.Size = new System.Drawing.Size(72, 23);
+            this.removeButton.TabIndex = 5;
+            this.removeButton.Text = "Remove";
+            this.removeButton.UseVisualStyleBackColor = true;
             // 
             // EnemyColorListViewControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.removeButton);
+            this.Controls.Add(this.addButton);
             this.Controls.Add(this.listPanel);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.nameColumnLabel);
             this.Name = "EnemyColorListViewControl";
-            this.Size = new System.Drawing.Size(136, 136);
+            this.Size = new System.Drawing.Size(144, 160);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -79,5 +101,7 @@
         private System.Windows.Forms.Label nameColumnLabel;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Panel listPanel;
+        private System.Windows.Forms.Button addButton;
+        private System.Windows.Forms.Button removeButton;
     }
 }
