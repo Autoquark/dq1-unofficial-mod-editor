@@ -49,6 +49,12 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Controls\Enemies\ChangeEnemyIdForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\Enemies\ChangeEnemyIdForm.Designer.cs">
+      <DependentUpon>ChangeEnemyIdForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Enemies\EnemyListViewControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -164,6 +170,9 @@
     <Compile Include="Controls\ViewControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <EmbeddedResource Include="Controls\Enemies\ChangeEnemyIdForm.resx">
+      <DependentUpon>ChangeEnemyIdForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\Enemies\EnemyListViewControl.resx">
       <DependentUpon>EnemyListViewControl.cs</DependentUpon>
     </EmbeddedResource>

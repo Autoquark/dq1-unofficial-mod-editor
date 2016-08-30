@@ -61,6 +61,8 @@ namespace DQModEditor.Loader
             _enemyLoader.LoadEnemyInfo(LoadedMod);
             // Load enemy graphics
             _enemyGraphicsLoader.LoadEnemyGraphicsInfo(LoadedMod);
+
+            _tracker = new StableSaveTracker();
         }
 
         /// <summary>
@@ -83,8 +85,18 @@ namespace DQModEditor.Loader
             infoRoot.Save(_infoFilePath);
 
             // Save enemies
-            _enemyLoader.StableSave(LoadedMod);
+            _enemyLoader.StableSave(LoadedMod, _tracker);
+
+            _tracker = new StableSaveTracker();
         }
+
+        public Enemy StableClone(Enemy source, string id)
+        {
+            _tracker.SetCloneSource(id, source.Id);
+            return source.Copy(id);
+        }
+
+        private StableSaveTracker _tracker;
 
         private readonly string _modIdElementName = "mod";
         private readonly string _modIdAttributeName = "id";

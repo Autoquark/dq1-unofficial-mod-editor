@@ -38,7 +38,7 @@ namespace DQModEditor.Gui.Controls
                 if (DisplayedItem == null) return;
                 enemyListViewControl.DisplayedItem = DisplayedItem.LoadedMod;
                 modInfoViewControl.DisplayedItem = DisplayedItem.LoadedMod;
-                Context = new DisplayContext(DisplayedItem.LoadedMod);
+                Context = new DisplayContext(DisplayedItem);
             };
 
             Utility.BindDisplayContext(this, modInfoViewControl);

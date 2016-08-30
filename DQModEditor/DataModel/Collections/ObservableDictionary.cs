@@ -12,9 +12,9 @@ namespace DQModEditor.DataModel.Collections
     {
         internal ObservableDictionary() : this(new Dictionary<TKey, TValue>()) { }
 
-        internal ObservableDictionary(IDictionary<TKey, TValue> dictionary)
+        internal ObservableDictionary(IDictionary<TKey, TValue> backingDictionary)
         {
-            _dictionary = dictionary;
+            _dictionary = backingDictionary;
         }
 
         public event NotifyCollectionChangedEventHandler CollectionChanged;

@@ -19,6 +19,15 @@ namespace DQModEditor.DataModel.Enemies
             Evade,
         }
 
+        public Resistance() { }
+
+        public Resistance(Resistance template)
+        {
+            Flavor = template.Flavor;
+            ResistanceKind = template.ResistanceKind;
+            Amount = template.Amount;
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public string Flavor

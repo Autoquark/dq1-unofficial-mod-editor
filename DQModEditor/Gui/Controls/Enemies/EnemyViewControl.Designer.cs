@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.statsGroupBox = new System.Windows.Forms.GroupBox();
@@ -78,6 +77,7 @@
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.enemyColorListViewControl = new DQModEditor.Gui.Controls.Enemies.Graphics.EnemyColorListViewControl();
+            this.changeIdButton = new System.Windows.Forms.Button();
             this.statsGroupBox.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.spawnsGroupBox.SuspendLayout();
@@ -216,6 +216,7 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.changeIdButton);
             this.groupBox2.Controls.Add(this.label18);
             this.groupBox2.Controls.Add(this.viewCorrespondingButton);
             this.groupBox2.Controls.Add(this.newGamePlusCheckBox);
@@ -231,7 +232,7 @@
             // label18
             // 
             this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(336, 24);
+            this.label18.Location = new System.Drawing.Point(376, 24);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(83, 13);
             this.label18.TabIndex = 11;
@@ -239,7 +240,7 @@
             // 
             // viewCorrespondingButton
             // 
-            this.viewCorrespondingButton.Location = new System.Drawing.Point(448, 20);
+            this.viewCorrespondingButton.Location = new System.Drawing.Point(472, 20);
             this.viewCorrespondingButton.Name = "viewCorrespondingButton";
             this.viewCorrespondingButton.Size = new System.Drawing.Size(112, 23);
             this.viewCorrespondingButton.TabIndex = 10;
@@ -250,7 +251,7 @@
             // 
             this.newGamePlusCheckBox.AutoSize = true;
             this.newGamePlusCheckBox.Enabled = false;
-            this.newGamePlusCheckBox.Location = new System.Drawing.Point(320, 24);
+            this.newGamePlusCheckBox.Location = new System.Drawing.Point(360, 24);
             this.newGamePlusCheckBox.Name = "newGamePlusCheckBox";
             this.newGamePlusCheckBox.Size = new System.Drawing.Size(15, 14);
             this.newGamePlusCheckBox.TabIndex = 9;
@@ -270,7 +271,7 @@
             this.internalNameTextBox.Location = new System.Drawing.Point(40, 21);
             this.internalNameTextBox.Name = "internalNameTextBox";
             this.internalNameTextBox.ReadOnly = true;
-            this.internalNameTextBox.Size = new System.Drawing.Size(240, 20);
+            this.internalNameTextBox.Size = new System.Drawing.Size(224, 20);
             this.internalNameTextBox.TabIndex = 7;
             this.internalNameTextBox.Text = "(display name)";
             // 
@@ -585,6 +586,15 @@
             this.enemyColorListViewControl.Size = new System.Drawing.Size(144, 152);
             this.enemyColorListViewControl.TabIndex = 16;
             // 
+            // changeIdButton
+            // 
+            this.changeIdButton.Location = new System.Drawing.Point(272, 19);
+            this.changeIdButton.Name = "changeIdButton";
+            this.changeIdButton.Size = new System.Drawing.Size(68, 23);
+            this.changeIdButton.TabIndex = 12;
+            this.changeIdButton.Text = "Change...";
+            this.changeIdButton.UseVisualStyleBackColor = true;
+            // 
             // EnemyViewControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -665,5 +675,6 @@
         private Graphics.EffectOffsetsListViewControl effectOffsetsListViewControl;
         private Graphics.EnemyColorListViewControl enemyColorListViewControl;
         private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.Button changeIdButton;
     }
 }

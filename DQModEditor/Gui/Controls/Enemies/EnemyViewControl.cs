@@ -23,6 +23,18 @@ namespace DQModEditor.Gui.Controls.Enemies
             InitializeComponent();
 
             viewCorrespondingButton.Click += ViewCorrespondingButton_Click;
+            changeIdButton.Click += (s, e) =>
+            {
+                ChangeEnemyIdForm f = new ChangeEnemyIdForm(Context, DisplayedItem);
+                f.SelectedValue = DisplayedItem.Id;
+                f.ShowDialog();
+                if (f.DialogResult == DialogResult.Cancel) return;
+
+                Enemy renamed = Context.CurrentLoader.StableClone(DisplayedItem, f.SelectedValue);
+                Context.CurrentMod.EnemiesById.Remove(DisplayedItem);
+                Context.CurrentMod.EnemiesById.Add(renamed);
+                DisplayedItem = renamed;
+            };
 
             DisplayedItemChanged += ChangeDisplayedItem;
             ContextChanged += EnemyViewControl_ContextChanged;
@@ -35,17 +47,14 @@ namespace DQModEditor.Gui.Controls.Enemies
         {
             if (previous != null) Context.CurrentMod.EnemiesById.CollectionChanged -= CurrentMod_EnemyCollectionChanged;
 
-            if (Context == null) viewCorrespondingButton.Enabled = false;
-            else
-            {
-                Context.CurrentMod.EnemiesById.CollectionChanged += CurrentMod_EnemyCollectionChanged;
-                UpdateViewCorrespondingEnabled();
-            }
+            if (Context != null) Context.CurrentMod.EnemiesById.CollectionChanged += CurrentMod_EnemyCollectionChanged;
+
+            UpdateContextDependent();
         }
 
         private void CurrentMod_EnemyCollectionChanged(object sender, NotifyCollectionChangedEventArgs args)
         {
-            UpdateViewCorrespondingEnabled();
+            UpdateContextDependent();
         }
 
         private void ViewCorrespondingButton_Click(object sender, EventArgs e)
@@ -55,11 +64,7 @@ namespace DQModEditor.Gui.Controls.Enemies
 
         private void ChangeDisplayedItem(ViewControl<Enemy> source, Enemy previous)
         {
-            if (previous != null)
-            {
-                //Utility.ClearChildBindings(this);
-                previous.PropertyChanged -= (s, e) => UpdateViewCorrespondingEnabled();
-            }
+            if (previous != null) previous.PropertyChanged -= (s, e) => UpdateContextDependent();
 
             if (DisplayedItem != null)
             {
@@ -94,30 +99,29 @@ namespace DQModEditor.Gui.Controls.Enemies
                 // Immunities
                 immunitiesListView.DisplayedItem = DisplayedItem.Immunities;
 
-                // View Corresponding
-                UpdateViewCorrespondingEnabled();
-                DisplayedItem.PropertyChanged += (s, e) => UpdateViewCorrespondingEnabled();
+                // Context Dependent
+                UpdateContextDependent();
+                DisplayedItem.PropertyChanged += (s, e) => UpdateContextDependent();
             }
         }
 
-        private void UpdateViewCorrespondingEnabled()
+        private void UpdateContextDependent()
         {
-            if(DisplayedItem == null)
+            viewCorrespondingButton.Enabled = true;
+            changeIdButton.Enabled = true;
+
+            if (DisplayedItem == null || Context == null)
             {
                 viewCorrespondingButton.Enabled = false;
+                changeIdButton.Enabled = false;
                 return;
             }
-            if(Context == null)
-            {
-                viewCorrespondingButton.Enabled = false;
-                return;
-            }
+
             if(Context.CurrentMod.GetCorrespondingEnemy(DisplayedItem) == null)
             {
                 viewCorrespondingButton.Enabled = false;
                 return;
             }
-            viewCorrespondingButton.Enabled = true;
         }
     }
 }

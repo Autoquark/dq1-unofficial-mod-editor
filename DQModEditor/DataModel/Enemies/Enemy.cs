@@ -18,16 +18,49 @@ namespace DQModEditor.DataModel.Enemies
     /// <summary>
     /// Represents the definition for one enemy. The original and NG+ versions of an enemy are represented by separate Enemy objects.
     /// </summary>
-    public class Enemy : INotifyPropertyChanged
+    /// <remarks>Sealed because the copy mechanism would need to be adapted to handle subclasses correctly</remarks>
+    public sealed class Enemy : INotifyPropertyChanged
     {
         public static string NewGamePlusIdSuffix => "_plus";
 
-        public Enemy(string internalName)
+        public static bool IdIsNewGamePlus(string id) => id.EndsWith(NewGamePlusIdSuffix);
+
+        public Enemy(string id) : this(null, id) { }
+
+        private Enemy(Enemy source, string id)
         {
-            Id = internalName;
-            IsNewGamePlus = Id.EndsWith(NewGamePlusIdSuffix);
+            Id = id;
+            IsNewGamePlus = IdIsNewGamePlus(id);
             NewGamePlusCorrespondingId = IsNewGamePlus ? (Id.Substring(0, Id.Length - NewGamePlusIdSuffix.Length))
                 : (Id + NewGamePlusIdSuffix);
+
+            if(source != null)
+            {
+                // Name & Description
+                DisplayName = source.DisplayName;
+                FlavorName = source.FlavorName;
+                FlavorDescription = source.FlavorDescription;
+
+                // Sound
+                DeathSound = source.DeathSound;
+
+                // Graphics
+                GraphicId = source.GraphicId;
+                GraphicSkinId = source.GraphicSkinId;
+                SelectBoxOffset = source.SelectBoxOffset;
+                foreach (var o in source.EffectOffsets) EffectOffsets.Add(o);
+                foreach (var o in source.Colors) Colors.Add(o);
+
+                // Stats
+                BaseStats.SetFrom(source.BaseStats);
+                LevelUpIncrement.SetFrom(source.LevelUpIncrement);
+
+                // Misc
+                foreach (var o in source.Types) Types.Add(o);
+                foreach (var o in source.Immunities) Immunities.Add(o);
+                foreach (var o in source.Spawns) Spawns.Add(new SpawnInfo(o));
+                foreach (var o in source.Resistances) Resistances.Add(new Resistance(o));
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -148,6 +181,11 @@ namespace DQModEditor.DataModel.Enemies
         /// Gets the collection of this enemy's resistances.
         /// </summary>
         public BindingList<Resistance> Resistances { get; } = new BindingList<Resistance>();
+
+        public Enemy Copy(string id)
+        {
+            return new Enemy(this, id);
+        }
 
         private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
         {

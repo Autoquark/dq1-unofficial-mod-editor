@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using DQModEditor.DataModel;
 using DQModEditor.DataModel.Enemies;
+using DQModEditor.Loader;
 
 namespace DQModEditor.Gui
 {
@@ -15,24 +16,26 @@ namespace DQModEditor.Gui
     /// </summary>
     internal class DisplayContext
     {
-        public DisplayContext(Mod mod)
+        public DisplayContext(ModLoader loader)
         {
-            CurrentMod = mod;
+            CurrentLoader = loader;
 
             EnemyIdAutoCompleteCollection = new AutoCompleteStringCollection();
-            EnemyIdAutoCompleteCollection.AddRange(mod.EnemiesById.Keys.ToArray());
-            mod.EnemiesById.CollectionChanged += (s, e) =>
+            EnemyIdAutoCompleteCollection.AddRange(CurrentMod.EnemiesById.Keys.ToArray());
+            CurrentMod.EnemiesById.CollectionChanged += (s, e) =>
             {
                 if (e.Action == NotifyCollectionChangedAction.Reset) EnemyIdAutoCompleteCollection.Clear();
-                foreach (object o in e.OldItems) EnemyIdAutoCompleteCollection.Remove((string)o);
-                foreach (object o in e.NewItems) EnemyIdAutoCompleteCollection.Add((string)o);
+                if(e.OldItems != null) foreach (object o in e.OldItems) EnemyIdAutoCompleteCollection.Remove(((Enemy)o).Id);
+                if(e.NewItems != null) foreach (object o in e.NewItems) EnemyIdAutoCompleteCollection.Add(((Enemy)o).Id);
             };
         }
 
         /// <summary>
         /// Gets the Mod whose data this control is displaying.
         /// </summary>
-        public Mod CurrentMod { get; }
+        public Mod CurrentMod => CurrentLoader.LoadedMod;
+
+        public ModLoader CurrentLoader { get; }
 
         /// <summary>
         /// Gets an AutoCompleteStringCollection containing the ids of all enemies for the current mod.

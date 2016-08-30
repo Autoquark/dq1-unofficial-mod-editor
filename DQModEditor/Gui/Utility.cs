@@ -75,6 +75,10 @@ namespace DQModEditor.Gui
             control.Paint += RenderControlArea;
         }
 
+        /// <summary>
+        /// Prevents a NumericUpDown from being left blank
+        /// </summary>
+        /// <param name="control"></param>
         internal static void PreventEmptyText(NumericUpDown control)
         {
             control.Validated += (s, e) =>
@@ -83,6 +87,11 @@ namespace DQModEditor.Gui
             };
         }
 
+        /// <summary>
+        /// When subscribed to a control's paint event, renders a black box around the area of a control.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private static void RenderControlArea(object sender, PaintEventArgs e)
         {
             ContainerControl control = (ContainerControl)sender;

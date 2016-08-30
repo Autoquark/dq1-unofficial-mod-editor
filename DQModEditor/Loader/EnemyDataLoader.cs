@@ -54,17 +54,29 @@ namespace DQModEditor.Loader
             }
         }
 
-        public void StableSave(Mod mod)
+        public void StableSave(Mod mod, StableSaveTracker tracker)
         {
-            // Save normal enemies
-            XElement root = XElement.Load(_enemyXmlPath);
-            EditXmlFromEnemies(mod.EnemiesById.Values.Where(x => !x.IsNewGamePlus).ToDictionary(x => x.Id), root);
-            root.Save(_enemyXmlPath);
+            XElement normalRoot = XElement.Load(_enemyXmlPath);
+            XElement plusRoot = XElement.Load(_enemyPlusXmlPath);
+
+            foreach (KeyValuePair<string, string> pair in tracker.ClonedEnemies)
+            {
+                XElement templateXml;
+                if (Enemy.IdIsNewGamePlus(pair.Value)) templateXml = GetEnemyDefinition(plusRoot, pair.Value);
+                else templateXml = new XElement(GetEnemyDefinition(normalRoot, pair.Value));
+
+                templateXml.SetAttributeValue(_idAttributeName, pair.Key);
+                if (Enemy.IdIsNewGamePlus(pair.Key)) AddEnemyDefinition(plusRoot, templateXml);
+                else AddEnemyDefinition(normalRoot, templateXml);
+            }
+
+            // Save normal
+            EditXmlFromEnemies(mod.EnemiesById.Values.Where(x => !x.IsNewGamePlus).ToDictionary(x => x.Id), normalRoot);
+            normalRoot.Save(_enemyXmlPath);
 
             // Save NG+ enemies
-            root = XElement.Load(_enemyPlusXmlPath);
-            EditXmlFromEnemies(mod.EnemiesById.Values.Where(x => x.IsNewGamePlus).ToDictionary(x => x.Id), root);
-            root.Save(_enemyPlusXmlPath);
+            EditXmlFromEnemies(mod.EnemiesById.Values.Where(x => x.IsNewGamePlus).ToDictionary(x => x.Id), plusRoot);
+            plusRoot.Save(_enemyPlusXmlPath);
         }
 
         private void EditXmlFromEnemies(IReadOnlyDictionary<string, Enemy> enemies, XElement root)
@@ -72,7 +84,7 @@ namespace DQModEditor.Loader
             //Remove enemy definitions from the XML that are not present in the Mod
             foreach (XElement enemyXml in GetEnemyDefinitions(root).ToList())
             {
-                if (!enemies.ContainsKey(enemyXml.AttributeValue("name"))) enemyXml.Remove();
+                if (!enemies.ContainsKey(enemyXml.AttributeValue(_idAttributeName))) enemyXml.Remove();
             }
             //Edit/add enemy definitions to the XML that are present in the mod
             foreach (Enemy enemy in enemies.Values)
@@ -90,12 +102,12 @@ namespace DQModEditor.Loader
         }
 
         private XElement GetEnemyDefinition(XElement enemyRoot, string id) 
-            => enemyRoot.Descendants("enemy").Where(x => x.AttributeValue("name") == id).Single();
+            => GetEnemyDefinitions(enemyRoot).Where(x => x.AttributeValue(_idAttributeName) == id).Single();
 
         private Enemy CreateEnemyFromXml(XElement root)
         {
             // Name & Description
-            Enemy enemy = new Enemy(root.AttributeValue(_internalNameAttributeName));
+            Enemy enemy = new Enemy(root.AttributeValue(_idAttributeName));
             enemy.DisplayName = root.AttributeValue(_displayNameAttributeName);
             XElement flavorElement = root.Descendant(_flavorElementName);
             enemy.FlavorName = flavorElement.AttributeValue(_flavorNameAttributeName);
@@ -183,6 +195,8 @@ namespace DQModEditor.Loader
             return statSet;
         }
 
+        private void AddEnemyDefinition(XElement enemyRoot, XElement enemy) => enemyRoot.Descendant(_contentElementName).Add(enemy);
+
         /// <summary>
         /// Modifies the given xml tree, whose root should be an "enemy" element whose "name" attribute matches the id of the given enemy,
         /// so that the XML data matches the data in the given Enemy. Any additional unrecognised XML information will be preserved.
@@ -191,7 +205,7 @@ namespace DQModEditor.Loader
         /// <param name="xmlRoot"></param>
         private void EditXmlFromEnemy(Enemy enemy, XElement root)
         {
-            if (root.AttributeValue("name") != enemy.Id) throw new ModLoadException();
+            if (root.AttributeValue(_idAttributeName) != enemy.Id) throw new ModLoadException();
 
             // Name & Description
             root.SetAttributeValue(_displayNameAttributeName, enemy.DisplayName);
@@ -313,8 +327,11 @@ namespace DQModEditor.Loader
 
         private readonly string _enemyXmlPath;
         private readonly string _enemyPlusXmlPath;
+
+        private readonly static string _contentElementName = "enemy_data";
+        private readonly static string _enemyElementName = "enemy";
         // Name & Description
-        private readonly static string _internalNameAttributeName = "name";
+        private readonly static string _idAttributeName = "name";
         private readonly static string _displayNameAttributeName = "nick";
         private readonly static string _flavorElementName = "flavor";
         private readonly static string _flavorNameAttributeName = "name";
